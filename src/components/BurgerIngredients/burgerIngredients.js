@@ -4,15 +4,28 @@ import data from  '../../Data/data.json';
 import { CurrencyIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgerIngredients.module.css' ;
 import imageSelected from '../../images/selected.jpg';
+import {useState, useMemo}  from 'react';
 
-class BurgerIngredients extends React.Component {
-  state = { 
-      ingredients: data 
-  };
+function BurgerIngredients () {
+
+const [ingredients, setIngredients] = useState(data);
 
 
-  
-    render() {
+  const bunIngredients  = useMemo(() => {
+    return ingredients.filter((item) => item.type === "bun");
+   // this.setState({price: sumPrice});
+}, [ingredients]);
+
+const sauceIngredients  = useMemo(() => {
+  return ingredients.filter((item) => item.type === "sauce");
+ // this.setState({price: sumPrice});
+}, [ingredients]);
+
+const mainIngredients  = useMemo(() => {
+  return ingredients.filter((item) => item.type === "main");
+ // this.setState({price: sumPrice});
+}, [ingredients]);
+    
     return (
       <>
       <h1 className="text text_type_main-large pt-10 pb-5">Соберите бургер</h1>
@@ -33,7 +46,7 @@ class BurgerIngredients extends React.Component {
 <>  
       <p className="text text_type_main-medium pr-1">Булки</p>
       
-       {this.state.ingredients.filter((item) => item.type === "bun").map((item) => (
+       {bunIngredients.map((item) => (
         <div className={styles.container_div_left}>
           <div >
             <div className={styles.display_selected}>
@@ -58,7 +71,7 @@ class BurgerIngredients extends React.Component {
 <>
       <p className="text text_type_main-medium pr-1">Соусы</p>
 
-          {this.state.ingredients.filter((item) => item.type === "sauce").map((item) => (
+          {sauceIngredients.map((item) => (
               <div className={styles.container_div_left }>
                 <div>
                   <img src={item.image}  />
@@ -80,7 +93,7 @@ class BurgerIngredients extends React.Component {
  <>    
      <p className="text text_type_main-medium pr-1">Начинка</p>   
    
-        {this.state.ingredients.filter((item) => item.type === "main").map((item) => (
+        {mainIngredients.map((item) => (
                <div className={styles.container_div_left }>
                <div>
                  <img src={item.image}  />
@@ -101,15 +114,6 @@ class BurgerIngredients extends React.Component {
        </>
     );
   }
-}
-
-
-
-
-
-
-
-
 
 
 export default BurgerIngredients; 
