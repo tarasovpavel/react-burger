@@ -17,7 +17,7 @@ class AppHeader extends React.Component {
   render() {
     return (
 
-      <header className={styles.header }>
+      <header className={styles.header } style = {{backgroundColor: '#1C1C21', height:'88px', top:'40px', height:'40px', width:'100%'}}>
       <nav className={styles.menu}>
         <ul className={styles.menu_up}>
           <li className={styles.menu_up_punkt}>
@@ -27,7 +27,7 @@ class AppHeader extends React.Component {
                   <>
                   <BurgerIcon type="primary"/>
                   <p className="p-1"></p>
-                  <p className="text text_type_main-default">Конструктор</p>
+                  <p className="text text_type_main-default"  style={{ color: '#8585AD' }} >Конструктор</p>
                   </>
               </NavLink>
           </li>
@@ -38,7 +38,7 @@ class AppHeader extends React.Component {
                 <>
               <ListIcon type="primary" />
               <p className="p-1"></p>
-              <p className="text text_type_main-default">Лента заказов</p>
+              <p className="text text_type_main-default" style={{ color: '#8585AD' }} >Лента заказов</p>
               </>
              </NavLink>  
           </li>
@@ -54,7 +54,7 @@ class AppHeader extends React.Component {
                 <>
                 <ProfileIcon type="primary" />
                 <p className="p-1"></p>
-              <p className="text text_type_main-default">
+              <p className="text text_type_main-default" style={{ color: '#8585AD' }} >
                   Личный кабинет
               </p>
             </>
