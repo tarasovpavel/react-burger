@@ -34,4 +34,5 @@
   .display_selected {
     box-sizing: border-box; 
     float:right;
+    position: relative;
   }

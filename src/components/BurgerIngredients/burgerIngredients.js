@@ -1,119 +1,124 @@
 import React from 'react';
-import {Tab}  from '@ya.praktikum/react-developer-burger-ui-components';
-import data from  '../../Data/data.json';
-import { CurrencyIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './burgerIngredients.module.css' ;
+import { Tab, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import data from '../../Data/data.json';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import styles from './burgerIngredients.module.css';
 import imageSelected from '../../images/selected.jpg';
-import {useState, useMemo}  from 'react';
-
-function BurgerIngredients () {
-
-const [ingredients, setIngredients] = useState(data);
+import { useState, useMemo, useContext } from 'react';
+import userDetailContext from '../App/App';
 
 
-  const bunIngredients  = useMemo(() => {
+function BurgerIngredients() {
+  //const ingredients = useContext(userDetailContext);
+
+
+  const [ingredients, setIngredients] = useState(data);
+
+
+  const bunIngredients = useMemo(() => {
     return ingredients.filter((item) => item.type === "bun");
-   // this.setState({price: sumPrice});
-}, [ingredients]);
+    // this.setState({price: sumPrice});
+  }, [ingredients]);
 
-const sauceIngredients  = useMemo(() => {
-  return ingredients.filter((item) => item.type === "sauce");
- // this.setState({price: sumPrice});
-}, [ingredients]);
+  const sauceIngredients = useMemo(() => {
+    return ingredients.filter((item) => item.type === "sauce");
+    // this.setState({price: sumPrice});
+  }, [ingredients]);
 
-const mainIngredients  = useMemo(() => {
-  return ingredients.filter((item) => item.type === "main");
- // this.setState({price: sumPrice});
-}, [ingredients]);
-    
-    return (
-      <>
+  const mainIngredients = useMemo(() => {
+    return ingredients.filter((item) => item.type === "main");
+    // this.setState({price: sumPrice});
+  }, [ingredients]);
+
+  return (
+    <>
       <h1 className="text text_type_main-large pt-10 pb-5">Соберите бургер</h1>
       <div style={{ display: 'flex' }}>
-                <Tab value="bun"  >
-                    Булки
-                </Tab>
-                <Tab value="sauce"  >
-                    Соусы
-                </Tab>
-                <Tab value="main" >
-                    Начинки
-                </Tab>
+        <Tab value="bun"  >
+          Булки
+        </Tab>
+        <Tab value="sauce"  >
+          Соусы
+        </Tab>
+        <Tab value="main" >
+          Начинки
+        </Tab>
       </div>
 
-      
-<div className={styles.container }>    
-<>  
-      <p className="text text_type_main-medium pr-1">Булки</p>
-      
-       {bunIngredients.map((item) => (
-        <div className={styles.container_div_left}>
-          <div >
-            <div className={styles.display_selected}>
-                <img src={imageSelected} />
-            </div>
-              
-              <img src={item.image}  />
+
+      <div className={styles.container}>
+        <>
+          <p className="text text_type_main-medium pr-1">Булки</p>
+
+          {bunIngredients.map((item) => (
+            <div className={styles.container_div_left} >
               <div >
+                <div className={styles.display_selected} >
+                  <Counter count={1} size="default" extraClass="m-1" />
+
+                </div>
+
+                <img src={item.image} />
+                <div >
                   <p className="text text_type_main-default pr-1 m-1 p-1">{item.price + " "}
                     <CurrencyIcon type='primary' />
                   </p>
-              </div>
+                </div>
                 <div >
                   <p className="text text_type_main-default pr-1">{item.name}</p>
                 </div>
               </div>
-         </div>
-         ))}
-</>
+            </div>
+          ))}
+        </>
 
 
-<>
-      <p className="text text_type_main-medium pr-1">Соусы</p>
+        <>
+          <p className="text text_type_main-medium pr-1">Соусы</p>
 
           {sauceIngredients.map((item) => (
-              <div className={styles.container_div_left }>
-                <div>
-                  <img src={item.image}  />
-                  <div >
-                    <p className="text text_type_main-default pr-1">{item.price + " "}
-                      <CurrencyIcon type='primary' />
-                    </p>
-                  </div>
-                  <div >
-                    <p className="text text_type_main-default pr-1">{item.name}</p>
-                  </div>
+            <div className={styles.container_div_left}>
+              <div>
+                <img src={item.image} />
+                <div >
+                  <p className="text text_type_main-default pr-1">{item.price + " "}
+                    <CurrencyIcon type='primary' />
+                  </p>
+                </div>
+                <div >
+                  <p className="text text_type_main-default pr-1">{item.name}</p>
+                </div>
 
               </div>
             </div>
-            ))}  
- </>
+          ))}
+        </>
 
 
- <>    
-     <p className="text text_type_main-medium pr-1">Начинка</p>   
-   
-        {mainIngredients.map((item) => (
-               <div className={styles.container_div_left }>
-               <div>
-                 <img src={item.image}  />
-                 <div >
-                   <p className="text text_type_main-default pr-1">{item.price + " "}
-                     <CurrencyIcon type='primary' />
-                   </p>
-                 </div>
-                 <div >
-                   <p className="text text_type_main-default pr-1">{item.name}</p>
-                 </div>
+        <>
+          <p className="text text_type_main-medium pr-1">Начинка</p>
 
-             </div>
-           </div>
-            ))}
-</>
-</div>
-       </>
-    );
-  }
+          {mainIngredients.map((item) => (
+            <div className={styles.container_div_left}>
+              <div>
+                <img src={item.image} />
+                <div >
+                  <p className="text text_type_main-default pr-1">{item.price + " "}
+                    <CurrencyIcon type='primary' />
+                  </p>
+                </div>
+                <div >
+                  <p className="text text_type_main-default pr-1">{item.name}</p>
+                </div>
+
+              </div>
+            </div>
+          ))}
+        </>
+      </div>
+    </>
+  );
+}
 
 
 export default BurgerIngredients; 
