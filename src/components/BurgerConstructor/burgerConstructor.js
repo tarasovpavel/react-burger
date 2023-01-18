@@ -1,42 +1,48 @@
 import React from 'react';
 import { CurrencyIcon, Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import data from  '../../Data/data.json';
 import styles from './burgerConstructor.module.css';
-import { useState, useMemo, useContext } from 'react';
-import userDetailContext from '../App/App';
+import { useState, useMemo } from 'react';
+import { Modal } from '../Modal/modal';
+import { OrderDetails } from '../OrderDetails/orderDetails';
 
-function BurgerConstructor() {
+function BurgerConstructor(props) {
   //const data = useContext(userDetailContext);
+  //const [ingredients, setIngredients] = useState(null);
 
-  const [ingredients, setIngredients] = useState(data);
-
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
 
   // Расчет фиктивной полной стоимости, потом будем считать только выбранные
   const getSumPrice = useMemo(() => {
     const total =
-      ingredients.reduce((prevValue, currentValue) =>
+      props.ingredients.reduce((prevValue, currentValue) =>
         prevValue + currentValue.price
 
         , 0);
     return total;
-    // this.setState({price: sumPrice});
-  }, [ingredients]);
+  }, [props.ingredients]);
 
-/*
+
   const bunIngredients = useMemo(() => {
-    return ingredients.filter((item) => item.type === "bun");
+    return props.ingredients.filter((item) => item.type === "bun");
     // this.setState({price: sumPrice});
-  }, [ingredients]);
-*/
+  }, [props.ingredients]);
 
-  //Пока отображаю часть компонентов, а не выранные. Стоимость,- по все существующим
+  function handleOrderClick() {
+    setIsModalVisible(true);
+  }
+
+  function handleOrderClose() {
+    setIsModalVisible(false);
+  }
+
+  //Пока отображаю часть компонентов, а не выбранные. Стоимость,- по все существующим
   return (
     <>
       <p className="text text_type_main-medium pt-20 pb-10"> </p>
 
       <div className={styles.container}>
-        {ingredients.filter((item) => item.type === "bun").map((item) => (
+        {bunIngredients.map((item) => (
           <>
             <div className={styles.box1} >
               <DragIcon type="primary" />
@@ -63,12 +69,23 @@ function BurgerConstructor() {
 
           {getSumPrice + ' '}
           <CurrencyIcon type='primary' />
-          <Button htmlType="button" type="primary" size="medium">
+          <Button htmlType="button" type="primary" size="medium" onClick={handleOrderClick}>
             Оформить заказ
           </Button>
         </p>
       </div>
+      {isModalVisible &&
+        <div style={{ overflow: 'hidden' }}>
+          {
+            <Modal header="Внимание!" onClose={handleOrderClose} >
+              <OrderDetails />
+            </Modal>
+          }
+        </div>
+      }
     </>
+
+
   );
 
 }
