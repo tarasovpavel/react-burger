@@ -2,7 +2,6 @@ import React, { useState, useEffect, createContext } from 'react';
 import logo from './logo.svg';
 import './App';
 import styles from './App.module.css';
-
 import BurgerIngredients from '../BurgerIngredients/burgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/burgerConstructor';
 import AppHeader from '../AppHeader/appHeader';
@@ -17,6 +16,7 @@ function App() {
   const path = '';
   const [data, setData] = useState({});
   const [isFetch, setIsFetch] = useState(false);
+  const [isModal, setModal] = useState(false);
 
 
   useEffect(() => {
@@ -39,7 +39,7 @@ function App() {
 
 
   return (
-    <userDetailContext.Provider value={{ data} }>
+    <userDetailContext.Provider value={{ data }}>
       <main className={`${styles.page} `}>
 
         <BrowserRouter>
@@ -51,7 +51,7 @@ function App() {
             </div>
             <div className={styles.container_div_right}>
               <BurgerConstructor />
-            </div>        
+            </div>
           </div>
         </BrowserRouter>
       </main>
