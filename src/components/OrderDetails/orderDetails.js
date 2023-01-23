@@ -3,14 +3,14 @@ import doneImage from '../../images/done.png';
 import styles from './orderDetails.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export function OrderDetails() {
+export function OrderDetails(props) {
     return (
         <div >
             <p style={{ float: 'right' }}>
                 <CloseIcon type="primary" className={styles.modal_image} />
             </p>
             <p className="text text_type_digits-large pb-16" >
-                034536
+                {props.orderNumber}
             </p>
             <p className=" text text_type_main-medium">
                 идентификатор заказа

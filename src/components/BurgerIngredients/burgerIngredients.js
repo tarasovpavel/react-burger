@@ -31,7 +31,7 @@ function BurgerIngredients(props) {
 
   function handleIngredientClick(item) {
     setIngredient(item);
-
+//console.log('1');
     setIsModalVisible(true);
   }
 

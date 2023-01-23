@@ -7,6 +7,7 @@ import AppHeader from '../AppHeader/appHeader';
 import { BrowserRouter } from 'react-router-dom';
 //import data1 from  '../../Data/data';
 import utils from "../../Utils/utils";
+import { BurgerConstructorContext} from "../../services/burgerConstructorContext";
 
 
 
@@ -66,15 +67,19 @@ useEffect(() => {
 
         <BrowserRouter>
           <AppHeader />
+          
         {isLoad &&  (
+          <BurgerConstructorContext.Provider value={{dataIngredient, setData}}>
           < div className={styles.container} >
             <div className={styles.container_div_left}>
               <BurgerIngredients ingredients={dataIngredient}/>
             </div>
             <div className={styles.container_div_left}>
-              <BurgerConstructor ingredients={dataIngredient}/>
+              <BurgerConstructor />
             </div>
-          </div>)}
+          </div>
+          </BurgerConstructorContext.Provider>)}
+         
         </BrowserRouter>
       </main>
 
