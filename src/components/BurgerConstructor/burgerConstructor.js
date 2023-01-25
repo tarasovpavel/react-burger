@@ -4,14 +4,14 @@ import styles from './burgerConstructor.module.css';
 import { useState, useMemo, useContext } from 'react';
 import { Modal } from '../Modal/modal';
 import { OrderDetails } from '../OrderDetails/orderDetails';
-import { BurgerConstructorContext } from "../../services/burgerConstructorContext";
+import { BurgerIngredientsContext, BurgerModalContext } from "../../context/burgerContext";
 import utils from "../../Utils/utils";
 
-function BurgerConstructor(props) {
-  //const data = useContext(userDetailContext);
+
+function BurgerConstructor() {
   //const [ingredients, setIngredients] = useState(null);
 
-  const { dataIngredient, setData } = useContext(BurgerConstructorContext);
+  const { dataIngredient, setData } = useContext(BurgerIngredientsContext);
 
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -22,8 +22,8 @@ function BurgerConstructor(props) {
   const getSumPrice = useMemo(() => {
     const total =
       dataIngredient.reduce((prevValue, currentValue) => {
-       if (currentValue.type === "bun") { prevValue = prevValue + currentValue.price; }
-       return prevValue + currentValue.price;
+        if (currentValue.type === "bun") { prevValue = prevValue + currentValue.price; }
+        return prevValue + currentValue.price;
       }
         , 0);
     return total;
@@ -56,24 +56,24 @@ function BurgerConstructor(props) {
 
   function postOrder() {
     // Посылаем на данный момент  все ингредиенты 
-    
+
     let ingredientsList = [];
 
-    
+
     for (let item of sauseMainIngredients) {
-      ingredientsList.push(item._id) ;
+      ingredientsList.push(item._id);
     }
-    
+
 
     utils
-    .getOrderNumberPost(ingredientsList)
-    .then(( data ) => {
-      console.log(data.order.number);
-      setOrderNumber(data.order.number);
-    })
-    .catch(console.log);
+      .getOrderNumberPost(ingredientsList)
+      .then((data) => {
+        console.log(data.order.number);
+        setOrderNumber(data.order.number);
+      })
+      .catch(console.log);
 
-}
+  }
 
 
 
@@ -83,17 +83,17 @@ function BurgerConstructor(props) {
       <p className="text text_type_main-medium pt-20 pb-10"> </p>
 
       <div className={styles.container}>
-            {/*Вставляем одну булку- верх, а потом и низ))*/}
+        {/*Вставляем одну булку- верх, а потом и низ))*/}
         <div className={styles.box1} >
-              <DragIcon type="primary" />
-            </div>
-            <div className={styles.box2}>
-              <ConstructorElement
-                text={bunIngredients[1].name  + "  верх"} 
-                price={bunIngredients[1].price}
-                thumbnail={bunIngredients[1].image_mobile}
-              />
-         </div>
+          <DragIcon type="primary" />
+        </div>
+        <div className={styles.box2}>
+          <ConstructorElement
+            text={bunIngredients[1].name + "  верх"}
+            price={bunIngredients[1].price}
+            thumbnail={bunIngredients[1].image_mobile}
+          />
+        </div>
 
 
         {sauseMainIngredients.map((item) => (
@@ -116,15 +116,15 @@ function BurgerConstructor(props) {
 
         {/*Вставляем одну булку- верх, а потом и низ))*/}
         <div className={styles.box1} >
-              <DragIcon type="primary" />
-            </div>
-            <div className={styles.box2}>
-              <ConstructorElement
-                text={bunIngredients[1].name  + "  низ"} 
-                price={bunIngredients[1].price}
-                thumbnail={bunIngredients[1].image_mobile}
-              />
-         </div>
+          <DragIcon type="primary" />
+        </div>
+        <div className={styles.box2}>
+          <ConstructorElement
+            text={bunIngredients[1].name + "  низ"}
+            price={bunIngredients[1].price}
+            thumbnail={bunIngredients[1].image_mobile}
+          />
+        </div>
 
       </div>
 
@@ -144,9 +144,11 @@ function BurgerConstructor(props) {
       {isModalVisible &&
         <div style={{ overflow: 'hidden' }}>
           {
-            <Modal header="Внимание!" onClose={handleOrderClose} >
-              <OrderDetails orderNumber={orderNumber}/>
-            </Modal>
+            <BurgerModalContext.Provider value={{orderNumber, setOrderNumber}}>
+              <Modal header="Внимание!" onClose={handleOrderClose} >
+                <OrderDetails  />
+              </Modal>
+            </BurgerModalContext.Provider>
           }
         </div>
       }
