@@ -4,34 +4,34 @@ import { Tab, Counter } from '@ya.praktikum/react-developer-burger-ui-components
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgerIngredients.module.css';
 //import imageSelected from '../../images/selected.jpg';
-import { useState, useMemo } from 'react';
-//import userDetailContext from '../App/App';
+import { useState, useMemo, useContext } from 'react';
 import { Modal } from '../Modal/modal';
 import { IngredientDetail } from '../IngredientDetail/ingredientDetail';
-import PropTypes from 'prop-types';
+import { BurgerIngredientsContext} from "../../context/burgerContext";
 
-function BurgerIngredients(props) {
-  //const ingredients = useContext(userDetailContext);
+function BurgerIngredients() {
+
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [ingredient, setIngredient] = useState({});
 
+  const { dataIngredient, setData } = useContext(BurgerIngredientsContext);
 
 
   const bunIngredients = useMemo(() => {
-    return props.ingredients.filter((item) => item.type === "bun");
-  }, [props.ingredients]);
+    return dataIngredient.filter((item) => item.type === "bun");
+  }, [dataIngredient]);
 
   const sauceIngredients = useMemo(() => {
-    return props.ingredients.filter((item) => item.type === "sauce");
-  }, [props.ingredients]);
+    return dataIngredient.filter((item) => item.type === "sauce");
+  }, [dataIngredient]);
 
   const mainIngredients = useMemo(() => {
-    return props.ingredients.filter((item) => item.type === "main");
-  }, [props.ingredients]);
+    return dataIngredient.filter((item) => item.type === "main");
+  }, [dataIngredient]);
 
   function handleIngredientClick(item) {
     setIngredient(item);
-
+//console.log('1');
     setIsModalVisible(true);
   }
 

@@ -1,3 +1,5 @@
+
+
 .container_div_left {
   box-sizing: border-box;
   width: 50%;
@@ -37,6 +39,8 @@
   display: grid;
   gap: 20px;
   columns: 2;
+  height: 600px;
+  overflow-y: scroll;
 }
 
 .box1 {
@@ -47,4 +51,10 @@
 
 .box2 {
   grid-column-start: 2;
+}
+
+
+.container::-webkit-scrollbar{
+  width: 10px;
+  background-color: rgb(89, 57, 131);
 }
