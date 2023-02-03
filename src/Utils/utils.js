@@ -1,4 +1,5 @@
 import { dataPath, orderNumberPath } from "../constant";
+import {ORDERDETAILS_QUERY, ORDERDETAILS_SUCCESS, ORDERDETAILS_ERROR} from '../services/actions/orderDetailsActions';
 
 class Utils {
   constructor(dataURL, orderNumberURL) {
@@ -7,7 +8,7 @@ class Utils {
   }
 
   _handleResponse(response) {
-    console.log(response);
+   // console.log(response);
     return response.ok ? 
             response.json() : 
             Promise.reject("Error!!!");
@@ -23,20 +24,46 @@ class Utils {
 
  
   getOrderNumberPost(dataIngredient) {
-    
-    return fetch(this._orderNumberURL, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json' },
-      body: JSON.stringify({ingredients:dataIngredient})}
-      )
-      .then((this._handleResponse))
-      .catch(error => {
-          console.log(error);
-      });
-     
+    return function (dispatch) {
+      
+ //     dispatch({
+ //       type: ORDERDETAILS_QUERY,
+  //    });
+      utils.getOrderNumberRequest({dataIngredient})
+      .then((res) => {
+        dispatch({
+          type: ORDERDETAILS_SUCCESS,
+          item: res.order.number,
+        });
+        
+      })
+      .catch(() => {
+        dispatch({
+          type: ORDERDETAILS_ERROR,
+        })
+      })
+
+
   }  
 }
 
+
+getOrderNumberRequest (dataIngredient)
+{
+  console.log('getOrderNumberRequest');
+  console.log(dataIngredient);
+return fetch(this._orderNumberURL, {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json' },
+  body: JSON.stringify({ingredients:dataIngredient.dataIngredient})}
+  )
+  .then((this._handleResponse))
+  .catch(error => {
+      console.log(error);
+  });
+}
+
+}
 
 
 

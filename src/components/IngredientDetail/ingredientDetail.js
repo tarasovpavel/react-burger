@@ -7,9 +7,9 @@ import { useSelector } from "react-redux";
 
 export function IngredientDetail(props) {
 
-    const  dataIngredient  = useSelector((store) => store.ingredientDetailData);
+    const dataIngredient = useSelector((store) => store.ingredientDetailData);
 
-    return   (
+    return (
         <div>
             <p style={{ float: 'right' }}>
                 <CloseIcon type="primary" className={styles.modal_image} />
