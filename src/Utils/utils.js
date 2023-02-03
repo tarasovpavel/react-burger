@@ -21,6 +21,7 @@ class Utils {
         .catch(console.log);
   }
 
+ 
   getOrderNumberPost(dataIngredient) {
     
     return fetch(this._orderNumberURL, {
@@ -41,6 +42,8 @@ class Utils {
 
 const utils = new Utils(dataPath, orderNumberPath);
 export default utils;
+
+
 
 
 /*

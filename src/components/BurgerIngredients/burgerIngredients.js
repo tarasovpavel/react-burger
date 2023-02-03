@@ -4,20 +4,38 @@ import { Tab, Counter } from '@ya.praktikum/react-developer-burger-ui-components
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgerIngredients.module.css';
 //import imageSelected from '../../images/selected.jpg';
-import { useState, useMemo, useContext } from 'react';
+import { useState, useMemo, useRef } from 'react';
 import { Modal } from '../Modal/modal';
 import { IngredientDetail } from '../IngredientDetail/ingredientDetail';
-import { BurgerIngredientsContext} from "../../context/burgerContext";
+import { useSelector, useDispatch } from "react-redux";
+import {INGREDIENTDETAILS_QUERY, INGREDIENTDETAILS_CLOSE} from  "../../services/actions/actions";
+
 
 function BurgerIngredients() {
 
+
+  const dispatch = useDispatch();
+  const  dataIngredient  = useSelector((store) => store.burgerIngredientsData.items);
+  const [activeTab, setActiveTab] = useState("bun");
+
+  
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [ingredient, setIngredient] = useState({});
 
-  const { dataIngredient, setData } = useContext(BurgerIngredientsContext);
+  //Рефы на заголовки типов интгредиентов
+  const bunMenuRef = useRef(null);
+  const headerMenuRef  = useRef(null);
+const sauceMenuRef = useRef(null);
+	const mainMenuRef = useRef(null);
+
+
+
+ // const { dataIngredient, setData } = useContext(BurgerIngredientsContext);
 
 
   const bunIngredients = useMemo(() => {
+    //console.log('BurgerIngredientsSelector');
+    //console.log(dataIngredient);
     return dataIngredient.filter((item) => item.type === "bun");
   }, [dataIngredient]);
 
@@ -31,36 +49,67 @@ function BurgerIngredients() {
 
   function handleIngredientClick(item) {
     setIngredient(item);
-//console.log('1');
+    console.log('click');
+    dispatch({ 
+      type: INGREDIENTDETAILS_QUERY, 
+      item: item
+    });
     setIsModalVisible(true);
+ 
   }
 
   function handleIngredientClose() {
     setIngredient({});
+    dispatch({ 
+      type: INGREDIENTDETAILS_CLOSE, 
+    });
     setIsModalVisible(false);
   }
 
 
+  function handleScroll(e) {
+    //console.log('scr1');
+    const scrollTop = e.target.scrollTop;
+    const bunDistance = headerMenuRef.current.getBoundingClientRect().top - bunMenuRef.current.getBoundingClientRect().top;
+    const sauceDistance = headerMenuRef.current.getBoundingClientRect().top - sauceMenuRef.current.getBoundingClientRect().top;
+    const mainDistance = headerMenuRef.current.getBoundingClientRect().top - mainMenuRef.current.getBoundingClientRect().top;
+
+    console.log("bunDistance  " + bunDistance);
+    console.log("sauceDistance" + sauceDistance);
+    console.log("mainDistance" + mainDistance);
+
+    if ((Math.abs(bunDistance) < Math.abs(sauceDistance)) && (Math.abs(bunDistance) < Math.abs(mainDistance)))
+    {setActiveTab("bun")}
+    else
+    {
+      (Math.abs(mainDistance) < Math.abs(sauceDistance))  ?   setActiveTab("main") : setActiveTab("sauce");
+ 
+    }
+
+    
+    //setActiveTab
+
+  }
 
   return (
 
     <>
       <h1 className="text text_type_main-large pt-10 pb-5">Соберите бургер</h1>
-      <div style={{ display: 'flex' }}>
-        <Tab value="bun"  >
+      <div style={{ display: 'flex' }} ref={headerMenuRef}>
+        <Tab value="bun"      active={activeTab === 'bun'}>
           Булки
         </Tab>
-        <Tab value="sauce"  >
+        <Tab value="sauce" active={activeTab === 'sauce'} >
           Соусы
         </Tab>
-        <Tab value="main" >
+        <Tab value="main" active={activeTab === 'main'}>
           Начинки
         </Tab>
       </div>
 
 
-      <div className={styles.container}>
-        <>
+      <div className={styles.container} onScroll={handleScroll}>
+        <div ref={bunMenuRef}>
           <p className="text text_type_main-medium pr-1">Булки</p>
 
           {bunIngredients.map((item) => (
@@ -83,10 +132,10 @@ function BurgerIngredients() {
               </div>
             </div>
           ))}
-        </>
+        </div>
 
 
-        <>
+        <div ref={sauceMenuRef}>
           <p className="text text_type_main-medium pr-1">Соусы</p>
 
           {sauceIngredients.map((item) => (
@@ -105,10 +154,10 @@ function BurgerIngredients() {
               </div>
             </div>
           ))}
-        </>
+        </div>
 
 
-        <>
+        <div ref={mainMenuRef}>
           <p className="text text_type_main-medium pr-1">Начинка</p>
 
           {mainIngredients.map((item) => (
@@ -127,13 +176,15 @@ function BurgerIngredients() {
               </div>
             </div>
           ))}
-        </>
+        </div>
+
+
       </div>
       {isModalVisible &&
         <div style={{ overflow: 'hidden' }}>
           {
             <Modal header="Внимание!" onClose={handleIngredientClose} >
-              <IngredientDetail props={ingredient} />
+              <IngredientDetail/>
             </Modal>
           }
         </div>
