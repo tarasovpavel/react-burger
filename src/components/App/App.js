@@ -7,40 +7,23 @@ import AppHeader from '../AppHeader/appHeader';
 import { BrowserRouter } from 'react-router-dom';
 //import data1 from  '../../Data/data';
 import utils from "../../Utils/utils";
-import {BURGER_INGREDIENTS_ERROR, BURGER_INGREDIENTS_SUCCESS, BURGER_CONSTRUCTOR_CLEAR} from  "../../services/actions/actions";
+import {BURGER_INGREDIENTS_ERROR, BURGER_INGREDIENTS_SUCCESS} from  "../../services/actions/burgerIngredientsActions";
+import { BURGER_CONSTRUCTOR_CLEAR} from  "../../services/actions/burgerConstructorActions";
+
 import { useDispatch } from 'react-redux';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 
 function App() {
-  const [dataIngredient, setData] = useState({});
   const [isLoad, setIsLoad] = useState(false);
   const dispatch = useDispatch();
  
     //const { data1, loading, error } = useFetch('https://norma.nomoreparties.space/api/ingredients');
    // console.log(data1) ;
    // setData(data1);setIsLoad (true);
- /*
-  useEffect(() => {
-    
-          getIngredients()
-              .then(data => {
-                if (data) {
-                  console.log(data);
-                  setData(data)
-                }
-              })
-              .catch(err => { console.log(err) })
 
-
-              .finally(setIsLoad(true));
-              
-            }
-    , []);
-
-*/
-
-
-useEffect(()=> {
+   useEffect(()=> {
   // Отправляем экшен-функцию
   dispatch(getRecommendedItems())
  // setIsLoad(true);
@@ -57,7 +40,8 @@ function getRecommendedItems() {
       if (data ) {
         dispatch({ 
           type: BURGER_INGREDIENTS_SUCCESS, 
-          items: data
+          items:data.map(item => ({ ...item, counter: 0 })),
+
         });
         dispatch({ 
           type: BURGER_CONSTRUCTOR_CLEAR,
@@ -109,24 +93,24 @@ useEffect(() => {
 
         <BrowserRouter>
           <AppHeader />
-          
-        {isLoad &&  (
+          <DndProvider backend={HTML5Backend}>
+           {isLoad &&  (
 
-          < div className={styles.container} >
-            <div className={styles.container_div_left}>
-              
-                <BurgerIngredients />
-              
-            </div>
-            <div className={styles.container_div_left}>
-          
-              <BurgerConstructor />
-      
-            </div>           
+                      < div className={styles.container} >
+                        <div className={styles.container_div_left}>
+                          
+                            <BurgerIngredients />
+                          
+                        </div>
+                        <div className={styles.container_div_left}>
+                      
+                          <BurgerConstructor />
+                  
+                        </div>           
 
-          </div>
-)}
-         
+                      </div>
+            )}
+            </DndProvider>
         </BrowserRouter>
       </main>
 

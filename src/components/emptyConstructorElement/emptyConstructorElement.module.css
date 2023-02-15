@@ -1,0 +1,24 @@
+.constructorelement {
+    padding: 16px 24px;
+    display: inline-block;
+    border-radius: var(--common-border-radius-s);
+    background: var(--background-element);
+    max-width: 536px;
+    min-width: 488px;
+    width: 100%;
+    min-height: 80px;
+    font-family: 'Jet Brains Mono';
+    font-size: 16px;
+    line-height: 24px;
+    color: #F2F2F3;
+    flex-grow: 1;
+    box-sizing: border-box;
+}
+
+.constructorelement_pos_top {
+    border-radius: var(--top-constructor-item-border-radius);
+}
+
+.constructorelement_pos_bottom {
+    border-radius: var(--bottom-constructor-item-border-radius);
+}
