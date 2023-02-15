@@ -17,7 +17,7 @@ class AppHeader extends React.Component {
   render() {
     return (
 
-      <header className={styles.header } style = {{backgroundColor: '#1C1C21', height:'88px', top:'40px', height:'40px', width:'100%'}}>
+      <header className={styles.header } style = {{backgroundColor: '#1C1C21', top:'40px', height:'40px'}}>
       <nav className={styles.menu}>
         <ul className={styles.menu_up}>
           <li className={styles.menu_up_punkt}>
@@ -50,7 +50,7 @@ class AppHeader extends React.Component {
           <li className={styles.menu_up_punkt}>
           <NavLink
               className={styles.link}
-              to='/' >
+              to='/profile' >
                 <>
                 <ProfileIcon type="primary" />
                 <p className="p-1"></p>

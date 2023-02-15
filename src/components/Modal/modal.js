@@ -29,6 +29,7 @@ export function Modal(props) {
   // Возвращаем ReactDOM.createPortal,
   // который поместит дочерние элементы в modalRoot
   return ReactDOM.createPortal(
+    <div style={{ overflow: 'hidden' }}>
     <ModalOverlay onClose={props.onClose} >
       <>
         <div className={styles.modal}>
@@ -38,6 +39,7 @@ export function Modal(props) {
 
       </>
     </ModalOverlay>
+    </div>
     ,
     modalRoot
   );

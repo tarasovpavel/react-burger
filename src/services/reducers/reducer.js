@@ -3,7 +3,7 @@ import {burgerIngredientsReducer} from './burgerIngredientsReducer';
 import {burgerConstructorReducer} from './burgerConstructorReducer';
 import {ingredientDetailReducer} from './ingredientDetailsReducer';
 import {orderDetailsReducer} from './orderDetailsReducer';
-
+import {userInitialReducer} from './userData';
 
 
 
@@ -12,6 +12,7 @@ import {orderDetailsReducer} from './orderDetailsReducer';
     burgerConstructorData: burgerConstructorReducer,
     ingredientDetailData: ingredientDetailReducer,
     orderDetailsData: orderDetailsReducer,
+    userData: userInitialReducer,
   });
   export default rootReducer;
 

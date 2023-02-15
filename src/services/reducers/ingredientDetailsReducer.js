@@ -16,6 +16,7 @@ import {
     switch (action.type) {
       
       case INGREDIENTDETAILS_QUERY: {
+        //console.log(action.item);
         return {
           item: action.item,
           requestError: false,
