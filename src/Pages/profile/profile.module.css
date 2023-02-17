@@ -15,9 +15,9 @@
     box-sizing: border-box;
     padding: 15px;
     float: left;
-    flex: 50%;
-    height: 2000px;
     
+    height: 2000px;
+    width: 320px;
   }
   
 
@@ -31,13 +31,25 @@
     height: 2000px;
   }
 
-  
+  .ullink {
+    text-decoration: none;
+  }
+
   .link {
     display: flex;
     text-decoration: none;
     align-items: right;
+    
   }
  
   .active_link
   {color: #ebebf8;
     }
+
+.buttons{
+    justify-content: center;
+    align-items: center;
+    width: 480px;
+    float:left;
+    column-count:2;
+}

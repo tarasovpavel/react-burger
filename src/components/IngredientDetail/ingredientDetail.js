@@ -2,14 +2,21 @@ import React from "react";
 import styles from "./ingredientDetail.module.css";
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from "react-redux";
+import { useParams } from 'react-router-dom'
 
 
 export default function IngredientDetail(props) {
 
-    const dataIngredient = useSelector((store) => store.ingredientDetailData.item);
+    let dataIngredient = useSelector((store) => store.ingredientDetailData.item);
+    const dataIngredients = useSelector((store) => store.burgerIngredientsData.items);
+   const { id } = useParams();
 
     
-    return ( 
+    if (!(dataIngredient))
+       dataIngredient = dataIngredients.find((item) => item._id   === id);
+
+    return (
+ dataIngredient && 
         <div>
             <p style={{ float: 'right' }}>
                 <CloseIcon type="primary" className={styles.modal_image} />

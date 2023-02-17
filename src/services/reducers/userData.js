@@ -1,7 +1,5 @@
 
 
-import utils from "../../Utils/utils";
-import {  useDispatch } from 'react-redux';
 import {USER_REGISTER_SUCCESS,
     USER_REGISTER_ERROR,
     USER_LOGIN_SUCCESS, 
@@ -19,7 +17,6 @@ import {USER_REGISTER_SUCCESS,
   
 const userInitialState = { userData: {
         userName: null,
-        login: null,
         password: null,
         email: null,
         newPassword: null,
@@ -41,7 +38,7 @@ export const userInitialReducer = (state=userInitialState, action) => {
                 condition: 'USER_REGISTER_SUCCESS',
                 //accessToken: action.accessToken,
                 userName: action.userName,
-                password: action.userName,
+                //password: action.userName,
                 email: action.email,
             }
         }
@@ -51,7 +48,7 @@ export const userInitialReducer = (state=userInitialState, action) => {
                 condition: 'USER_REGISTER_ERROR',
                 //accessToken: null,
                 userName: null,
-                password: null,
+                //password: null,
                 email: null,
             }
         }
@@ -61,8 +58,7 @@ export const userInitialReducer = (state=userInitialState, action) => {
                 ...state,
                 condition: 'USER_LOGIN_SUCCESS',
                 //accessToken: action.accessToken,
-                login: action.email,
-                password: action.password,
+                //password: action.password,
                 email: action.email,
                 userName: action.userName,
             }
@@ -76,10 +72,11 @@ export const userInitialReducer = (state=userInitialState, action) => {
         
         
         case USER_UPDATE_DATA_SUCCESS: {
+            
             return {
                 ...state,
                 email: action.email,
-                login: action.login,
+                userName:action.userName,
                 condition: 'USER_UPDATE_DATA_SUCCESS',
             }
         }
@@ -92,7 +89,7 @@ export const userInitialReducer = (state=userInitialState, action) => {
         case PASSWORD_REFRESH_SUCCESS: {
             return {
                 ...state,
-                newPassword: action.newPassword, 
+                //newPassword: action.newPassword, 
                 condition: 'PASSWORD_REFRESH_SUCCESS',
                 requestChangePassword: true,
             }
@@ -106,7 +103,7 @@ export const userInitialReducer = (state=userInitialState, action) => {
         case PASSWORD_NEW_SUCCESS: {
             return {
                 ...state,
-                password: action.password, 
+                //password: action.password, 
                 condition: 'PASSWORD_NEW_SUCCESS',
                 requestChangePassword: false,
             }

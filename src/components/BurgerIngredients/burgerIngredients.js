@@ -6,14 +6,14 @@ import styles from './burgerIngredients.module.css';
 import { useState, useMemo, useRef } from 'react';
 
 import { useSelector, useDispatch } from "react-redux";
-import { INGREDIENTDETAILS_QUERY, INGREDIENTDETAILS_CLOSE } from "../../services/actions/ingredientDetailsActions";
+import { INGREDIENTDETAILS_QUERY } from "../../services/actions/ingredientDetailsActions";
 import { IngredientCard } from '../IngredientCard/ingredientCard';
 import { useNavigate } from "react-router-dom";
-
+import {  useLocation } from "react-router-dom";
 
 function BurgerIngredients() {
 
-
+  const location = useLocation();
   const dispatch = useDispatch();
   const dataIngredient = useSelector((store) => store.burgerIngredientsData.items);
   //const ingredientData = useSelector((store) => store.ingredientDetailData.item);
@@ -59,18 +59,19 @@ function BurgerIngredients() {
       type: INGREDIENTDETAILS_QUERY,
       item: item
     });
-    
-    navigate("/ingredients/"||item._id);
-
+    //console.log(item);
+    const id = item._id;
+    //console.log('/ingredients/${id}');
+    navigate(`/ingredients/${id}`, {state: {background: location }});
   }
 
-  function handleIngredientClose() {
+ /* function handleIngredientClose() {
     //setIngredient({});
     dispatch({
       type: INGREDIENTDETAILS_CLOSE,
     });
 
-  }
+  }*/
 
 
   function handleScroll(e) {
@@ -114,27 +115,27 @@ function BurgerIngredients() {
 
 
         <div ref={bunMenuRef} >
-          <p className="text text_type_main-medium pr-1" style={{ 'margin-top': '24px'}} >Булки</p>
+          <p className="text text_type_main-medium pr-1" >Булки</p>
 
-          {bunIngredients.map((item) => (
-            <div className={styles.container_div_left} onClick={() => handleIngredientClick(item)} >
+          {bunIngredients.map((item, i) => (
+            <div className={styles.container_div_left}  key={i} onClick={() => handleIngredientClick(item)} >
               <div >
-                <IngredientCard item={{ item }} type="dndIngredient" ></IngredientCard>
+                <IngredientCard item={{ item }} key={Date.Now} type="dndIngredient" ></IngredientCard>
               </div>
             </div>
-          ))}
+          ))}  
         </div>
-
+       
         
                 
         <div ref={sauceMenuRef} >
 
           <p className="text text_type_main-medium pr-1"  >Соусы</p>
           
-          {sauceIngredients.map((item) => (
-            <div className={styles.container_div_left} style={{ 'margin-top': '24px'}} onClick={() => handleIngredientClick(item)}>
+          {sauceIngredients.map((item, i) => (
+            <div className={styles.container_div_left}  key={i}   onClick={() => handleIngredientClick(item)}>
               <div>
-                <IngredientCard item={{ item }} type="dndIngredient" id={{ item }}></IngredientCard>
+                <IngredientCard item={{ item }} type="dndIngredient" ></IngredientCard>
               </div>
             </div>
           ))}
@@ -142,12 +143,12 @@ function BurgerIngredients() {
 
 
         <div ref={mainMenuRef}>
-          <p className="text text_type_main-medium pr-1" style={{ 'margin-bottom': '24px'}} >Начинка</p>
+          <p className="text text_type_main-medium pr-1"  >Начинка</p>
 
-          {mainIngredients.map((item) => (
-            <div className={styles.container_div_left} style={{ 'margin-top': '24px'}}  onClick={() => handleIngredientClick(item)}>
+          {mainIngredients.map((item, i) => (
+            <div className={styles.container_div_left}   key={i}  onClick={() => handleIngredientClick(item)}>
               <div>
-                <IngredientCard item={{ item }} type="dndIngredient" ></IngredientCard>
+                <IngredientCard item={{ item }} type="dndIngredient"></IngredientCard>
               </div>
             </div>
           ))}

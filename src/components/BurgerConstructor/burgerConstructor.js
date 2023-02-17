@@ -13,6 +13,7 @@ import {
   BURGER_INGREDIENTS_INCREASECOUNTER, BURGER_INGREDIENT_CHANGE_BUN
 } from "../../services/actions/burgerIngredientsActions";
 import { useDrop } from "react-dnd";
+import { useNavigate } from 'react-router-dom';
 
 
 function BurgerConstructor() {
@@ -45,14 +46,14 @@ function BurgerConstructor() {
     if (dataIngredient.bun) { total += 2 * dataIngredients.filter((item) => item._id === dataIngredient.bun)[0].price };
 
     return total;
-  }, [dataIngredient, dataIngredients]);
+  }, [dataIngredients, dataIngredient]);
 
 
 
   const bunIngredients = useMemo(() => {
     return dataIngredients.filter((item) => item._id === dataIngredient.bun);
     // this.setState({price: sumPrice});
-  }, [dataIngredients]);
+  }, [dataIngredients, dataIngredient]);
 
 
   const sauseMainIngredients = useMemo(() => {
@@ -62,8 +63,14 @@ function BurgerConstructor() {
   }, [dataIngredient]);
 
 
+  const navigate = useNavigate();
   function handleOrderClick() {
-    postOrder();
+    // При нажатии на кнопку «Оформить заказ» неавторизованный пользователь должен переадресовываться на маршрут /login
+    //console.log(localStorage.getItem('refreshToken'));
+    if  (!((localStorage.getItem('refreshToken') === null ) || (localStorage.getItem('refreshToken') === '')))
+      postOrder();
+    else
+      navigate('/login');
     // console.log('handleOrderClick');
     // console.log(orderNumber);
     //setIsModalVisible(true);
@@ -167,7 +174,7 @@ function BurgerConstructor() {
 
           {(dataIngredient.items.length > 0) && (sauseMainIngredients.map((item, index) => (
             <>
-              <ConstructorCard item={item} key={item.sortedId} type="sausemain" index={index}></ConstructorCard>
+              <ConstructorCard item={item}  type="sausemain" index={index}></ConstructorCard>
             </>
 
           )))}

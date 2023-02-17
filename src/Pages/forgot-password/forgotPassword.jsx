@@ -8,8 +8,6 @@ import { useState } from "react";
 import { Link , useNavigate} from "react-router-dom";
 import styles from "./forgotPassword.module.css";
 import {useDispatch} from 'react-redux';
-import { restorePasswordData } from '../../services/reducers/userData';
-import {PASSWORD_REFRESH_SUCCESS, PASSWORD_REFRESH_ERROR} from '../../services/actions/userData';
 import utils from '../../Utils/utils';
 
 
@@ -23,27 +21,32 @@ export default function ForgotPasswordPage() {
 
     const dispatch = useDispatch();
 
-    const recreatePassword = () => {
+
+    const recreatePassword = (e) => {
         //console.log('recreatePassword');
-        if (emailValue.length > 0)
+        e.preventDefault();
+        if (emailValue.length > 0) {
             dispatch(utils.passwordReset(emailValue));
+            navigate ('/reset-password');
+        }
     }
 
     
+
  
     const  navigate= useNavigate();
     const userAuthorized = document.cookie.indexOf('accessToken') >=0;
     
     return (
-    
+        console.log('register' || document.cookie.indexOf('accessToken'))&&
       userAuthorized?(
-        navigate (-1)
+        navigate ('/login')
       )
       :
       (
     
     
-        <>
+        <form onSubmit={recreatePassword}>
             < div className={styles.container} >
                 <h1 className="text text_type_main-medium mb-6"> Восстановление пароля </h1>
                 <div className="mb-6">
@@ -55,10 +58,10 @@ export default function ForgotPasswordPage() {
                         value={emailValue}
                      
                      />
-                        
+                         
                 </div>
 
-                <Button type="primary" size="large" onClick= {() => recreatePassword()}>Восстановить</Button>
+                <Button htmltype="submit" type="primary" size="large" >Восстановить</Button>
 
 
 
@@ -66,7 +69,7 @@ export default function ForgotPasswordPage() {
                     <Link to="/login" >Войти</Link>
                 </p>
             </div>
-        </>
+        </form>
     )
     )
 };

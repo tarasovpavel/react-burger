@@ -21,10 +21,9 @@ import ProfilePage from '../../Pages/profile/profile';
 import ErrorPage from '../../Pages/errorPage/errorPage';
 import IngredientPage from '../../Pages/ingredientPage/ingredientPage';
 import IngredientDetail from '../IngredientDetail/ingredientDetail';
-import { ProtectedRoute } from '../ProtectedRoute/protectedRoute';
+import  ProtectedRoute  from '../ProtectedRoute/protectedRoute';
 import { INGREDIENTDETAILS_CLOSE } from "../../services/actions/ingredientDetailsActions";
 import { Modal } from '../Modal/modal';
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function App() {
@@ -34,7 +33,8 @@ function App() {
   const location = useLocation();
   const background = location.state && location.state.background;
 
-  const ingredientData = useSelector((store) => store.ingredientDetailData.item);
+
+//  const ingredientData = useSelector((store) => store.ingredientDetailData.item);
 
 
 
@@ -99,7 +99,7 @@ function App() {
 
 
       <AppHeader />
-      <Routes >
+      <Routes location={background || location}>
         <Route path="/" exact={true} element={
           <DndProvider backend={HTML5Backend}>
             {isLoad && (
@@ -131,11 +131,15 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />}></Route>
 
         <Route path="/reset-password" element={<ResetPasswordPage />}> </Route>
-        <Route path="/ingredients/:id" element={<IngredientPage />}> </Route>
-
+        <Route path="/ingredients/:id" element={<IngredientPage />}></Route>
+        <Route path="/profile" element={<ProtectedRoute element={<ProfilePage />} />} />
         <Route path="/error" element={<ErrorPage />}> </Route>
+        <Route path="*" element={<p>Path not resolved</p>} />
+      </Routes>
+      <Routes>
 
-        {ingredientData && background &&
+
+        {background &&
           <Route path="/ingredients/:id" element={
             <Modal header="Внимание!" onClose={handleIngredientClose} >
               <IngredientDetail />
@@ -145,7 +149,6 @@ function App() {
 
 
 
-        <Route path="/profile" element={<ProtectedRoute element={<ProfilePage />} />} />
 
       </Routes>
 
