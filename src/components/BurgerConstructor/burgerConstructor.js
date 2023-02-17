@@ -94,20 +94,7 @@ function BurgerConstructor() {
     //console.log(bunIngredients);
     //console.log(sauseMainIngredients);
     dispatch(utils.getOrderNumberPost(ingredientsList));
-    /*
-        utils
-          .getOrderNumberPost(ingredientsList)
-          .then((data) => {
-             // посылаем данные о номере заказа
-            dispatch({
-              type: ORDERDETAILS_SUCCESS,
-              item: data.order.number,
-            });
-          })
-          .catch(
-            console.log
-          );
-    */
+    
 
   }
 

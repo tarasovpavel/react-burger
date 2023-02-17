@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from 'prop-types';
-import styles from "./ingredient-detail.module.css";
+import styles from "./ingredientdetail.module.css";
 
 export default function IngredientDetail({ element }) {
     return (

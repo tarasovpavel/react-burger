@@ -4,18 +4,20 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burgerIngredients.module.css';
 //import imageSelected from '../../images/selected.jpg';
 import { useState, useMemo, useRef } from 'react';
-import { Modal } from '../Modal/modal';
-import { IngredientDetail } from '../IngredientDetail/ingredientDetail';
+
 import { useSelector, useDispatch } from "react-redux";
 import { INGREDIENTDETAILS_QUERY, INGREDIENTDETAILS_CLOSE } from "../../services/actions/ingredientDetailsActions";
 import { IngredientCard } from '../IngredientCard/ingredientCard';
+import { useNavigate } from "react-router-dom";
+
 
 function BurgerIngredients() {
 
 
   const dispatch = useDispatch();
   const dataIngredient = useSelector((store) => store.burgerIngredientsData.items);
-  const ingredientData = useSelector((store) => store.ingredientDetailData.item);
+  //const ingredientData = useSelector((store) => store.ingredientDetailData.item);
+  
 
   const [activeTab, setActiveTab] = useState("bun");
 
@@ -46,15 +48,19 @@ function BurgerIngredients() {
   const mainIngredients = useMemo(() => {
     return dataIngredient.filter((item) => item.type === "main");
   }, [dataIngredient]);
+  const navigate = useNavigate();
 
   function handleIngredientClick(item) {
     //setIngredient(item);
     //console.log('click');
-    dispatch({
+    
+    
+   dispatch({
       type: INGREDIENTDETAILS_QUERY,
       item: item
     });
-
+    
+    navigate("/ingredients/"||item._id);
 
   }
 
@@ -120,14 +126,15 @@ function BurgerIngredients() {
         </div>
 
         
-         
+                
         <div ref={sauceMenuRef} >
-          <p className="text text_type_main-medium pr-1"  style={{ 'margin-top': '24px'}} >Соусы</p>
+
+          <p className="text text_type_main-medium pr-1"  >Соусы</p>
           
           {sauceIngredients.map((item) => (
             <div className={styles.container_div_left} style={{ 'margin-top': '24px'}} onClick={() => handleIngredientClick(item)}>
               <div>
-                <IngredientCard item={{ item }} type="dndIngredient" ></IngredientCard>
+                <IngredientCard item={{ item }} type="dndIngredient" id={{ item }}></IngredientCard>
               </div>
             </div>
           ))}
@@ -148,15 +155,8 @@ function BurgerIngredients() {
 
 
       </div>
-      {ingredientData &&
-        <div style={{ overflow: 'hidden' }}>
-          {
-            <Modal header="Внимание!" onClose={handleIngredientClose} >
-              <IngredientDetail />
-            </Modal>
-          }
-        </div>
-      }
+      
+      
 
     </>
 
