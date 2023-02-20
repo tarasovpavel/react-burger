@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import './App';
-import styles from './App.module.css';
+import './app';
+import styles from './app.module.css';
 import BurgerIngredients from '../BurgerIngredients/burgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/burgerConstructor';
 import AppHeader from '../AppHeader/appHeader';
 import { Route, Routes, useLocation } from 'react-router-dom';
 //import data1 from  '../../Data/data';
-import utils from "../../Utils/utils";
-import { BURGER_INGREDIENTS_ERROR, BURGER_INGREDIENTS_SUCCESS } from "../../services/actions/burgerIngredientsActions";
-import { BURGER_CONSTRUCTOR_CLEAR } from "../../services/actions/burgerConstructorActions";
+
+
+
 
 import { useDispatch } from 'react-redux';
 import { DndProvider } from "react-dnd";
@@ -21,10 +21,12 @@ import ProfilePage from '../../Pages/profile/profile';
 import ErrorPage from '../../Pages/errorPage/errorPage';
 import IngredientPage from '../../Pages/ingredientPage/ingredientPage';
 import IngredientDetail from '../IngredientDetail/ingredientDetail';
-import  ProtectedRoute  from '../ProtectedRoute/protectedRoute';
+import ProtectedRoute from '../ProtectedRoute/protectedRoute';
 import { INGREDIENTDETAILS_CLOSE } from "../../services/actions/ingredientDetailsActions";
 import { Modal } from '../Modal/modal';
 import { useNavigate } from "react-router-dom";
+import NotFound from '../../Pages/NotFound/notFound';
+import { getRecommendedItems } from '../../services/actions/reduxFunctions';
 
 function App() {
   const [isLoad, setIsLoad] = useState(false);
@@ -34,7 +36,7 @@ function App() {
   const background = location.state && location.state.background;
 
 
-//  const ingredientData = useSelector((store) => store.ingredientDetailData.item);
+  //  const ingredientData = useSelector((store) => store.ingredientDetailData.item);
 
 
 
@@ -44,43 +46,14 @@ function App() {
 
   useEffect(() => {
     // Отправляем экшен-функцию
-    dispatch(getRecommendedItems())
+    dispatch(getRecommendedItems());
+    setIsLoad(true);
     // setIsLoad(true);
   }, [dispatch])
 
-  function getRecommendedItems() {
-    return function (dispatch) {
-      //   dispatch({
-      //     type: GET_RECOMMENDED_ITEMS_REQUEST
-      //   });
-      utils
-        .getIngredients()
-        .then(({ data }) => {
-          if (data) {
-            dispatch({
-              type: BURGER_INGREDIENTS_SUCCESS,
-              items: data.map(item => ({ ...item, counter: 0 })),
-
-            });
-            dispatch({
-              type: BURGER_CONSTRUCTOR_CLEAR,
-            });
-            setIsLoad(true)
-          } else {
-            dispatch({
-              type: BURGER_INGREDIENTS_ERROR
-            })
-          }
-
-        })
-        .catch(err => { console.log(err) })
-      //.finally(setIsLoad(true));
 
 
 
-    };
-
-  }
 
   function handleIngredientClose() {
     //setIngredient({});
@@ -89,6 +62,8 @@ function App() {
     });
     navigate(-1);
   }
+
+
 
 
 
@@ -126,31 +101,40 @@ function App() {
 
         <Route path="/login" element={<LoginPage />} />
 
-        <Route path="/register" element={<RegisterPage />} />
 
-        <Route path="/forgot-password" element={<ForgotPasswordPage />}></Route>
+        {/*<Route path="/register" element={<RegisterPage />} />*/}
 
-        <Route path="/reset-password" element={<ResetPasswordPage />}> </Route>
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+
+
+        <Route path="/reset-password" element={<ResetPasswordPage />}/>
+
         <Route path="/ingredients/:id" element={<IngredientPage />}></Route>
         <Route path="/profile" element={<ProtectedRoute element={<ProfilePage />} />} />
+        <Route path="/register" element={<ProtectedRoute element={<RegisterPage />} />} />
         <Route path="/error" element={<ErrorPage />}> </Route>
-        <Route path="*" element={<p>Path not resolved</p>} />
+        <Route path="*" element={<NotFound />} />
+
       </Routes>
-      <Routes>
 
 
-        {background &&
+
+
+      {background &&
+
+        <Routes>
           <Route path="/ingredients/:id" element={
             <Modal header="Внимание!" onClose={handleIngredientClose} >
               <IngredientDetail />
             </Modal>}>
           </Route>
-        }
+        </Routes>
+
+      }
 
 
 
 
-      </Routes>
 
 
     </>

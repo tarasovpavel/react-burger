@@ -39,7 +39,7 @@
     display: flex;
     text-decoration: none;
     align-items: right;
-    
+    list-style:none;
   }
  
   .active_link
@@ -52,4 +52,14 @@
     width: 480px;
     float:left;
     column-count:2;
+}
+
+.liststylenone
+{
+  list-style:none;
+}
+
+.floatright
+{
+  float: right;
 }

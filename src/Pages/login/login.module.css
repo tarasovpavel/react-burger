@@ -24,3 +24,9 @@
     float: right;
     flex: 50%;
   }
+.displayflex{
+
+  display: flex; 
+  flex-Direction: column;
+}
+  

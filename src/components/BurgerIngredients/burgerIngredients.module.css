@@ -40,3 +40,8 @@
     float:right;
     position: relative;
   }
+
+  .displayFlex
+  {
+    display: flex;
+  }

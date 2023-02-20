@@ -12,3 +12,11 @@
   width: 10px;
   background-color: rgb(89, 57, 131);
 }
+
+.floatright{
+float:  right ;
+}
+
+.overflowHidden{
+overflow: hidden;
+}

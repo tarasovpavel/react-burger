@@ -5,7 +5,7 @@ import styles from "./ingredientdetail.module.css";
 export default function IngredientDetail({ element }) {
     return (
         <>
-            <img src={element.image} className={styles.image} />
+            <img src={element.image} className={styles.image} с />
             <p className=" text text_type_main-medium pt-4 pb-8">
                 {element.name}
             </p>
