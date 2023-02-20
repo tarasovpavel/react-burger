@@ -16,3 +16,15 @@
     height: 600px;
     opacity: 100%;
 }
+
+.header {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    width: 100%;
+    float:right;
+  }
+  
+  .overflowHidden {
+  overflow: hidden;
+}

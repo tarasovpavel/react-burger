@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import styles from "./login.module.css";
-import utils from '../../Utils/utils';
+import { authorization } from '../../services/actions/reduxFunctions';
 
 
 
@@ -11,8 +11,9 @@ function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [e_MailValue, setE_MailValue] = React.useState('');
+  const [eMailValue, setE_MailValue] = React.useState('');
   const [passwordValue, setPasswordValue] = React.useState('');
+  const [userAuthorized, setUserAuthorized] = React.useState(false);
 
   const onChange = e => {
     setE_MailValue(e.target.value)
@@ -23,13 +24,13 @@ function LoginPage() {
   }
 
   const onButtonClick = async (e) => {
-    //console.log('onSubmit');
-    if ((e_MailValue.length > 0) && (passwordValue.length > 0)) {
+    console.log('onSubmit');
+    if ((eMailValue.length > 0) && (passwordValue.length > 0)) {
       //localStorage.setItem('refreshToken', '');
       e.preventDefault();
-      dispatch(utils.Authorization(e_MailValue, passwordValue));
+      dispatch(authorization(eMailValue, passwordValue));
 
-     // console.log(localStorage.getItem('refreshToken'));
+      // console.log(localStorage.getItem('refreshToken'));
       if (localStorage.getItem('refreshToken') !== '') {
         //console.log(localStorage.getItem('refreshToken'));
         navigate("/");
@@ -37,14 +38,18 @@ function LoginPage() {
     }
   }
 
-  const userAuthorized = document.cookie.indexOf('accessToken') >= 0;
 
-  return (console.log('авторизация') &&
+  useEffect(() => {
+    //setUserAuthorized(document.cookie.indexOf('accessToken') >= 0)
+    if (document.cookie.indexOf('accessToken') >= 0) navigate("/");
 
-    userAuthorized ? (
-    navigate(-1)
-  )
-    :
+  }, []);
+
+
+
+  return (
+
+
     (
       <form onSubmit={onButtonClick}>
         < div className={styles.container} >
@@ -56,7 +61,7 @@ function LoginPage() {
               type={"text"}
               placeholder={"E-mail"}
               onChange={onChange}
-              value={e_MailValue}
+              value={eMailValue}
               size={"default"}
               extraClass="mb-2"
 
@@ -64,7 +69,7 @@ function LoginPage() {
           </div>
 
 
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div className={styles.displayflex}>
             <PasswordInput
               onChange={onPasswordChange}
               value={passwordValue}
@@ -74,7 +79,7 @@ function LoginPage() {
 
           </div>
 
-          <Button htmltype="submit" type="primary" size="large" >Войти</Button>
+          <Button htmlType="submit" type="primary" size="large" >Войти</Button>
 
           <p className="text text_type_main-default text_color_inactive mt-20">Вы — новый пользователь?
             <Link to={"/register"} > Зарегистрироваться</Link>

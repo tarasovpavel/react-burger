@@ -6,6 +6,8 @@
     display: flex;
     align-items: center;
     width: 1200px;
+    top:40px;
+
   }
   
   .menu {
@@ -59,6 +61,5 @@
     width: 30%;
     justify-content: end;
   }
-  
   
   
