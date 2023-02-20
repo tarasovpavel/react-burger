@@ -17,6 +17,9 @@ class Utils {
   
 
 
+  deleteCookie (name) {
+    document.cookie = `${name}=;Expires=${new Date(0).toUTCString()}`;
+  }
 
   setCookie(name, value, props) {
     props = props || {};
@@ -51,7 +54,7 @@ class Utils {
 
 
   _handleResponse(response) {
-   // console.log(response);
+    console.log(response);
     return response.ok ? 
             response.json() : 
             Promise.reject("Error!!!");
@@ -107,11 +110,11 @@ return fetch(this._orderNumberURL, {
 }
 
 
-passwordReset(EMail)
+passwordReset(email)
 {
 
   return async (dispatch) => {
-    const jsonBodyRequest = { EMail };
+    const jsonBodyRequest = { email };
 
    try{
         const answer =await fetch(password_ResetPath, {
@@ -120,15 +123,16 @@ passwordReset(EMail)
             body: JSON.stringify(jsonBodyRequest)
         })
         .then((this._handleResponse))
+        .then((result) => 
+        {
+          dispatch({
+            type: PASSWORD_REFRESH_SUCCESS,
+            message: result.message
+          });
+        })
         .catch(error => {
             console.log(error);
         });
-        //console.log(answer);
-        dispatch({
-          type: PASSWORD_REFRESH_SUCCESS,
-          message: answer.message
-        });
-      
     }
     catch (err) {
       dispatch({
@@ -153,23 +157,25 @@ createNewPassword(password, token)
             body: JSON.stringify(jsonBodyRequest)
         })
         .then((this._handleResponse))
+        .then((result) => 
+        {
+          if (result.success=== true)
+          {
+          dispatch({
+            type: PASSWORD_NEW_SUCCESS,
+            message: result.message
+          });
+          }
+          else
+          {
+            dispatch({
+              type: PASSWORD_NEW_ERROR
+          });
+          }          
+        })
         .catch(error => {
             console.log(error);
         });
-        console.log(answer);
-        if (answer.success=== true)
-        {
-        dispatch({
-          type: PASSWORD_NEW_SUCCESS,
-          message: answer.message
-        });
-        }
-        else
-        {
-          dispatch({
-            type: PASSWORD_NEW_ERROR
-        });
-        }
     }
     catch (err) {
       dispatch({
@@ -179,43 +185,46 @@ createNewPassword(password, token)
     }  
   };
 
-registerUser = (name, email, password) => {
+registerUser = (email, password, name) => {
   return async (dispatch) => {
     const jsonBodyRequest = {email, password, name};
-    console.log(jsonBodyRequest);
-   try{
-        const answer =await fetch(user_RegisterPath, {
+   // console.log(jsonBodyRequest);
+   // console.log(user_RegisterPath);
+   try{       const answer = fetch(user_RegisterPath, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+              'Accept': 'application/json',
+              'Content-Type': 'application/json' },
             body: JSON.stringify(jsonBodyRequest)
         })
         .then((this._handleResponse))
+        .then((result) => 
+        {
+          if (result.success=== true)
+          {
+                dispatch({
+                  type: USER_REGISTER_SUCCESS,
+                  userName: result.name,
+                  password: result.password,
+                  email: result.email,
+                });
+  
+                localStorage.setItem('refreshToken', result.refreshToken);
+                this.setCookie('accessToken', result.accessToken.split('Bearer ')[1]);    
+                
+              //  console.log(USER_REGISTER_SUCCESS);
+          }
+          else
+          {
+            dispatch({
+              type: USER_REGISTER_ERROR
+          });
+          }
+        }       )
         .catch(error => {
             console.log(error);
         });
-        console.log(answer);
-        if (answer.success=== true)
-        {
-              dispatch({
-                type: USER_REGISTER_SUCCESS,
-                userName: name,
-                password: password,
-                email: email,
-                accessToken: answer.accessToken,
-                refreshToken: answer.refreshToken,
-              });
-
-              localStorage.setItem('refreshToken', answer.refreshToken);
-              this.setCookie('accessToken', answer.accessToken);    
-              
-              console.log(USER_REGISTER_SUCCESS);
-        }
-        else
-        {
-          dispatch({
-            type: USER_REGISTER_ERROR
-        });
-        }
+        
     }
     catch (err) {
       dispatch({
@@ -232,42 +241,46 @@ registerUser = (name, email, password) => {
       const jsonBodyRequest = {email, password};
       //console.log(jsonBodyRequest);
      try{
-          const answer =await fetch(user_LoginPath, {
+          const answer = fetch(user_LoginPath, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(jsonBodyRequest)
           })
-          .then((this._handleResponse));
-          
-          console.log(answer);
-          if (answer.success=== true)
+          .then((this._handleResponse))
+          .then((result) => 
           {
-                dispatch({
-                  type: USER_LOGIN_SUCCESS,
-                  password: password,
-                  email: email,
-                  accessToken: answer.accessToken,
-                  refreshToken: answer.refreshToken,
-                });
-  
-                localStorage.setItem('refreshToken', answer.refreshToken);
-                this.setCookie('accessToken', answer.accessToken);    
-                
-               // console.log(localStorage.getItem('refreshToken'));
-                
-          }
-          else
-          {
-            dispatch({
-              type: USER_LOGIN_ERROR
-          });
-          }
+            if (result.success=== true)
+            {
+                  dispatch({
+                    type: USER_LOGIN_SUCCESS,
+                    //password: result.user.password,
+                    email: result.user.email,
+                    userName: result.user.name,
+                    //accessToken: answer.accessToken,
+                    //refreshToken: answer.refreshToken,
+                  });
+    
+                  localStorage.setItem('refreshToken', result.refreshToken);
+                  this.setCookie('accessToken', result.accessToken.split('Bearer ')[1]);     
+                  
+                // console.log(localStorage.getItem('refreshToken'));
+                  
+            }
+            else
+            {
+              dispatch({
+                type: USER_LOGIN_ERROR
+            });
+            console.log('Authorization ERROR');
+            }
+          })
       }
       catch (err) {
         dispatch({
             type: USER_LOGIN_ERROR
         });
-        console.log(err);
+        console.log('Authorization ERROR');
+        //console.log(err);
     }
       }  
     };
@@ -285,100 +298,83 @@ updateToken = () => {
                 'Content-Type': 'application/json'},
               body: JSON.stringify(jsonBodyRequest)
           })
-          .then((this._handleResponse));
-
-          if (answer.success=== true)
+          .then((this._handleResponse))
+          .then((result) => 
           {
-            dispatch({
-              type: TOKEN_REFRESH_SUCCESS,
-              accessToken: answer.accessToken,
-            });
+              if (result.success=== true)
+              {
+                dispatch({
+                  type: TOKEN_REFRESH_SUCCESS,
+                  //accessToken: result.accessToken,
+                });
 
-            localStorage.setItem('refreshToken', answer.refreshToken);
-            this.setCookie('accessToken', answer.accessToken); 
-          }
+                
+                this.setCookie('accessToken', result.accessToken.split('Bearer ')[1]);    
+              }
+              else
+              {
+                dispatch({
+                  type: TOKEN_REFRESH_ERROR
+              });
+              }
+          })
         }
       }
       catch (err){
         dispatch({
           type: TOKEN_REFRESH_ERROR
       });
+        console.log(err);
 
       };
     }
 }
 
 
-logOut = () => {
-  return async (dispatch) => {
-  const jsonBodyRequest = {token: localStorage.getItem('refreshToken')};
-  try{
-        return async (dispatch) => {
-          const answer = fetch(user_LogoutPath, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'},
-              body: JSON.stringify(jsonBodyRequest)
-          })
-          .then((this._handleResponse));
-
-          if (answer.success=== true)
-          {
-            dispatch({
-              type: USER_EXIT_SUCCESS,
-              
-            });
-
-            localStorage.setItem('refreshToken', '');
-            this.setCookie('accessToken', ''); 
-          }
-        }
-      }
-      catch{
-        dispatch({
-          type: USER_EXIT_ERROR
-      });
-
-      }
-    }
-}
 
 
 setIngredientData = (item) => {
-  {
+  
         return async (dispatch) => {
           
     dispatch({
       type: INGREDIENTDETAILS_QUERY,
       item: item
     });
-          }}}
+          }}
 
 
 
 
-getrequestUserData = () => {
+getRequestUserData = () => {
   return async (dispatch) => {
  
   try{
-        return async (dispatch) => {
-          const answer = await fetch(user_DataPath, {
+      //console.log(this.getCookie('accessToken'));
+      let token = this.getCookie('accessToken');
+
+      //console.log(token);
+        {
+          const answer = fetch(user_DataPath, {
               method: 'GET',
               headers: {
-                  'Content-Type': 'application/json',
-                  'authorization': this.getCookie('accessToken')}, 
+                  'Content-Type': 'application/json;charset=utf-8',
+                  'authorization': 'Bearer ' + token}, 
               //body: JSON.stringify(jsonBodyRequest)
           })
-          .then((this._handleResponse));
-
-          if (answer.success=== true)
+          .then((this._handleResponse))
+          .then((result) => 
           {
-            dispatch({
-              type: USER_UPDATE_DATA_SUCCESS,
-              email: answer.user.email,
-              login: answer.user.name,
-            });
-          }
+              if (result.success=== true)
+              {
+              //  console.log(result);
+                dispatch({
+                  type: USER_UPDATE_DATA_SUCCESS,
+                  email: result.user.email,
+                  userName: result.user.name,
+                });
+              }
+           })
         }
       }
       catch{
@@ -393,29 +389,42 @@ getrequestUserData = () => {
 
 updateUserData = (email, name, password) => {
   return async (dispatch) => {
-  const jsonBodyRequest = {email, name, password};
+  let jsonBodyRequest ;
+  if (password !== undefined) jsonBodyRequest = {email, name, password}
+  else jsonBodyRequest = {email, name};
+  let token = this.getCookie('accessToken');
+
+  console.log(token);
   //console.log(jsonBodyRequest);
   try{
-        return async (dispatch) => {
+        {
           const answer = fetch(user_DataPath, {
               method: 'PATCH',
               headers: {
                 'Content-Type': 'application/json',  
-                Authorization: this.getCookie('accessToken')
+                'authorization': 'Bearer ' + token
                   }, 
               body: JSON.stringify(jsonBodyRequest)
           })
           .then((this._handleResponse))
-          
-          console.log(answer);
-          if (answer.success=== true)
+          .then((result) => 
           {
-            dispatch({
-              type: USER_UPDATE_DATA_SUCCESS,
-              email: answer.user.email,
-              login: answer.user.name
-            });
-          }
+          //  console.log(result);
+            if (result.success=== true)
+            {
+              dispatch({
+                type: USER_UPDATE_DATA_SUCCESS,
+                email: result.user.email,
+                userName: result.user.name
+              });
+            }
+            else
+            {
+              dispatch({
+                type: USER_UPDATE_DATA_ERROR,
+              })
+            }
+          })
         }
       }
       catch{
@@ -429,12 +438,68 @@ updateUserData = (email, name, password) => {
 }
 
 
+
+logOut () {
+  return async (dispatch) => {
+  const jsonBodyRequest = {token: localStorage.getItem('refreshToken')};
+  this.deleteCookie('accessToken'); 
+  localStorage.removeItem('refreshToken');
+  //console.log(localStorage.getItem('refreshToken'));
+  try{
+         {
+          const answer = await fetch(user_LogoutPath, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'},
+              body: JSON.stringify(jsonBodyRequest)
+          })
+          .then((this._handleResponse))
+          .then((result) => 
+          {
+            //console.log(result);
+            if (result.success=== true)
+            {
+              dispatch({
+                type: USER_EXIT_SUCCESS,
+                
+              });
+
+              
+              this.deleteCookie('accessToken'); 
+              localStorage.removeItem('refreshToken');
+            }
+            else{
+              dispatch({
+                type: USER_EXIT_ERROR
+              });
+              
+              this.deleteCookie('accessToken'); 
+              localStorage.removeItem('refreshToken');
+            }
+          })
+        }
+      }
+      catch{
+        dispatch({
+          type: USER_EXIT_ERROR
+      });
+      
+      this.deleteCookie('accessToken'); 
+      localStorage.removeItem('refreshToken');
+      }
+    }
 }
+
+
+
+}
+
 
 
 
 const utils = new Utils(dataPath, orderNumberPath);
 export default utils;
+
 
 
 
