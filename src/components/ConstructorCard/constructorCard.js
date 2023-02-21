@@ -8,7 +8,7 @@ import { BURGER_INGREDIENTS_DECREASECOUNTER } from "../../services/actions/burge
 import { useRef } from "react";
 
 
-export function ConstructorCard({ item,  type, index }) {
+export function ConstructorCard({ item, type, index }) {
   const dispatch = useDispatch();
   const ref = useRef(null);
   const refConstructor = useRef(null);
@@ -122,7 +122,7 @@ export function ConstructorCard({ item,  type, index }) {
             price={item.price}
             thumbnail={item.image_mobile}
             isLocked={true}
-           
+
             type="bottom" />
         }
         {
@@ -131,7 +131,7 @@ export function ConstructorCard({ item,  type, index }) {
             text={item.data.name}
             price={item.data.price}
             thumbnail={item.data.image_mobile}
-            
+
             handleClose={() => handleDeleteClick(item.sortedId, item.data._id)}
           />
         }

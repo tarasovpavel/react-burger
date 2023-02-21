@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import ModalOverlay from "../ModalOverlay/modalOverlay";
 import styles from './modal.module.css';
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const modalRoot = document.getElementById("modal");
 
@@ -29,16 +30,25 @@ export function Modal(props) {
   // Возвращаем ReactDOM.createPortal,
   // который поместит дочерние элементы в modalRoot
   return ReactDOM.createPortal(
-    <div style={{ overflow: 'hidden' }}>
-    <ModalOverlay onClose={props.onClose} >
+    <div className={styles.overflowHidden}>
+      <ModalOverlay onClose={props.onClose} />
       <>
+
         <div className={styles.modal}>
-          {props.children}
+          <div>
+            <div className={styles.header}>
+              <CloseIcon onClick={props.onClose} type="primary" />
+            </div>
+
+            <div>
+              {props.children}
+            </div>
+          </div>
         </div>
-        <p />
+
 
       </>
-    </ModalOverlay>
+
     </div>
     ,
     modalRoot

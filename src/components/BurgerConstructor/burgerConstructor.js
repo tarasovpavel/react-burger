@@ -14,6 +14,7 @@ import {
 } from "../../services/actions/burgerIngredientsActions";
 import { useDrop } from "react-dnd";
 import { useNavigate } from 'react-router-dom';
+import { v4 } from 'uuid';
 
 
 function BurgerConstructor() {
@@ -66,8 +67,9 @@ function BurgerConstructor() {
   const navigate = useNavigate();
   function handleOrderClick() {
     // При нажатии на кнопку «Оформить заказ» неавторизованный пользователь должен переадресовываться на маршрут /login
-    //console.log(localStorage.getItem('refreshToken'));
-    if  (!((localStorage.getItem('refreshToken') === null ) || (localStorage.getItem('refreshToken') === '')))
+    console.log(localStorage.getItem('refreshToken'));
+    
+    if (((document.cookie.indexOf('accessToken') >= 0)  && (localStorage.getItem('refreshToken') !== '')))
       postOrder();
     else
       navigate('/login');
@@ -101,7 +103,7 @@ function BurgerConstructor() {
     //console.log(bunIngredients);
     //console.log(sauseMainIngredients);
     dispatch(utils.getOrderNumberPost(ingredientsList));
-    
+
 
   }
 
@@ -125,7 +127,7 @@ function BurgerConstructor() {
     //const { _id, type } = data;
 
     //console.log(data);
-    let datenow = Date.now();
+    let datenow = v4();
     (data.type !== 'bun') &&
       dispatch({
         type: BURGER_CONSTRUCTOR_ADD_INGREDIENT,
@@ -155,40 +157,42 @@ function BurgerConstructor() {
     < div ref={dropTargetRef} >
       <p className="text text_type_main-medium pt-20 pb-10"> </p>
 
-      <div  >
+      <div >
         {/*Если bun-пустой, то рисуем картинки))*/}
-        {!(dataIngredient.bun) &&
-          <ConstructorCard item={null} type="bunUp"></ConstructorCard>}
+        <div >
+          {!(dataIngredient.bun) &&
+            <ConstructorCard item={null} type="bunUp" key={v4()}></ConstructorCard>}
+        </div>
+        <div >
+          {/*Вставляем одну булку- верх, а потом и низ))*/}
+          {(dataIngredient.bun) &&
+            <ConstructorCard item={bunIngredients[0]} type="bunUp" key={v4()} ></ConstructorCard>}
+        </div>
 
-        {/*Вставляем одну булку- верх, а потом и низ))*/}
-        {(dataIngredient.bun) &&
-          <ConstructorCard item={bunIngredients[0]} type="bunUp" ></ConstructorCard>}
+        <div className={`${styles.container} custom-scroll mt-10 pr-2`}  key={v4()}>
 
-
-        <div className={`${styles.container} custom-scroll mt-10 pr-2` }  >
-         
           {/*Если sauseMain-пустой, то рисуем приглашение))*/}
 
           {(dataIngredient.items.length === 0) &&
-            <ConstructorCard item={null} type="sausemain" ></ConstructorCard>}
+            <ConstructorCard item={null} key={v4()} type="sausemain" ></ConstructorCard>}
 
           {(dataIngredient.items.length > 0) && (sauseMainIngredients.map((item, index) => (
-            <>
-              <ConstructorCard item={item}  type="sausemain" index={index}></ConstructorCard>
-            </>
+            <ConstructorCard item={item} key={v4()} type="sausemain" index={index}></ConstructorCard>
 
           )))}
         </div>
         {/*Вставляем одну булку- верх, а потом и низ))*/}
-        {(dataIngredient.bun) &&
-          <ConstructorCard item={bunIngredients[0]} type="bunDown" ></ConstructorCard>
-        }
+        <div key={v4()}>
+          {(dataIngredient.bun) &&
+            <ConstructorCard item={bunIngredients[0]} type="bunDown" key={v4()}  ></ConstructorCard>
+          }
+        </div>
 
       </div>
 
 
 
-      <div style={{ float: 'right' }}>
+      <div className={styles.floatright}>
 
         <p className="text text_type_main-default pr-4 pt-20 pb-10">
 
@@ -200,7 +204,7 @@ function BurgerConstructor() {
         </p>
       </div>
       {orderNumber &&
-        <div style={{ overflow: 'hidden' }}>
+        <div className={styles.overflowHidden}>
           {
             <Modal header="Внимание!" onClose={handleOrderClose} >
               <OrderDetails />

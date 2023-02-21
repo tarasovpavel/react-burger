@@ -1,6 +1,6 @@
 import { useDrag } from "react-dnd";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-
+import styles from './ingredientCard.module.css';
 
 export function IngredientCard({ item, type, counter }) {
 
@@ -10,7 +10,7 @@ export function IngredientCard({ item, type, counter }) {
   });
 
   return (
-    <div ref={dragRef} style={{ position: 'relative' }}>
+    <div ref={dragRef} className={styles.stylerelative}>
       <img src={item.item.image} alt={item.item.name} />
       <div >
         <p className="text text_type_main-default pr-1">{item.item.price + " "}

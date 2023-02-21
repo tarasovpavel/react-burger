@@ -1,18 +1,18 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./profile.module.css";
-import utils from '../../Utils/utils';
+import { updateUserData, logOut, getRequestUserData } from '../../services/actions/reduxFunctions';
 
 function ProfilePage() {
   const dispatch = useDispatch();
- 
- 
+
+
 
   let userData = useSelector((store) => store.userData);
 
- 
+
 
   const [userDataChanged, setUserDataChanged] = React.useState(false);
 
@@ -33,7 +33,7 @@ function ProfilePage() {
   const navigate = useNavigate();
   function onLogout(e) {
     e.preventDefault();
-    dispatch(utils.logOut());
+    dispatch(logOut());
     navigate('/');
   }
 
@@ -53,27 +53,37 @@ function ProfilePage() {
 
   const onSave = (e) => {
     //сохраняем данные на сервер Сохраняем данные  в стор
-   // console.log('onSave');
-    
-    dispatch(utils.updateUserData(eMailValue, nameValue, passwordValue));
+    // console.log('onSave');
+
+    dispatch(updateUserData(eMailValue, nameValue, passwordValue));
     setUserDataChanged(false);
   }
 
-  const onButtonClick = (e) =>{
+  const onButtonClick = (e) => {
     e.preventDefault();
-    e.nativeEvent.submitter.name==="Reset"? onReset() : onSave();
+    e.nativeEvent.submitter.name === "Reset" ? onReset() : onSave();
   }
 
 
   useEffect(() => {
+    //setUserAuthorized(document.cookie.indexOf('accessToken') >= 0)
+    if (document.cookie.indexOf('accessToken') < 0) navigate("/");
+
+  }, []);
+
+
+
+  useEffect(() => {
     // Отправляем экшен-функцию
-    
-    dispatch(utils.getRequestUserData());
-   // console.log(userData);
-   // console.log(userData.userName);
+
+    dispatch(getRequestUserData());
+    // console.log(userData);
+    // console.log(userData.userName);
+
+
     document.getElementById('name').value = (userData.userName !== undefined) ? userData.userName : '';
     document.getElementById('email').value = userData.email;
-    
+
   }, [])
 
 
@@ -89,14 +99,14 @@ function ProfilePage() {
         < div className={styles.container_div_left} >
           <nav>
             <ul className={`text text_type_main-medium text_color_inactive `} >
-              <li className={`mb-10` } style={{"list-style":"none"}}>
+              <li className={`mb-10 ${styles.liststylenone}`}>
                 <NavLink
                   className={`text text_type_main-medium text_color_inactive mb-6 ${styles.link}`}
                   to={'/profile'}
                 >Профиль
                 </NavLink>
               </li>
-              <li className={`mb-10 `}  style={{"list-style":"none"}}>
+              <li className={`mb-10 ${styles.liststylenone}`}>
                 <NavLink
                   className={`text text_type_main-medium text_color_inactive mb-6 ${styles.link}`}
 
@@ -104,7 +114,7 @@ function ProfilePage() {
                 >История заказов
                 </NavLink>
               </li>
-              <li className={`mb-10 `}  style={{"list-style":"none"}}>
+              <li className={`mb-10 ${styles.liststylenone}`}>
                 <NavLink
                   className={`text text_type_main-medium text_color_inactive ${styles.link}`}
                   to={'/'} onClick={onLogout}
@@ -129,8 +139,8 @@ function ProfilePage() {
               placeholder={"Имя"}
               name={"name"}
               onChange={onNameChange}
-              icon={'EditIcon'} 
-              value={nameValue ? nameValue : ''}
+              icon={'EditIcon'}
+              value={nameValue !== undefined ? nameValue : ''}
               id={"name"}
             />
           </div>
@@ -140,8 +150,8 @@ function ProfilePage() {
               placeholder={"E-mail"}
               name={"email"}
               onChange={onEMailChange}
-              icon={'EditIcon'} 
-              value={eMailValue ? eMailValue : ''}
+              icon={'EditIcon'}
+              value={eMailValue !== undefined ? eMailValue : ''}
               id={"email"}
             />
 
@@ -152,19 +162,19 @@ function ProfilePage() {
               type={"password"}
               name={'passwordValue'}
               extraClass="mb-4"
-              icon={'EditIcon'} 
-              value={passwordValue}
+              icon={'EditIcon'}
+              value={passwordValue !== undefined ? passwordValue : ''}
               id={"password"}
             />
           </div>
           {
             (userDataChanged) && (
               <div className={`mb-10 ${styles.buttons}  `}  >
-                <Button name="Reset" htmltype="submit" type="secondary" size="medium" >
+                <Button name="Reset" htmlType="submit" type="secondary" size="medium" >
                   Отменить
                 </Button>
                 <p></p>
-                <Button name="Save" htmltype="submit" type="primary" size="medium" style={{ float: "right" }} >
+                <Button name="Save" htmlType="submit" type="primary" size="medium"  >
                   Сохранить
                 </Button>
               </div>)
