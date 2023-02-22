@@ -3,7 +3,7 @@ import {
     ORDERDETAILS_ERROR,
     ORDERDETAILS_DELETE
   
-  } from '../actions/orderDetailsActions';
+  } from '../actions/order-details-actions';
   
    
 

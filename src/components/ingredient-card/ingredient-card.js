@@ -1,6 +1,8 @@
 import { useDrag } from "react-dnd";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from './ingredientCard.module.css';
+import styles from './ingredient-card.module.css';
+import PropTypes from 'prop-types';
+import { ingredientType } from "../../types";
 
 export function IngredientCard({ item, type, counter }) {
 
@@ -29,4 +31,10 @@ export function IngredientCard({ item, type, counter }) {
   );
 };
 
+
+IngredientCard.propTypes = {
+  item: ingredientType.isRequired,
+  type: PropTypes.string.isRequired,
+  counter: PropTypes.number,
+};
 

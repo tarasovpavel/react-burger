@@ -6,7 +6,7 @@ import {
     BURGER_CONSTRUCTOR_SORT,
     BURGER_CONSTRUCTOR_MOVE,
     BURGER_CONSTRUCTOR_CLEAR,
-  } from '../actions/burgerConstructorActions';
+  } from '../actions/burger-constructor-actions';
   
    
   

@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import styles from "../reset-password/resetPassword.module.css";
+import styles from "../reset-password/reset-password.module.css";
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import {createNewPassword} from '../../services/actions/reduxFunctions';
+import { createNewPassword } from '../../services/actions/redux-functions';
+import utils from '../../Utils/utils';
 
 export default function ResetPasswordPage() {
     const [password, setPassword] = React.useState('');
@@ -22,7 +23,7 @@ export default function ResetPasswordPage() {
 
     const createMyNewPassword = (e) => {
         e.preventDefault();
-              console.log(token);
+        console.log(token);
         if ((token.length > 0)) {
             dispatch(createNewPassword(password, token));
             navigate('/');
@@ -31,10 +32,11 @@ export default function ResetPasswordPage() {
 
     useEffect(() => {
         //setUserAuthorized(document.cookie.indexOf('accessToken') >= 0)
-        if (document.cookie.indexOf('accessToken') >= 0) navigate("/");
-   //     if (!userData.requestChangePassword)
-     //       navigate('/');
-    }, []);
+        console.log(userData);
+        //if (!userData.requestChangePassword )  navigate(-1);
+    
+      }, []);
+    
 
 
     return (
@@ -74,7 +76,7 @@ export default function ResetPasswordPage() {
                         </div>
                         <div >
                             <span className="text text_type_main-default text_color_inactive">Вспомнили пароль?
-                                <Link to="/register" className="text text_type_main-default pl-2">Войти</Link>
+                                <Link to="/login" className="text text_type_main-default pl-2">Войти</Link>
                             </span>
                         </div>
                     </div>

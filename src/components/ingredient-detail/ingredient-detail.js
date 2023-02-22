@@ -1,10 +1,10 @@
 import React from "react";
-import styles from "./ingredientDetail.module.css";
+import styles from "./ingredient-detail.module.css";
 import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom'
 
 
-export default function IngredientDetail(props) {
+export default function IngredientDetail() {
 
     let dataIngredient = useSelector((store) => store.ingredientDetailData.item);
     const dataIngredients = useSelector((store) => store.burgerIngredientsData.items);
@@ -17,7 +17,9 @@ export default function IngredientDetail(props) {
     return (
         dataIngredient &&
         <div>
-
+            <p className=" text text_type_main-large pt-4 pb-8" >
+                Детали ингредиента
+            </p>
             <p>
                 <img src={dataIngredient.image_large} className={styles.image} alt={dataIngredient.name} />
             </p>

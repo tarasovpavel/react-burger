@@ -1,4 +1,4 @@
-import styles from "./ingredientPage.module.css";
+import styles from "./ingredient-page.module.css";
 
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -23,7 +23,7 @@ export default function IngredientPage() {
                 Детали ингредиента
             </p>
             <p>
-                <img src={mainIngredients[0].image} className={styles.image} alt={mainIngredients[0].name} />
+                <img src={mainIngredients[0].image_large} className={styles.image} alt={mainIngredients[0].name} />
             </p>
             <p className=" text text_type_main-medium pt-4 pb-8" >
                 {mainIngredients[0].name}

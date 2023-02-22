@@ -1,13 +1,13 @@
 import React from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 //import data from '../../Data/data.json';
-import styles from './burgerIngredients.module.css';
+import styles from './burger-ingredients.module.css';
 //import imageSelected from '../../images/selected.jpg';
 import { useState, useMemo, useRef } from 'react';
 
 import { useSelector, useDispatch } from "react-redux";
-import { INGREDIENTDETAILS_QUERY } from "../../services/actions/ingredientDetailsActions";
-import { IngredientCard } from '../IngredientCard/ingredientCard';
+import { INGREDIENTDETAILS_QUERY } from "../../services/actions/ingredient-details-actions";
+import { IngredientCard } from '../ingredient-card/ingredient-card';
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
@@ -109,9 +109,9 @@ function BurgerIngredients() {
           <p className="text text_type_main-medium pr-1" >Булки</p>
 
           {bunIngredients.map((item, i) => (
-            <div className={styles.container_div_left} key={i} onClick={() => handleIngredientClick(item)} >
+            <div className={styles.container_div_left} key={item._id} onClick={() => handleIngredientClick(item)} >
               <div >
-                <IngredientCard item={{ item }} key={Date.Now} type="dndIngredient" ></IngredientCard>
+                <IngredientCard item={{ item }} type="dndIngredient" ></IngredientCard>
               </div>
             </div>
           ))}

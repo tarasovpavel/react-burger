@@ -4,7 +4,7 @@ import {
     INGREDIENTDETAILS_QUERY,
     INGREDIENTDETAILS_CLOSE,
     INGREDIENTDETAILS_ERROR
-  } from '../actions/ingredientDetailsActions';
+  } from '../actions/ingredient-details-actions';
   
 
   

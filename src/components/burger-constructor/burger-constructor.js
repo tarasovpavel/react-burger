@@ -1,17 +1,17 @@
 import React from 'react';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './burgerConstructor.module.css';
+import styles from './burger-constructor.module.css';
 import { useMemo } from 'react';
-import { Modal } from '../Modal/modal';
-import { OrderDetails } from '../OrderDetails/orderDetails';
-import { ConstructorCard } from '../ConstructorCard/constructorCard';
+import { Modal } from '../modal/modal';
+import { OrderDetails } from '../order-details/order-details';
+import { ConstructorCard } from '../constructor-card/constructor-card';
 import utils from "../../Utils/utils";
 import { useSelector, useDispatch } from "react-redux";
-import { ORDERDETAILS_DELETE } from "../../services/actions/orderDetailsActions";
-import { BURGER_CONSTRUCTOR_ADD_INGREDIENT, BURGER_CONSTRUCTOR_CHANGE_BUN } from "../../services/actions/burgerConstructorActions";
+import { ORDERDETAILS_DELETE } from "../../services/actions/order-details-actions";
+import { BURGER_CONSTRUCTOR_ADD_INGREDIENT, BURGER_CONSTRUCTOR_CHANGE_BUN } from "../../services/actions/burger-constructor-actions";
 import {
   BURGER_INGREDIENTS_INCREASECOUNTER, BURGER_INGREDIENT_CHANGE_BUN
-} from "../../services/actions/burgerIngredientsActions";
+} from "../../services/actions/burger-ingredients-actions";
 import { useDrop } from "react-dnd";
 import { useNavigate } from 'react-router-dom';
 import { v4 } from 'uuid';
@@ -39,11 +39,16 @@ function BurgerConstructor() {
     if (dataIngredient.items.length > 0) {
       total =
         dataIngredient.items.reduce((prevValue, currentValue) => {
-          return prevValue + currentValue.data.price;
+          //console.log(dataIngredient);
+          if (currentValue !== undefined)
+            return prevValue + currentValue.data.price
+          //else
+          // return prevValue;
         }
           , 0);
     }
     //console.log(total);
+    //console.log (dataIngredient.bun + "1");
     if (dataIngredient.bun) { total += 2 * dataIngredients.filter((item) => item._id === dataIngredient.bun)[0].price };
 
     return total;
@@ -67,12 +72,15 @@ function BurgerConstructor() {
   const navigate = useNavigate();
   function handleOrderClick() {
     // При нажатии на кнопку «Оформить заказ» неавторизованный пользователь должен переадресовываться на маршрут /login
-    console.log(localStorage.getItem('refreshToken'));
-    
-    if (((document.cookie.indexOf('accessToken') >= 0)  && (localStorage.getItem('refreshToken') !== '')))
+    //console.log(utils.getCookie( 'accessToken')!== 'undefined');
+
+    if (((document.cookie.indexOf('accessToken') >= 0) && (utils.getCookie( 'accessToken')!== 'undefined') &&  (localStorage.getItem('refreshToken') !== '')))
       postOrder();
-    else
+    else 
+    {
+      console.log('handleOrderClick');
       navigate('/login');
+    }
     // console.log('handleOrderClick');
     // console.log(orderNumber);
     //setIsModalVisible(true);
@@ -127,11 +135,11 @@ function BurgerConstructor() {
     //const { _id, type } = data;
 
     //console.log(data);
-    let datenow = v4();
+
     (data.type !== 'bun') &&
       dispatch({
         type: BURGER_CONSTRUCTOR_ADD_INGREDIENT,
-        item: { data, sortedId: data._id + datenow }
+        item: { data, sortedId: data._id }
       }) &&
       dispatch({
         type: BURGER_INGREDIENTS_INCREASECOUNTER,
@@ -161,30 +169,30 @@ function BurgerConstructor() {
         {/*Если bun-пустой, то рисуем картинки))*/}
         <div >
           {!(dataIngredient.bun) &&
-            <ConstructorCard item={null} type="bunUp" key={v4()}></ConstructorCard>}
+            <ConstructorCard item={null} type="bunUp" key={"emptyBun"}></ConstructorCard>}
         </div>
         <div >
           {/*Вставляем одну булку- верх, а потом и низ))*/}
           {(dataIngredient.bun) &&
-            <ConstructorCard item={bunIngredients[0]} type="bunUp" key={v4()} ></ConstructorCard>}
+            <ConstructorCard item={bunIngredients[0]} type="bunUp" key={bunIngredients[0]._id + "bunUp"} ></ConstructorCard>}
         </div>
 
-        <div className={`${styles.container} custom-scroll mt-10 pr-2`}  key={v4()}>
+        <div className={`${styles.container} custom-scroll mt-10 pr-2`}  >
 
           {/*Если sauseMain-пустой, то рисуем приглашение))*/}
 
           {(dataIngredient.items.length === 0) &&
-            <ConstructorCard item={null} key={v4()} type="sausemain" ></ConstructorCard>}
+            <ConstructorCard item={null} key={"emptyMain"} type="sausemain" ></ConstructorCard>}
 
           {(dataIngredient.items.length > 0) && (sauseMainIngredients.map((item, index) => (
-            <ConstructorCard item={item} key={v4()} type="sausemain" index={index}></ConstructorCard>
+            <ConstructorCard item={item} key={index} type="sausemain" index={index}></ConstructorCard>
 
           )))}
         </div>
         {/*Вставляем одну булку- верх, а потом и низ))*/}
-        <div key={v4()}>
+        <div>
           {(dataIngredient.bun) &&
-            <ConstructorCard item={bunIngredients[0]} type="bunDown" key={v4()}  ></ConstructorCard>
+            <ConstructorCard item={bunIngredients[0]} type="bunDown" itemkey={bunIngredients[0]._id + "bunDown"}  ></ConstructorCard>
           }
         </div>
 

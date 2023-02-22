@@ -3,7 +3,7 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import styles from "./login.module.css";
-import { authorization } from '../../services/actions/reduxFunctions';
+import { authorization } from '../../services/actions/redux-functions';
 
 
 
@@ -11,12 +11,12 @@ function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [eMailValue, setE_MailValue] = React.useState('');
+  const [eMailValue, setEMailValue] = React.useState('');
   const [passwordValue, setPasswordValue] = React.useState('');
   const [userAuthorized, setUserAuthorized] = React.useState(false);
 
   const onChange = e => {
-    setE_MailValue(e.target.value)
+    setEMailValue(e.target.value)
   }
 
   const onPasswordChange = e => {
@@ -24,7 +24,7 @@ function LoginPage() {
   }
 
   const onButtonClick = async (e) => {
-    console.log('onSubmit');
+    //console.log('onSubmit');
     if ((eMailValue.length > 0) && (passwordValue.length > 0)) {
       //localStorage.setItem('refreshToken', '');
       e.preventDefault();
@@ -37,13 +37,6 @@ function LoginPage() {
       }
     }
   }
-
-
-  useEffect(() => {
-    //setUserAuthorized(document.cookie.indexOf('accessToken') >= 0)
-    if (document.cookie.indexOf('accessToken') >= 0) navigate("/");
-
-  }, []);
 
 
 

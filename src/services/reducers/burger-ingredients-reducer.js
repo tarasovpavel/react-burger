@@ -5,7 +5,7 @@ import {
   BURGER_INGREDIENTS_DECREASECOUNTER,
   BURGER_INGREDIENT_CHANGE_BUN,
   BURGER_INGREDIENT_REQUEST
-} from '../actions/burgerIngredientsActions';
+} from '../actions/burger-ingredients-actions';
 
 // список всех полученных ингредиентов
 const burgerIngredientsInitialState = { items: [], queryError: false }

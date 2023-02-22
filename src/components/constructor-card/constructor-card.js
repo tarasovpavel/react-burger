@@ -1,11 +1,13 @@
 import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './constructorCard.module.css';
+import styles from './constructor-card.module.css';
 import { useDispatch } from 'react-redux';
-import { EmptyConstructorElement } from '../emptyConstructorElement/emptyConstructorElement';
-import { BURGER_CONSTRUCTOR_DELETE, BURGER_CONSTRUCTOR_MOVE } from "../../services/actions/burgerConstructorActions";
-import { BURGER_INGREDIENTS_DECREASECOUNTER } from "../../services/actions/burgerIngredientsActions";
+import { EmptyConstructorElement } from '../empty-constructor-element/empty-constructor-element';
+import { BURGER_CONSTRUCTOR_DELETE, BURGER_CONSTRUCTOR_MOVE } from "../../services/actions/burger-constructor-actions";
+import { BURGER_INGREDIENTS_DECREASECOUNTER } from "../../services/actions/burger-ingredients-actions";
 import { useRef } from "react";
+import PropTypes from 'prop-types';
+import { ingredientType } from '../../types';
 
 
 export function ConstructorCard({ item, type, index }) {
@@ -30,6 +32,7 @@ export function ConstructorCard({ item, type, index }) {
 
   //СОРТИРОВКА  
   const [{ isDragging }, drag] = useDrag({
+
     type: "constructorCard",
     item: () => {
       // Определяем элемент
@@ -44,6 +47,7 @@ export function ConstructorCard({ item, type, index }) {
 
 
   const [, drop] = useDrop({
+
     accept: "constructorCard",
     collect(monitor) {
       return {
@@ -51,15 +55,24 @@ export function ConstructorCard({ item, type, index }) {
       };
     },
     hover(item, monitor) {
+      if (item.type === "bun") {
+        return;
+      }
+
+
       if (!refConstructor.current) {
         return;
       }
       const dragIndex = item.index;
       const hoverIndex = index;
 
+
       if (dragIndex === hoverIndex) {
         return;
       }
+
+
+
 
       //console.log('useDrop');
       //console.log (refConstructor.current);
@@ -87,6 +100,7 @@ export function ConstructorCard({ item, type, index }) {
 
       item.index = hoverIndex;
     }
+
   });
 
 
@@ -143,3 +157,8 @@ export function ConstructorCard({ item, type, index }) {
   );
 }
 
+ConstructorCard.propTypes = {
+  item: ingredientType,
+  type: PropTypes.string,
+  index: PropTypes.number,
+};

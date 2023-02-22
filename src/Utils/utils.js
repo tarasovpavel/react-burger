@@ -1,5 +1,5 @@
-import { dataPath, orderNumberPath } from "../constant";
-import { ORDERDETAILS_SUCCESS, ORDERDETAILS_ERROR } from '../services/actions/orderDetailsActions';
+import { dataPath, orderNumberPath, BASE_URL } from "../constant";
+import { ORDERDETAILS_SUCCESS, ORDERDETAILS_ERROR } from '../services/actions/order-details-actions';
 
 
 class Utils {
@@ -16,6 +16,10 @@ class Utils {
   }
 
   setCookie(name, value, props) {
+    props = {
+      path: '/',  //задаем корневой адрес для cookies
+      ...props
+    };
     props = props || {};
     let exp = props.expires;
     if (typeof exp == 'number' && exp) {
@@ -38,6 +42,12 @@ class Utils {
     document.cookie = updatedCookie;
   }
 
+
+
+
+
+  
+
   getCookie(name) {
     const matches = document.cookie.match(
       new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
@@ -51,7 +61,7 @@ class Utils {
     console.log(response);
     return response.ok ?
       response.json() :
-      Promise.reject("Error!!!");
+      response.json().then((error) => Promise.reject(error));
 
   }
 
@@ -70,12 +80,7 @@ class Utils {
           });
 
         })
-        .catch(() => {
-          dispatch({
-            type: ORDERDETAILS_ERROR,
-          })
-        })
-
+        
 
     }
   }
@@ -83,8 +88,8 @@ class Utils {
   getIngredients() {
     //console.log(this._dataURL);
     return fetch(this._dataURL)
-      .then(this._handleResponse)
-      .catch(console.log);
+      .then(this._handleResponse);
+      
   }
 
 
@@ -97,19 +102,20 @@ class Utils {
       body: JSON.stringify({ ingredients: dataIngredient.dataIngredient })
     }
     )
-      .then((this._handleResponse))
-      .catch(error => {
-        console.log(error);
-      });
+      .then((this._handleResponse));
+      
+      
   }
 
 
+
+  
 
 }
 
 
 
 
-const utils = new Utils(dataPath, orderNumberPath);
+const utils = new Utils(`${BASE_URL}${dataPath}`, `${BASE_URL}${orderNumberPath}`);
 export default utils;
 

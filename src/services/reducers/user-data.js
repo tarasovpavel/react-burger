@@ -13,7 +13,7 @@ import {USER_REGISTER_SUCCESS,
     TOKEN_REFRESH_SUCCESS ,
     TOKEN_REFRESH_ERROR ,
     USER_EXIT_SUCCESS,
-    USER_EXIT_ERROR } from "../actions/userData";
+    USER_EXIT_ERROR, AUTH_CHECKED } from "../actions/user-data";
   
 const userInitialState = { userData: {
         userName: null,
@@ -21,7 +21,8 @@ const userInitialState = { userData: {
         email: null,
         newPassword: null,
         condition: null, // состояние- берем из значений экшонов
-        requestChangePassword: false,  // был запрос на вспоминание пороля
+        requestChangePassword: false,  // был запрос на вспоминание пароля
+        auth_checked:false,
         //accessToken:null,
         //refreshToken:null,
     },
@@ -40,6 +41,7 @@ export const userInitialReducer = (state=userInitialState, action) => {
                 userName: action.userName,
                 //password: action.userName,
                 email: action.email,
+                
             }
         }
         case USER_REGISTER_ERROR: {
@@ -61,6 +63,7 @@ export const userInitialReducer = (state=userInitialState, action) => {
                 //password: action.password,
                 email: action.email,
                 userName: action.userName,
+                auth_checked: true,
             }
         }
         case USER_LOGIN_ERROR: {
@@ -78,6 +81,7 @@ export const userInitialReducer = (state=userInitialState, action) => {
                 email: action.email,
                 userName:action.userName,
                 condition: 'USER_UPDATE_DATA_SUCCESS',
+                auth_checked:true,
             }
         }
         case USER_UPDATE_DATA_ERROR: {
@@ -87,6 +91,7 @@ export const userInitialReducer = (state=userInitialState, action) => {
             }
         }
         case PASSWORD_REFRESH_SUCCESS: {
+           // console.log('dddd');
             return {
                 ...state,
                 //newPassword: action.newPassword, 
@@ -105,7 +110,7 @@ export const userInitialReducer = (state=userInitialState, action) => {
                 ...state,
                 //password: action.password, 
                 condition: 'PASSWORD_NEW_SUCCESS',
-                requestChangePassword: false,
+                //requestChangePassword: false,
             }
         }
         case PASSWORD_NEW_ERROR: {
@@ -130,6 +135,8 @@ export const userInitialReducer = (state=userInitialState, action) => {
         }
         case USER_EXIT_SUCCESS: {
             return {
+                ...state,
+                auth_checked: false,
             }
         }
         case USER_EXIT_ERROR: {
@@ -138,7 +145,14 @@ export const userInitialReducer = (state=userInitialState, action) => {
                 condition: 'USER_EXIT_ERROR',
             }
         }
+        case  AUTH_CHECKED: {
+            return {
+                ...state,
+                auth_checked: true,
 
+            }
+
+        }
         default:
             return state ;
     }

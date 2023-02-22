@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './app';
 import styles from './app.module.css';
-import BurgerIngredients from '../BurgerIngredients/burgerIngredients';
-import BurgerConstructor from '../BurgerConstructor/burgerConstructor';
-import AppHeader from '../AppHeader/appHeader';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
+import AppHeader from '../app-header/app-header';
 import { Route, Routes, useLocation } from 'react-router-dom';
 //import data1 from  '../../Data/data';
 
@@ -15,18 +15,20 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import LoginPage from '../../Pages/login/login';
 import RegisterPage from '../../Pages/register/register';
-import ForgotPasswordPage from '../../Pages/forgot-password/forgotPassword';
-import ResetPasswordPage from '../../Pages/reset-password/resetPassword';
+import ForgotPasswordPage from '../../Pages/forgot-password/forgot-password';
+import ResetPasswordPage from '../../Pages/reset-password/reset-password';
 import ProfilePage from '../../Pages/profile/profile';
-import ErrorPage from '../../Pages/errorPage/errorPage';
-import IngredientPage from '../../Pages/ingredientPage/ingredientPage';
-import IngredientDetail from '../IngredientDetail/ingredientDetail';
-import ProtectedRoute from '../ProtectedRoute/protectedRoute';
-import { INGREDIENTDETAILS_CLOSE } from "../../services/actions/ingredientDetailsActions";
-import { Modal } from '../Modal/modal';
+import ErrorPage from '../../Pages/error-page/error-page';
+import IngredientPage from '../../Pages/ingredient-page/ingredient-page';
+import IngredientDetail from '../ingredient-detail/ingredient-detail';
+import ProtectedRoute from '../protected-route/protected-route';
+import NotAccessProtectedRoute from '../not-authorized-protected-route/not-authorized-protected-route';
+import { INGREDIENTDETAILS_CLOSE } from "../../services/actions/ingredient-details-actions";
+import { Modal } from '../modal/modal';
 import { useNavigate } from "react-router-dom";
-import NotFound from '../../Pages/NotFound/notFound';
-import { getRecommendedItems } from '../../services/actions/reduxFunctions';
+import NotFound from '../../Pages/not-found/not-found';
+import { getRecommendedItems, getUserData } from '../../services/actions/redux-functions';
+import utils from '../../Utils/utils';
 
 function App() {
   const [isLoad, setIsLoad] = useState(false);
@@ -49,7 +51,10 @@ function App() {
     dispatch(getRecommendedItems());
     setIsLoad(true);
     // setIsLoad(true);
-  }, [dispatch])
+    if ((utils.getCookie('accessToken')) && (utils.getCookie('accessToken') !== undefined))
+      dispatch(getUserData());
+
+  }, [])
 
 
 
@@ -99,19 +104,20 @@ function App() {
         </Route>
 
 
-        <Route path="/login" element={<LoginPage />} />
 
+        <Route path="/login" element={<NotAccessProtectedRoute element={<LoginPage />} />} />
 
         {/*<Route path="/register" element={<RegisterPage />} />*/}
 
-        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
+        <Route path="/forgot-password" element={<NotAccessProtectedRoute element={<ForgotPasswordPage />} />} />
 
-        <Route path="/reset-password" element={<ResetPasswordPage />}/>
+        <Route path="/reset-password" element={<NotAccessProtectedRoute  element={<ResetPasswordPage />} />} />
 
         <Route path="/ingredients/:id" element={<IngredientPage />}></Route>
         <Route path="/profile" element={<ProtectedRoute element={<ProfilePage />} />} />
-        <Route path="/register" element={<ProtectedRoute element={<RegisterPage />} />} />
+
+        <Route path="/register" element={<NotAccessProtectedRoute element={<RegisterPage />} />} />
         <Route path="/error" element={<ErrorPage />}> </Route>
         <Route path="*" element={<NotFound />} />
 
