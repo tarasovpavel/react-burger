@@ -1,0 +1,36 @@
+.modal {
+    background: rgba(223, 44, 44, 0);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+
+.modal__image {
+    cursor: pointer;
+}
+
+.description {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 1 1;
+    width: '500px';
+}
+
+.container {
+    
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    margin-top: 180px;
+  }
+  
+  .flex25{
+    flex: 25%;
+  }

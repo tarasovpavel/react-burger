@@ -1,5 +1,5 @@
-import { dataPath, orderNumberPath} from "../constant";
-import { ORDERDETAILS_SUCCESS, ORDERDETAILS_ERROR} from '../services/actions/orderDetailsActions';
+import { dataPath, orderNumberPath, BASE_URL } from "../constant";
+
 
 
 class Utils {
@@ -8,14 +8,18 @@ class Utils {
     this._orderNumberURL = orderNumberURL;
   }
 
-  
 
 
-  deleteCookie (name) {
+
+  deleteCookie(name) {
     document.cookie = `${name}=;Expires=${new Date(0).toUTCString()}`;
   }
 
   setCookie(name, value, props) {
+    props = {
+      path: '/',  //задаем корневой адрес для cookies
+      ...props
+    };
     props = props || {};
     let exp = props.expires;
     if (typeof exp == 'number' && exp) {
@@ -36,72 +40,41 @@ class Utils {
       }
     }
     document.cookie = updatedCookie;
-  } 
+  }
+
+
 
   getCookie(name) {
     const matches = document.cookie.match(
       new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
-  } 
-
-
-
-  _handleResponse(response) {
-    console.log(response);
-    return response.ok ? 
-            response.json() : 
-            Promise.reject("Error!!!");
-    
   }
 
- 
-  getOrderNumberPost(dataIngredient) {
-    return function (dispatch) {
-      
- //     dispatch({
- //       type: ORDERDETAILS_QUERY,
-  //    });
-      utils.getOrderNumberRequest({dataIngredient})
-      .then((res) => {
-        dispatch({
-          type: ORDERDETAILS_SUCCESS,
-          item: res.order.number,
-        });
-        
-      })
-      .catch(() => {
-        dispatch({
-          type: ORDERDETAILS_ERROR,
-        })
-      })
 
 
-  }  
-}
-
-getIngredients() {
-  //console.log(this._dataURL);
-  return fetch(this._dataURL)
-      .then(this._handleResponse)
-      .catch(console.log);
-}
 
 
-getOrderNumberRequest (dataIngredient)
-{
- // console.log('getOrderNumberRequest');
- // console.log(dataIngredient);
-return fetch(this._orderNumberURL, {
-  method: 'POST',
-  headers: {'Content-Type': 'application/json' },
-  body: JSON.stringify({ingredients:dataIngredient.dataIngredient})}
-  )
-  .then((this._handleResponse))
-  .catch(error => {
-      console.log(error);
-  });
-}
+  checkResponse = (res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка ${res.status}`);
+  };
+
+  // создаем функцию проверки на `success`
+  checkSuccess = (res) => {
+    if (res && res.success) {
+      return res;
+    }
+    return Promise.reject(`Ответ не success: ${res}`);
+  };
+
+
+
+
+
+
 
 
 
@@ -110,6 +83,6 @@ return fetch(this._orderNumberURL, {
 
 
 
-const utils = new Utils(dataPath, orderNumberPath);
+const utils = new Utils(`${BASE_URL}${dataPath}`, `${BASE_URL}${orderNumberPath}`);
 export default utils;
 

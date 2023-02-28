@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./profile.module.css";
-import { updateUserData, logOut, getRequestUserData } from '../../services/actions/reduxFunctions';
+import { updateUserData, logOut, getRequestUserData } from '../../services/actions/redux-functions';
 
 function ProfilePage() {
   const dispatch = useDispatch();
@@ -66,25 +66,19 @@ function ProfilePage() {
 
 
   useEffect(() => {
-    //setUserAuthorized(document.cookie.indexOf('accessToken') >= 0)
-    if (document.cookie.indexOf('accessToken') < 0) navigate("/");
+   
+    //e.preventDefault();
+    //console.log('profile');
+    //console.log(userData);
+    
+    
+    if ((userData !== undefined) && (userData.userName !== null)) {
+      console.log('profile1');
+      document.getElementById('name').value = (userData.userName !== undefined) ? userData.userName : '';
+      document.getElementById('email').value = userData.email;
+    }
 
-  }, []);
-
-
-
-  useEffect(() => {
-    // Отправляем экшен-функцию
-
-    dispatch(getRequestUserData());
-    // console.log(userData);
-    // console.log(userData.userName);
-
-
-    document.getElementById('name').value = (userData.userName !== undefined) ? userData.userName : '';
-    document.getElementById('email').value = userData.email;
-
-  }, [])
+  }, [userData]);
 
 
   const [nameValue, setName] = React.useState(userData.userName);

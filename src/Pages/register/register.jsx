@@ -1,9 +1,10 @@
-import React, { useState, useRef } from "react";
-import { Button, Input, Logo, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from "react-redux";
 import styles from "./register.module.css";
-import { registerUser } from '../../services/actions/reduxFunctions';
+import { registerUser } from '../../services/actions/redux-functions';
+import utils from '../../Utils/utils';
 
 function RegisterPage() {
   const dispatch = useDispatch();
@@ -15,17 +16,28 @@ function RegisterPage() {
 
 
   const onButtonClick = (e) => {
-    //console.log('register');
+    console.log('register');
 
     if ((name.length > 0) && (email.length > 0) && (password.length > 0)) {
       e.preventDefault();
       dispatch(registerUser(email, password, name));
-      const userAuthorized = document.cookie.indexOf('accessToken') >= 0;
-      if (userAuthorized) navigate('/login');
+      //const userAuthorized = document.cookie.indexOf('accessToken') >= 0;
+      //if (userAuthorized) 
+      navigate('/login');
     }
   }
 
   const navigate = useNavigate();
+
+
+
+  useEffect(() => {
+    //setUserAuthorized(document.cookie.indexOf('accessToken') >= 0)
+    if ((document.cookie.indexOf('accessToken') >= 0) &&  (utils.getCookie( 'accessToken')!== 'undefined') )  navigate(-1);
+
+  }, []);
+
+
 
 
   return (

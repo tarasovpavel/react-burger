@@ -1,0 +1,30 @@
+.modal {
+    background: rgba(146, 142, 142, 0);
+    position: fixed;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 40;
+    border-radius: 103px;
+    background-color: #000000;
+    width: 720px;
+    height: 600px;
+    opacity: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    width: 100%;
+    float:right;
+  }
+  
+  .overflowHidden {
+  overflow: hidden;
+}

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import {burgerIngredientsReducer} from './burgerIngredientsReducer';
-import {burgerConstructorReducer} from './burgerConstructorReducer';
-import {ingredientDetailReducer} from './ingredientDetailsReducer';
-import {orderDetailsReducer} from './orderDetailsReducer';
-import {userInitialReducer} from './userData';
+import {burgerIngredientsReducer} from './burger-ingredients-reducer';
+import {burgerConstructorReducer} from './burger-constructor-reducer';
+import {ingredientDetailReducer} from './ingredient-details-reducer';
+import {orderDetailsReducer} from './order-details-reducer';
+import {userInitialReducer} from './user-data';
 
 
 
