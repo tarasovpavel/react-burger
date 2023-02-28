@@ -9,6 +9,8 @@ import utils from '../../Utils/utils';
 export default function ProtectedRoute({ element, anonymous = false }) {
   const authChecked = useSelector(store => store.userData.auth_checked);
   const userData = useSelector(store => store.userData);
+
+
   const isLoggedIn = (document.cookie.indexOf('accessToken') >= 0) && (utils.getCookie( 'accessToken')!== 'undefined');
   // console.log(utils.getCookie('accessToken'));
   const location = useLocation();
@@ -23,17 +25,7 @@ export default function ProtectedRoute({ element, anonymous = false }) {
     dispatch(updateToken());
   }
 
-  console.log(userData);
-  if (!authChecked) {
-    // Запрос еще выполняется
-    console.log('пользователь не авторизован');
-    return <Navigate to="/" state={{ from: location }} />;
-  }
-
-
-  console.log('2');
-
-
+  
   // Если разрешен неавторизованный доступ, а пользователь авторизован...
   if (anonymous && isLoggedIn) {
     // ...то отправляем его на предыдущую страницу

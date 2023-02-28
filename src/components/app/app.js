@@ -51,8 +51,11 @@ function App() {
     dispatch(getRecommendedItems());
     setIsLoad(true);
     // setIsLoad(true);
+    //console.log('data1') ;
     if ((utils.getCookie('accessToken')) && (utils.getCookie('accessToken') !== undefined))
+    {
       dispatch(getUserData());
+    }
 
   }, [])
 

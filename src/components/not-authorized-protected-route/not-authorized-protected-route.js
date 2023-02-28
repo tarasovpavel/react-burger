@@ -12,7 +12,7 @@ export default function NotAccessProtectedRoute({ element, anonymous = false }) 
   const location = useLocation();
   const from = location.state?.from || '/';
 
-  const refreshToken = (localStorage['refreshToken'] !== undefined);
+  //const refreshToken = (localStorage['refreshToken'] !== undefined);
   //const authChecked = useSelector(store => store.userData.authChecked);
 
   console.log('1');

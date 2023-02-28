@@ -1,23 +1,23 @@
 import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styles from "../reset-password/reset-password.module.css";
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { createNewPassword } from '../../services/actions/redux-functions';
-import utils from '../../Utils/utils';
 
 export default function ResetPasswordPage() {
     const [password, setPassword] = React.useState('');
     const [token, setToken] = React.useState('');
 
     const dispatch = useDispatch();
+    const location = useLocation();
 
 
 
     const navigate = useNavigate();
 
-    const userData = useSelector((store) => store.userData);
+    //const userData = useSelector((store) => store.userData);
     //Если !userAuthorized то разрешать только если заходил на forgot и успешно получил сообщение о смене пароля
     // 
 
@@ -31,12 +31,15 @@ export default function ResetPasswordPage() {
     }
 
     useEffect(() => {
-        //setUserAuthorized(document.cookie.indexOf('accessToken') >= 0)
-        console.log(userData);
-        //if (!userData.requestChangePassword )  navigate(-1);
-    
-      }, []);
-    
+
+        //    if (userData)
+        //    {
+        //        (location.state && location.state.previousLocation) ? navigate(location.state.previousLocation.pathname) : navigate('/');
+        //    }
+        //    else
+        !location?.state?.resetPassword && navigate('/forgot-password')
+    }, [location.state, navigate]);
+
 
 
     return (

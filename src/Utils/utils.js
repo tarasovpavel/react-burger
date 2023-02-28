@@ -1,5 +1,5 @@
 import { dataPath, orderNumberPath, BASE_URL } from "../constant";
-import { ORDERDETAILS_SUCCESS, ORDERDETAILS_ERROR } from '../services/actions/order-details-actions';
+
 
 
 class Utils {
@@ -44,10 +44,6 @@ class Utils {
 
 
 
-
-
-  
-
   getCookie(name) {
     const matches = document.cookie.match(
       new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
@@ -57,59 +53,30 @@ class Utils {
 
 
 
-  _handleResponse(response) {
-    console.log(response);
-    return response.ok ?
-      response.json() :
-      response.json().then((error) => Promise.reject(error));
-
-  }
 
 
-  getOrderNumberPost(dataIngredient) {
-    return function (dispatch) {
-
-      //     dispatch({
-      //       type: ORDERDETAILS_QUERY,
-      //    });
-      utils.getOrderNumberRequest({ dataIngredient })
-        .then((res) => {
-          dispatch({
-            type: ORDERDETAILS_SUCCESS,
-            item: res.order.number,
-          });
-
-        })
-        
-
+  checkResponse = (res) => {
+    if (res.ok) {
+      return res.json();
     }
-  }
+    return Promise.reject(`Ошибка ${res.status}`);
+  };
 
-  getIngredients() {
-    //console.log(this._dataURL);
-    return fetch(this._dataURL)
-      .then(this._handleResponse);
-      
-  }
-
-
-  getOrderNumberRequest(dataIngredient) {
-    // console.log('getOrderNumberRequest');
-    // console.log(dataIngredient);
-    return fetch(this._orderNumberURL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ingredients: dataIngredient.dataIngredient })
+  // создаем функцию проверки на `success`
+  checkSuccess = (res) => {
+    if (res && res.success) {
+      return res;
     }
-    )
-      .then((this._handleResponse));
-      
-      
-  }
+    return Promise.reject(`Ответ не success: ${res}`);
+  };
 
 
 
-  
+
+
+
+
+
 
 }
 

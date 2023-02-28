@@ -4,7 +4,7 @@ import {
     Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./forgot-password.module.css";
 import { useDispatch } from 'react-redux';
@@ -28,7 +28,7 @@ export default function ForgotPasswordPage() {
         e.preventDefault();
         if (eMailValue.length > 0) {
             dispatch(passwordReset(eMailValue));
-            navigate('/reset-password');
+            navigate('/reset-password', {state: { resetPassword: true }});
         }
     }
 

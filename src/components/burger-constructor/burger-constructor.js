@@ -14,7 +14,8 @@ import {
 } from "../../services/actions/burger-ingredients-actions";
 import { useDrop } from "react-dnd";
 import { useNavigate } from 'react-router-dom';
-import { v4 } from 'uuid';
+import { v4 as uuid } from 'uuid';
+import { getOrderNumberPost } from '../../services/actions/redux-functions';
 
 
 function BurgerConstructor() {
@@ -74,10 +75,9 @@ function BurgerConstructor() {
     // При нажатии на кнопку «Оформить заказ» неавторизованный пользователь должен переадресовываться на маршрут /login
     //console.log(utils.getCookie( 'accessToken')!== 'undefined');
 
-    if (((document.cookie.indexOf('accessToken') >= 0) && (utils.getCookie( 'accessToken')!== 'undefined') &&  (localStorage.getItem('refreshToken') !== '')))
+    if (((document.cookie.indexOf('accessToken') >= 0) && (utils.getCookie('accessToken') !== 'undefined') && (localStorage.getItem('refreshToken') !== '')))
       postOrder();
-    else 
-    {
+    else {
       console.log('handleOrderClick');
       navigate('/login');
     }
@@ -110,7 +110,7 @@ function BurgerConstructor() {
     }
     //console.log(bunIngredients);
     //console.log(sauseMainIngredients);
-    dispatch(utils.getOrderNumberPost(ingredientsList));
+    dispatch(getOrderNumberPost(ingredientsList));
 
 
   }
@@ -139,7 +139,7 @@ function BurgerConstructor() {
     (data.type !== 'bun') &&
       dispatch({
         type: BURGER_CONSTRUCTOR_ADD_INGREDIENT,
-        item: { data, sortedId: data._id }
+        item: { data, sortedId: data._id, uuid: uuid() }
       }) &&
       dispatch({
         type: BURGER_INGREDIENTS_INCREASECOUNTER,
@@ -185,7 +185,8 @@ function BurgerConstructor() {
             <ConstructorCard item={null} key={"emptyMain"} type="sausemain" ></ConstructorCard>}
 
           {(dataIngredient.items.length > 0) && (sauseMainIngredients.map((item, index) => (
-            <ConstructorCard item={item} key={index} type="sausemain" index={index}></ConstructorCard>
+
+            <ConstructorCard item={item} key={item.uuid} type="sausemain" index={index}></ConstructorCard>
 
           )))}
         </div>

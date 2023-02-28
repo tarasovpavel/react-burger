@@ -124,7 +124,7 @@ function BurgerIngredients() {
           <p className="text text_type_main-medium pr-1"  >Соусы</p>
 
           {sauceIngredients.map((item, i) => (
-            <div className={styles.container_div_left} key={i} onClick={() => handleIngredientClick(item)}>
+            <div className={styles.container_div_left} key={item._id} onClick={() => handleIngredientClick(item)}>
               <div>
                 <IngredientCard item={{ item }} type="dndIngredient" ></IngredientCard>
               </div>
@@ -137,7 +137,7 @@ function BurgerIngredients() {
           <p className="text text_type_main-medium pr-1"  >Начинка</p>
 
           {mainIngredients.map((item, i) => (
-            <div className={styles.container_div_left} key={i} onClick={() => handleIngredientClick(item)}>
+            <div className={styles.container_div_left} key={item._id} onClick={() => handleIngredientClick(item)}>
               <div>
                 <IngredientCard item={{ item }} type="dndIngredient"></IngredientCard>
               </div>

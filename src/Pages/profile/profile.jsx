@@ -66,20 +66,19 @@ function ProfilePage() {
 
 
   useEffect(() => {
-    // Отправляем экшен-функцию
+   
     //e.preventDefault();
-    console.log('profile');
-    console.log(userData);
-    //onsole.log(userData.userData.userName);
-    //console.log(userData.ususerData.userData.userNameerName);
-
-    if ((userData !== undefined) && (userData.userData.userName !== null)) {
+    //console.log('profile');
+    //console.log(userData);
+    
+    
+    if ((userData !== undefined) && (userData.userName !== null)) {
       console.log('profile1');
       document.getElementById('name').value = (userData.userName !== undefined) ? userData.userName : '';
       document.getElementById('email').value = userData.email;
     }
 
-  }, [])
+  }, [userData]);
 
 
   const [nameValue, setName] = React.useState(userData.userName);
