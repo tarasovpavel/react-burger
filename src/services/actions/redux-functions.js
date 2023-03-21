@@ -95,7 +95,7 @@ export function createNewPassword(password, token) {
 export const registerUser = (email, password, name) => {
   return async (dispatch) => {
     const jsonBodyRequest = { email, password, name };
-    // console.log(jsonBodyRequest);
+     console.log(jsonBodyRequest);
     // console.log(user_RegisterPath);
     try {
       const answer = await request(`${user_RegisterPath}`, {
@@ -110,6 +110,7 @@ export const registerUser = (email, password, name) => {
 
 
       if (answer.success === true) {
+     //   console.log('registerUser SUCCESS');
         dispatch({
           type: USER_REGISTER_SUCCESS,
           userName: answer.name,
@@ -120,7 +121,7 @@ export const registerUser = (email, password, name) => {
         // localStorage.setItem('refreshToken', result.refreshToken);
         // utils.setCookie('accessToken', result.accessToken.split('Bearer ')[1]);
 
-        console.log(USER_REGISTER_SUCCESS);
+   //     console.log(USER_REGISTER_SUCCESS);
       }
       else {
         dispatch({
@@ -145,6 +146,7 @@ export const authorization = (email, password) => {
   return async (dispatch) => {
     const jsonBodyRequest = { email, password };
     //   console.log(jsonBodyRequest);
+    //console.log('authorization SUCCESS');
     try {
       const answer = await request(`${user_LoginPath}`, {
         method: 'POST',
@@ -155,7 +157,7 @@ export const authorization = (email, password) => {
       //.then((result) => 
 
 
-      console.log(answer);
+   //   console.log(answer);
       if (answer.success === true) {
         localStorage.setItem('refreshToken', answer.refreshToken);
         utils.setCookie('accessToken', answer.accessToken.split('Bearer ')[1]);
@@ -357,6 +359,7 @@ export function logOut() {
 
 
 export const getUserData = () => {
+  
   return async (dispatch) => {
     const accessToken =
       utils.getCookie('accessToken');
@@ -373,7 +376,7 @@ export const getUserData = () => {
       console.log('getUserData');
       //console.log(data);
       //if(!data.success) throw new Error('');
-      console.log(data);
+    //  console.log(data);
       dispatch({
         type: USER_UPDATE_DATA_SUCCESS,
         email: data.user.email,
