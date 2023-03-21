@@ -1,4 +1,10 @@
 
+interface IProps  {
+  path?: string
+  expires?: Date | string | number
+  [propName: string]: any
+}
+
 class Utils {
 
 
@@ -8,7 +14,9 @@ class Utils {
     document.cookie = `${name}=;Expires=${new Date(0).toUTCString()}`;
   }
 
-  setCookie(name: string, value: string, props: any) {
+  
+
+  setCookie(name: string, value: string, props: IProps) {
     props = {
       path: '/',  //задаем корневой адрес для cookies
       ...props
@@ -20,8 +28,8 @@ class Utils {
       d.setTime(d.getTime() + exp * 1000);
       exp = props.expires = d;
     }
-    if (exp && exp.toUTCString) {
-      props.expires = exp.toUTCString();
+    if (exp && exp.toString) {
+      props.expires = exp.toString();
     }
     value = encodeURIComponent(value);
     let updatedCookie = name + '=' + value;
