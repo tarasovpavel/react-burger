@@ -1,27 +1,23 @@
+import { IIngredientDetails } from '../../types/types';
 import {
 
 
   INGREDIENTDETAILS_QUERY,
   INGREDIENTDETAILS_CLOSE,
-  INGREDIENTDETAILS_ERROR
+  INGREDIENTDETAILS_ERROR, TIngredientDetailsActions
 } from '../actions/ingredient-details-actions';
-import { IIngredient, nullIngredient } from './burger-ingredients-reducer';
+
 //объект созданного заказа.
 
-interface IIngredientDetails {
-  item: IIngredient,
-  requestError: boolean,
-
-}
 
 
-const ingredientDetailsInitialState = 
+const ingredientDetailsInitialState : IIngredientDetails = 
     { item: null, 
       requestError: false 
     }
 
 
-export const ingredientDetailReducer = (state = ingredientDetailsInitialState, action: any) => {
+export const ingredientDetailReducer = (state = ingredientDetailsInitialState, action: TIngredientDetailsActions) => {
   //    console.log('ingredientDetailReducer');
   //    console.log(action);
   switch (action.type) {

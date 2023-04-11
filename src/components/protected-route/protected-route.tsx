@@ -4,20 +4,14 @@ import { updateToken } from "../../services/actions/redux-functions";
 import { useDispatch } from 'react-redux';
 import { FC } from 'react';
 import utils from '../../Utils/utils';
-import { RouteProps } from 'react-router';
-
-
-type ProtectedRouteProps = {
-  element: any;
-  anonymous?: boolean;
-} & RouteProps;
+import {ProtectedRouteProps} from '../../types/types';
 
 
 const ProtectedRoute: FC<ProtectedRouteProps> = ({ element, anonymous = false }) => {
 
 
 
-  const isLoggedIn = (document.cookie.indexOf('accessToken') >= 0) && (utils.getCookie('accessToken') !== 'undefined');
+  const isLoggedIn = (utils.getCookie('accessToken')) && (utils.getCookie('accessToken') !== 'undefined');
   // console.log(utils.getCookie('accessToken'));
   const location = useLocation();
   const from = location.state?.from || '/';
@@ -28,7 +22,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ element, anonymous = false })
 
   if (!(isLoggedIn) && (refreshToken)) {
     console.log('ProtectedRoute');
-    dispatch<any>(updateToken());
+    dispatch(updateToken());
   }
 
 
@@ -41,6 +35,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ element, anonymous = false })
   // Если требуется авторизация, а пользователь не авторизован...
   if (!anonymous && !isLoggedIn) {
     // ...то отправляем его на страницу логин
+    //console.log(' отправляем его на страницу логин');
     return <Navigate to="/login" state={{ from: location }} />;
   }
 

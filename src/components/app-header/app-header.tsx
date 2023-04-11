@@ -28,7 +28,7 @@ const AppHeader: FC = () => {
           <li className={styles.menu_up_punkt}>
             <NavLink
               className={({ isActive }) => (isActive ? styles.link_active : styles.link)}
-              to='/' >
+              to='/feed' >
               <>
                 <ListIcon type="primary" />
                 <p className="p-1"></p>

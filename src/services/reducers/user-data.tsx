@@ -1,5 +1,6 @@
 
 
+import { IUserState } from "../../types/types";
 import {
     USER_REGISTER_SUCCESS,
     USER_REGISTER_ERROR,
@@ -14,11 +15,12 @@ import {
     TOKEN_REFRESH_SUCCESS,
     TOKEN_REFRESH_ERROR,
     USER_EXIT_SUCCESS,
-    USER_EXIT_ERROR, AUTH_CHECKED
+    USER_EXIT_ERROR, AUTH_CHECKED, TUserRegisterActions
 } from "../actions/user-data";
 
 
-const userInitialState = {
+
+const userInitialState: IUserState = {
     userData: {
         userName: null,
         password: null,
@@ -40,7 +42,7 @@ const userInitialState = {
 
 
 
-export const userInitialReducer = (state = userInitialState, action: any) => {
+export const userInitialReducer = (state = userInitialState, action: TUserRegisterActions) => {
     switch (action.type) {
         case USER_REGISTER_SUCCESS: {
             return {
@@ -50,7 +52,7 @@ export const userInitialReducer = (state = userInitialState, action: any) => {
                 userName: action.userName,
                 //password: action.userName,
                 email: action.email,
-
+                userData: action.UserData,
             }
         }
         case USER_REGISTER_ERROR: {

@@ -1,7 +1,7 @@
 import styles from "./ingredient-page.module.css";
 
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/hooks";
 import { useMemo, FC } from 'react';
 import { StateType } from 'typesafe-actions';
 
@@ -18,7 +18,7 @@ const IngredientPage: FC = () => {
     //const dataIngredient = useSelector((store) => store.burgerIngredientsData.items);
     let dataIngredient = useSelector((store: Store) => store.burgerIngredientsData.items);
 
-    const mainIngredients = useMemo<any>(() => {
+    const mainIngredients = useMemo(() => {
         return dataIngredient.filter((item) => item._id === id);
     }, [dataIngredient, id]);
 
@@ -59,7 +59,7 @@ const IngredientPage: FC = () => {
             </div>
         </div>
 
-    ) as any;
+    )  as any;
 }
 
 

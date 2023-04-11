@@ -1,13 +1,12 @@
 import React, { useEffect, FC } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../hooks/hooks";
 import styles from "./profile.module.css";
 import { updateUserData, logOut } from '../../services/actions/redux-functions';
 import { StateType } from 'typesafe-actions';
-
-//import Store  from '../../services/reducers/reducer';
 import rootReducer from "../../services/reducers/reducer";
+import { IUserState } from "../../types/types";
 export type Store = StateType<typeof rootReducer>;
 
 
@@ -15,9 +14,9 @@ export type Store = StateType<typeof rootReducer>;
 
 const ProfilePage: FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-
-  let userData = useSelector((store: Store) => store.userData);
+  let userData = useSelector((store: Store) => store.userData as IUserState);
 
 
 
@@ -40,11 +39,11 @@ const ProfilePage: FC = () => {
     setEMailValue(e.target.value);
     setUserDataChanged(true);
   }
-  const navigate = useNavigate();
+
 
   function onLogout(e: React.SyntheticEvent) {
     e.preventDefault();
-    dispatch<any>(logOut());
+    dispatch(logOut());
     navigate('/');
   }
 
@@ -71,7 +70,7 @@ const ProfilePage: FC = () => {
     //сохраняем данные на сервер Сохраняем данные  в стор
     // console.log('onSave');
 
-    dispatch<any>(updateUserData(eMailValue, nameValue, passwordValue));
+    dispatch(updateUserData(eMailValue as string, nameValue as string, passwordValue as string));
     setUserDataChanged(false);
   }
 
@@ -89,6 +88,7 @@ const ProfilePage: FC = () => {
     //e.preventDefault();
     // console.log('profile');
     //  console.log(userData);
+   
 
 
     if ((userData !== undefined) && (userData.userName !== null)) {
@@ -116,8 +116,10 @@ const ProfilePage: FC = () => {
           <nav>
             <ul className={`text text_type_main-medium text_color_inactive `} >
               <li className={`mb-10 ${styles.liststylenone}`}>
-                <NavLink
-                  className={`text text_type_main-medium text_color_inactive mb-6 ${styles.link}`}
+                <NavLink  className={({ isActive }) => 
+                            (isActive ? 
+                                `text text_type_main-medium text_color_inactive mb-6 ${styles.link_active}` : 
+                        `text text_type_main-medium text_color_inactive mb-6 ${styles.link}`)}
                   to={'/profile'}
                 >Профиль
                 </NavLink>

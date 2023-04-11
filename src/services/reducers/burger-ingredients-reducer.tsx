@@ -4,28 +4,12 @@ import {
   BURGER_INGREDIENTS_INCREASECOUNTER,
   BURGER_INGREDIENTS_DECREASECOUNTER,
   BURGER_INGREDIENT_CHANGE_BUN,
-  BURGER_INGREDIENT_REQUEST
+  BURGER_INGREDIENT_REQUEST,
+  TIngredientsActions
 } from '../actions/burger-ingredients-actions';
 
-
-
-export interface IIngredient {
-  _id: string
-  calories: number
-  carbohydrates: number
-  fat: number
-  image: string
-  image_large: string
-  image_mobile: string
-  name: string
-  price: number
-  proteins: number
-  type: string
-  uniqId: string
-  counter: number
-  sortedId: string
-
-}
+import {IIngredientsState} from '../../types/types';
+import {IIngredient} from '../../types/types';
 
 export const nullIngredient: IIngredient = {
   _id: "",
@@ -42,16 +26,9 @@ export const nullIngredient: IIngredient = {
   uniqId: "",
   counter: 0,
   sortedId: "",
-
+  uuid: "",
 }
 
-
-
-interface IIngredientsState {
-  items: IIngredient[],
-  queryError: boolean,
-
-}
 
 const burgerIngredientsInitialState: IIngredientsState = {
   items: [],
@@ -69,7 +46,7 @@ const burgerIngredientsInitialState: IIngredientsState = {
 
 
 
-export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, action: any) => {
+export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, action: TIngredientsActions) => {
   switch (action.type) {
     case BURGER_INGREDIENTS_ERROR: {
       return {
@@ -99,7 +76,7 @@ export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, 
       }
     }
     case BURGER_INGREDIENTS_INCREASECOUNTER: {
-      //console.log(action.item);
+      console.log(action.item);
       return {
         ...state,
         items: [...state.items].map(item => {

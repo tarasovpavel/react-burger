@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-constructor.module.css';
 import { useMemo } from 'react';
@@ -6,7 +6,7 @@ import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import ConstructorCard from '../constructor-card/constructor-card';
 import utils from "../../Utils/utils";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../hooks/hooks";
 import { ORDERDETAILS_DELETE } from "../../services/actions/order-details-actions";
 import { BURGER_CONSTRUCTOR_ADD_INGREDIENT, BURGER_CONSTRUCTOR_CHANGE_BUN } from "../../services/actions/burger-constructor-actions";
 import {
@@ -17,9 +17,11 @@ import { useNavigate } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import { getOrderNumberPost } from '../../services/actions/redux-functions';
 import { StateType } from 'typesafe-actions';
-import { IIngredient, nullIngredient } from '../../services/reducers/burger-ingredients-reducer';
+import { nullIngredient } from '../../services/reducers/burger-ingredients-reducer';
 
 import rootReducer from "../../services/reducers/reducer";
+import { IburgerIngredientsState } from '../../types/types';
+import Loader from '../loader/loader';
 export type Store = StateType<typeof rootReducer>;
 
 
@@ -28,13 +30,13 @@ const BurgerConstructor: FC = () => {
 
   //const { dataIngredient, setData } = useState(null);
   const dispatch = useDispatch();
+  const[ isClick, setIsClick] =  useState(false);
 
 
 
 
-
-  const dataIngredient = useSelector((store: Store) => store.burgerConstructorData); // только ингредиенты контсруктора, и bun
-  const dataIngredients = useSelector((store: Store) => store.burgerIngredientsData.items); //Все существующие компоненты
+  const dataIngredient = useSelector((store: Store) => store.burgerConstructorData) as IburgerIngredientsState ; // только ингредиенты контсруктора, и bun
+  const dataIngredients = useSelector((store: Store) => store.burgerIngredientsData.items) ; //Все существующие компоненты
   const orderNumber = useSelector((store: Store) => store.orderDetailsData.item);
   //console.log (dataIngredient);
   //console.log (dataIngredients);
@@ -46,21 +48,16 @@ const BurgerConstructor: FC = () => {
     let total = 0;
 
     if (dataIngredient.items.length > 0) {
+      console.log(dataIngredient.items[0].price);
       var i: number;
       for (i = 0; i < dataIngredient.items.length; i++) {
-        total += dataIngredient.items[i].data.price;
+
+        if ((dataIngredient.items[i] != undefined) && (dataIngredient.items[i].price !== undefined) && (dataIngredient.items[i].price !== null))
+          total += dataIngredient.items[i].price;
         //console.log(dataIngredient.items[i].price);
       }
 
-      /* total =
-         dataIngredient.items.   reduce((prevValue:number, currentValue:any) => {
-           //console.log(dataIngredient);
-           if (currentValue !== undefined)
-             return prevValue + currentValue.data.price
-           //else
-           // return prevValue;
-         }
-           , 0);*/
+     
     }
     //console.log(total);
     //console.log (dataIngredient.bun + "1");
@@ -87,11 +84,16 @@ const BurgerConstructor: FC = () => {
   const navigate = useNavigate();
   function handleOrderClick() {
     // При нажатии на кнопку «Оформить заказ» неавторизованный пользователь должен переадресовываться на маршрут /login
-    //console.log(utils.getCookie( 'accessToken')!== 'undefined');
+    //console.log(utils.getCookie( 'accessToken'));
 
     if (((document.cookie.indexOf('accessToken') >= 0) && (utils.getCookie('accessToken') !== 'undefined') && (localStorage.getItem('refreshToken') !== '')))
-
+      {
+      setIsClick( true);
+      console.log('Клик на номере заказа');
+      console.log(orderNumber);
       postOrder();
+      
+      }
     else {
       //console.log('handleOrderClick');
       navigate('/login');
@@ -104,7 +106,7 @@ const BurgerConstructor: FC = () => {
 
   function handleOrderClose() {
     //setIsModalVisible(false);
-    dispatch<any>({
+    dispatch({
       type: ORDERDETAILS_DELETE,
     });
   }
@@ -118,14 +120,14 @@ const BurgerConstructor: FC = () => {
 
 
     for (let item of sauseMainIngredients) {
-      ingredientsList.push(item.data._id);
+      ingredientsList.push(item._id);
     }
     for (let item of bunIngredients) {
       ingredientsList.push(item._id);
     }
     //console.log(bunIngredients);
     //console.log(sauseMainIngredients);
-    dispatch<any>(getOrderNumberPost(ingredientsList));
+    dispatch(getOrderNumberPost(ingredientsList));
 
 
   }
@@ -147,16 +149,20 @@ const BurgerConstructor: FC = () => {
 
 
   function onDropHandler(data: any) {
-    //const { _id, type } = data;
-
-    //  console.log(data);
-
+  //const { _id, type } = data;
+    
+      
+    data.sortedId = uuid();
+    data.uuid = uuid();
+    //console.log(data);
     (data.type !== 'bun') &&
-      dispatch<any>({
+      dispatch({
         type: BURGER_CONSTRUCTOR_ADD_INGREDIENT,
-        item: { data, sortedId: data._id, uuid: uuid() }
-      }) &&
-      dispatch<any>({
+        item:  data ,
+      }) ;
+      
+      (data.type !== 'bun') &&
+      dispatch({
         type: BURGER_INGREDIENTS_INCREASECOUNTER,
         item: data,
       })
@@ -164,18 +170,23 @@ const BurgerConstructor: FC = () => {
       ;
 
     (data.type === 'bun') &&
-      dispatch<any>({
+      dispatch({
         type: BURGER_CONSTRUCTOR_CHANGE_BUN,
         bun: data._id,
-      }) &&
-      dispatch<any>({
+      }) ;
+      
+      (data.type === 'bun') &&
+      dispatch({
         type: BURGER_INGREDIENT_CHANGE_BUN,
         item: data,
       });
   };
 
-  //console.log(dataIngredient);
-
+  
+  useEffect(() => {
+    if (isClick)
+      setIsClick(false);
+  }, [orderNumber]);
 
   return (
     < div ref={dropTargetRef} >
@@ -200,9 +211,10 @@ const BurgerConstructor: FC = () => {
           {(dataIngredient.items.length === 0) &&
             <ConstructorCard item={nullIngredient} key={"emptyMain"} type="sausemain" ></ConstructorCard>}
 
-          {(dataIngredient.items.length > 0) && (sauseMainIngredients.map((item, index) => (
+          {(dataIngredient.items.length > 0) && (sauseMainIngredients.map((item: any, index: any) => (
 
-            <ConstructorCard item={item.data} key={item.uuid} type="sausemain" index={index}></ConstructorCard>
+            (dataIngredient.items[index] != undefined) && 
+            <ConstructorCard item={item} key={item.uuid} type="sausemain" index={index}></ConstructorCard>
 
           )))}
         </div>
@@ -228,6 +240,12 @@ const BurgerConstructor: FC = () => {
           </Button>
         </p>
       </div>
+      {
+        ((orderNumber===null) && (isClick))  &&
+       
+          <Loader/>
+          
+      }
       {orderNumber &&
         <div className={styles.overflowHidden}>
           {

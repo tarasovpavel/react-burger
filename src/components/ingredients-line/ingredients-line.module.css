@@ -1,0 +1,15 @@
+.line{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ingredientName{
+    display: flex;
+    align-items: center;
+    column-gap: 200 px;
+}
+
+.ingredientName svg{
+    fill: white;
+}

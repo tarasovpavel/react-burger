@@ -1,28 +1,14 @@
 import { useDrag, useDrop } from "react-dnd";
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './constructor-card.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../hooks/hooks';
 import EmptyConstructorElement from '../empty-constructor-element/empty-constructor-element';
 import { BURGER_CONSTRUCTOR_DELETE, BURGER_CONSTRUCTOR_MOVE } from "../../services/actions/burger-constructor-actions";
 import { BURGER_INGREDIENTS_DECREASECOUNTER } from "../../services/actions/burger-ingredients-actions";
 import { useRef } from "react";
 import { FC } from "react";
-import { IIngredient, nullIngredient } from '../../services/reducers/burger-ingredients-reducer';
-
-type ConstructorCardProps = {
-  item: IIngredient,
-  type: string,
-  index?: number,
-}
-
-type RectResult = {
-  bottom: number;
-  height: number;
-  left: number;
-  right: number;
-  top: number;
-  width: number;
-} | null;
+import { nullIngredient } from '../../services/reducers/burger-ingredients-reducer';
+import {ConstructorCardProps, RectResult} from '../../types/types';
 
 const getRect = (element: HTMLElement | null): RectResult | null => {
   if (!element) return null;
@@ -32,21 +18,21 @@ const getRect = (element: HTMLElement | null): RectResult | null => {
 
 const ConstructorCard: FC<ConstructorCardProps> = ({ item, type, index }) => {
   const dispatch = useDispatch();
-  const ref = useRef<any>(null);
-  const refConstructor = useRef<any>(null);
+  const ref = useRef(null);
+  const refConstructor = useRef(null);
 
   //console.log(item);
 
   function handleDeleteClick(key: string, _id: string) {
     //console.log('handleDeleteClick');
-    //  console.log(key);
+      console.log(key);
     //  console.log(_id);
 
-    dispatch<any>({
+    dispatch({
       type: BURGER_CONSTRUCTOR_DELETE,
       sortedId: key,
     });
-    dispatch<any>({
+    dispatch({
       type: BURGER_INGREDIENTS_DECREASECOUNTER,
       _id: _id,
     })
@@ -79,7 +65,7 @@ const ConstructorCard: FC<ConstructorCardProps> = ({ item, type, index }) => {
       };
     },
 
-    hover(item: any, monitor) {
+    hover(item: any, monitor: any) {
       if (item.type === "bun") {
         return;
       }
@@ -124,10 +110,10 @@ const ConstructorCard: FC<ConstructorCardProps> = ({ item, type, index }) => {
           return;
         }
 
-      dispatch<any>({
+      dispatch({
         type: BURGER_CONSTRUCTOR_MOVE,
         dragIndex: dragIndex,
-        hoverIndex: hoverIndex,
+        hoverIndex: (hoverIndex!=undefined) ?hoverIndex:0,
       });
 
 
@@ -179,7 +165,7 @@ const ConstructorCard: FC<ConstructorCardProps> = ({ item, type, index }) => {
             price={item.price}
             thumbnail={item.image_mobile}
 
-            handleClose={() => handleDeleteClick(item._id, item._id)}
+            handleClose={() => handleDeleteClick(item.sortedId, item._id)}
           />
         }
 

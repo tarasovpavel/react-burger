@@ -1,10 +1,10 @@
-import React, { useState, useEffect, FC } from "react";
+import React, {  useEffect, FC } from "react";
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from "react-redux";
 import styles from "./register.module.css";
 import { registerUser } from '../../services/actions/redux-functions';
 import utils from '../../Utils/utils';
+import {useDispatch} from '../../hooks/hooks';
 
 const RegisterPage: FC = () => {
   const dispatch = useDispatch();
@@ -16,11 +16,11 @@ const RegisterPage: FC = () => {
 
 
   const onButtonClick = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log('register');
+    //console.log('register');
 
     if ((name.length > 0) && (email.length > 0) && (password.length > 0)) {
       e.preventDefault();
-      dispatch<any>(registerUser(email, password, name));
+      dispatch(registerUser(email, password, name));
       //const userAuthorized = document.cookie.indexOf('accessToken') >= 0;
       //if (userAuthorized) 
       navigate('/login');

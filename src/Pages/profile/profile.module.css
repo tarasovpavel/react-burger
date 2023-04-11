@@ -63,3 +63,11 @@
 {
   float: right;
 }
+
+
+.link_active {
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  color:#F2F2F3;
+}

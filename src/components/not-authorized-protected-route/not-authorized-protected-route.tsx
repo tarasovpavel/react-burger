@@ -1,14 +1,8 @@
 
 import { Navigate, useLocation } from 'react-router-dom';
 import utils from '../../Utils/utils';
-import { RouteProps } from 'react-router';
 import { FC } from 'react';
-
-type ProtectedRouteProps = {
-  element: any;
-  anonymous?: boolean;
-} & RouteProps;
-
+import { ProtectedRouteProps } from '../../types/types';
 
 
 const NotAccessProtectedRoute: FC<ProtectedRouteProps> = ({ element, anonymous = false }) => {

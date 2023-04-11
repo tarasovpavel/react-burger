@@ -1,0 +1,49 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 680px;
+    margin:auto;
+    margin-top:122px;
+    list-style-type: none;
+  }
+  .done{
+    color: #00CCCC;
+}
+.ingredientsList{
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.line{
+    margin-left:-20px;
+
+}
+.lineTop{
+
+    margin-top:12px;
+}
+
+.orderNumber{
+    text-align: center;    
+    
+}
+
+.dateColor {
+    color:#8585AD;
+}
+.bottom{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+
+
+
+.picture svg{
+    fill: white;
+}

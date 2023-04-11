@@ -1,7 +1,7 @@
 import React, { useEffect, FC } from "react";
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../hooks/hooks";
 import styles from "./login.module.css";
 import { authorization } from '../../services/actions/redux-functions';
 import { useLocation } from 'react-router-dom';
@@ -42,11 +42,11 @@ const LoginPage: FC = () => {
     if ((eMailValue.length > 0) && (passwordValue.length > 0)) {
       //localStorage.setItem('refreshToken', '');
       e.preventDefault();
-      dispatch<any>(authorization(eMailValue, passwordValue));
+      dispatch(authorization(eMailValue, passwordValue));
 
       //   console.log('authorization');
       //   console.log(utils.getCookie('accessToken'));
-      if ((utils.getCookie('accessToken') && utils.getCookie('accessToken') !== undefined)) {
+      if ((utils.getCookie('accessToken') && utils.getCookie('accessToken') !== 'undefined')) {
         //console.log(localStorage.getItem('refreshToken'));
         //    console.log(from);
         //return <Navigate to={from} />;
@@ -56,7 +56,7 @@ const LoginPage: FC = () => {
   }
 
   useEffect(() => {
-    if ((utils.getCookie('accessToken') && utils.getCookie('accessToken') !== undefined)) {
+    if ((utils.getCookie('accessToken') && utils.getCookie('accessToken') !== 'undefined')) {
       //console.log(localStorage.getItem('refreshToken'));
       console.log(from);
       //return <Navigate to={from} />;

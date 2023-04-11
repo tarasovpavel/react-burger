@@ -5,7 +5,7 @@ import { ingredientDetailReducer } from './ingredient-details-reducer';
 import { orderDetailsReducer } from './order-details-reducer';
 import { userInitialReducer } from './user-data';
 import { StateType } from 'typesafe-actions';
-
+import {webSocketReducer} from './websocket';
 
 
 const rootReducer = combineReducers({
@@ -14,6 +14,7 @@ const rootReducer = combineReducers({
   ingredientDetailData: ingredientDetailReducer,
   orderDetailsData: orderDetailsReducer,
   userData: userInitialReducer,
+  webSocket: webSocketReducer,
 });
 export default rootReducer;
 

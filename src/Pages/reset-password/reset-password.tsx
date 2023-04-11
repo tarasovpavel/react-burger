@@ -1,6 +1,6 @@
 import React, { useEffect, FC } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { AppThunk, useDispatch } from '../../hooks/hooks';
 import styles from "../reset-password/reset-password.module.css";
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -21,11 +21,11 @@ const ResetPasswordPage: FC = () => {
     //Если !userAuthorized то разрешать только если заходил на forgot и успешно получил сообщение о смене пароля
     // 
 
-    const createMyNewPassword = (e: React.FormEvent<HTMLFormElement>) => {
+    const createMyNewPassword  = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         //    console.log(token);
         if ((token.length > 0)) {
-            dispatch<any>(createNewPassword(password, token));
+            dispatch(createNewPassword(password, token));
             navigate('/');
         }
     }

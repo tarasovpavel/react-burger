@@ -26,7 +26,7 @@ const ForgotPasswordPage: FC = () => {
         //console.log('recreatePassword');
         e.preventDefault();
         if (eMailValue.length > 0) {
-            dispatch<any>(passwordReset(eMailValue));
+            dispatch(passwordReset(eMailValue));
             navigate('/reset-password', { state: { resetPassword: true } });
         }
     }

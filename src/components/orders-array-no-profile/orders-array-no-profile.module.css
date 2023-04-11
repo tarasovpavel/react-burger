@@ -1,0 +1,28 @@
+
+.container_div_right {
+  box-sizing: border-box;
+  margin-top:auto;
+  
+  height: 1200px;
+  width: 700px;
+  overflow-y: scroll;
+    
+
+}
+
+
+
+.container_div_right::-webkit-scrollbar{
+  width: 10px;
+  background-color: rgb(89, 57, 131);
+}
+
+
+
+.linkStyle{
+   
+    text-decoration: none;
+    color: white;
+}
+
+ 
