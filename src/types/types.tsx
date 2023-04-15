@@ -225,6 +225,8 @@ export type TIngredientsLineProps = {
 };
 
 
+
+
 export type TApplicationActions = 
 TBurgerIngredientsActions |
 TIngredientsActions |

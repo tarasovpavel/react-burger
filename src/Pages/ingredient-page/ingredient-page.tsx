@@ -59,7 +59,7 @@ const IngredientPage: FC = () => {
             </div>
         </div>
 
-    )  as any;
+    ) as any;
 }
 
 

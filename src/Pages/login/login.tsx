@@ -58,7 +58,7 @@ const LoginPage: FC = () => {
   useEffect(() => {
     if ((utils.getCookie('accessToken') && utils.getCookie('accessToken') !== 'undefined')) {
       //console.log(localStorage.getItem('refreshToken'));
-      console.log(from);
+      //console.log(from);
       //return <Navigate to={from} />;
       navigate(from);
     }

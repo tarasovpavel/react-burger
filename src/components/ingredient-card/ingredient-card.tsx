@@ -2,7 +2,7 @@ import { useDrag } from "react-dnd";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './ingredient-card.module.css';
 import { FC } from "react";
-import  {IngredientCardProps} from '../../types/types';
+import { IngredientCardProps } from '../../types/types';
 
 const IngredientCard: FC<IngredientCardProps> = ({ item, type }) => {
 
@@ -15,7 +15,7 @@ const IngredientCard: FC<IngredientCardProps> = ({ item, type }) => {
 
   //console.log(item.counter);
 
-  return  (
+  return (
     <div ref={dragRef} className={styles.stylerelative}>
       <img src={item.image} alt={item.name} />
       <div >
@@ -28,7 +28,7 @@ const IngredientCard: FC<IngredientCardProps> = ({ item, type }) => {
         <div >
           {
             (item.counter > 0) && <Counter count={item.counter} size="default" />
-            
+
           }
         </div>
       </div>

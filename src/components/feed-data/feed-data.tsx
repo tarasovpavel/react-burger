@@ -10,28 +10,30 @@ export type Store = StateType<typeof rootReducer>;
 
 const FeedData: FC = () => {
 
-    const { orders, total, totalToday }: 
-    { orders: TWSOrder[], total: number, totalToday: number } = useSelector((store: Store) => store.webSocket);
+    const { orders, total, totalToday }:
+        { orders: TWSOrder[], total: number, totalToday: number } = useSelector((store: Store) => store.webSocket);
 
     const doneOrders: TWSOrder[] = orders.filter(order => order.status === 'done');
     const ordersProgress: TWSOrder[] = orders.filter(order => order.status === 'created');
 
-   
 
-   
+
+
 
     return (
         <div >
             <div className={`${styles.flex} mb-15`}>
                 <div className={styles.half}>
-                                <span className={`text_type_main-medium mb-6 mt-1`}>Готовы:</span>
-                                <ul className={styles.orderNumbers}>
-                                    {
-                                        doneOrders.map((order: TWSOrder, i: number) => (                               
-                                            <li className={` text_type_digits-default    ${styles.colorDone}` } key={i}> {order.number}
-                                            </li>))
-                                    }
-                                </ul>
+                    <span className={`text_type_main-medium mb-6 mt-1`}>Готовы:</span>
+                    <ul className={styles.orderNumbers}>
+                        {
+                            doneOrders.map((order: TWSOrder, i: number) => (
+                                (i < 30) &&
+                                <li className={` text_type_digits-default    ${styles.colorDone}`} key={i}> {order.number}
+                                </li>))
+
+                        }
+                    </ul>
                 </div>
 
 
@@ -41,7 +43,7 @@ const FeedData: FC = () => {
                     <span className={`text_type_main-medium mb-6 mt-1`}>В работе:</span>
                     <ul className={styles.orderNumbers}>
                         {
-                            ordersProgress.map((order: TWSOrder, i: number) => (                               
+                            ordersProgress.map((order: TWSOrder, i: number) => (
                                 <li className={`text_type_digits-default ${styles.colorProgress}`} key={i}>{order.number}
                                 </li>))
                         }
@@ -57,7 +59,7 @@ const FeedData: FC = () => {
                 <span className={`text_type_main-medium`}>{'Выполнено за сегодня:'}</span>
                 <p className={`${styles.text} text_type_digits-large`}>{totalToday}</p>
             </div>
- 
+
         </div>
     )
 }

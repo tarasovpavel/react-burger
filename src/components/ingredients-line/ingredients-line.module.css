@@ -10,6 +10,13 @@
     column-gap: 200 px;
 }
 
+
+
 .ingredientName svg{
+    fill: white;
+}
+
+
+.line svg{
     fill: white;
 }

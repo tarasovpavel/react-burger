@@ -7,38 +7,38 @@ export const socketMiddleware = (wsActions: TWSActions): Middleware => {
 
         return next => (action) => {
             const { dispatch } = store;
-            const { 
-                wsInit, wsSendOrder, onOpen, onClose, onError, onMessage 
+            const {
+                wsInit, wsSendOrder, onOpen, onClose, onError, onMessage
             } = wsActions;
             const { type, payload } = action;
 
-            if(type === wsInit){
-                console.log(payload);
+            if (type === wsInit) {
+                //console.log(payload);
                 socket = new WebSocket(payload);
-                console.log(socket);
+                //console.log(socket);
             }
-            if(type === onClose && socket){
-                console.log('onClose');
+            if (type === onClose && socket) {
+                ///console.log('onClose');
                 socket.close();
             }
-            if(socket){
+            if (socket) {
                 socket.onopen = event => {
-                    console.log('onOpen');
+                    //console.log('onOpen');
                     dispatch({
                         type: onOpen,
                         payload: event
                     });
                 };
                 socket.onerror = event => {
-                    console.log('onerr');
+                    //console.log('onerr');
                     dispatch({
                         type: onError,
                         payload: event
                     });
                 };
                 socket.onmessage = event => {
-                    console.log('onMessage');
-                    console.log(event);
+                    //console.log('onMessage');
+                    //console.log(event);
                     const { data } = event;
                     const parsedData = JSON.parse(data);
                     const { success, ...rest } = parsedData;
@@ -53,8 +53,8 @@ export const socketMiddleware = (wsActions: TWSActions): Middleware => {
                         payload: event
                     });
                 };
-                
-                if(type === wsSendOrder){
+
+                if (type === wsSendOrder) {
                     const message = payload;
                     socket.send(JSON.stringify(message));
                 }

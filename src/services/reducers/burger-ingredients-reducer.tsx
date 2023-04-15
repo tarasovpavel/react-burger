@@ -8,8 +8,8 @@ import {
   TIngredientsActions
 } from '../actions/burger-ingredients-actions';
 
-import {IIngredientsState} from '../../types/types';
-import {IIngredient} from '../../types/types';
+import { IIngredientsState } from '../../types/types';
+import { IIngredient } from '../../types/types';
 
 export const nullIngredient: IIngredient = {
   _id: "",
@@ -76,7 +76,7 @@ export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, 
       }
     }
     case BURGER_INGREDIENTS_INCREASECOUNTER: {
-      console.log(action.item);
+      //console.log(action.item);
       return {
         ...state,
         items: [...state.items].map(item => {

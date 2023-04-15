@@ -1,14 +1,14 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
 import { NavLink } from "react-router-dom";
-
+import { useLocation } from 'react-router-dom';
 
 
 const AppHeader: FC = () => {
-
-
+  const { pathname } = useLocation();
+  console.log(pathname);
   return (
 
     <header className={styles.header} >
@@ -18,11 +18,14 @@ const AppHeader: FC = () => {
             <NavLink
               className={({ isActive }) => (isActive ? styles.link_active : styles.link)}
               to='/' >
-              <>
-                <BurgerIcon type="primary" />
-                <p className="p-1"></p>
-                <p className="text text_type_main-default"  >Конструктор</p>
-              </>
+
+              <BurgerIcon type={pathname === '/' ? "primary" : "secondary"} />
+
+              <p className="p-1"></p>
+              <p className="text text_type_main-default"  >Конструктор</p>
+
+
+
             </NavLink>
           </li>
           <li className={styles.menu_up_punkt}>
@@ -30,7 +33,7 @@ const AppHeader: FC = () => {
               className={({ isActive }) => (isActive ? styles.link_active : styles.link)}
               to='/feed' >
               <>
-                <ListIcon type="primary" />
+                <ListIcon type={pathname === '/feed' ? "primary" : "secondary"} />
                 <p className="p-1"></p>
                 <p className="text text_type_main-default" >Лента заказов</p>
               </>
@@ -46,7 +49,7 @@ const AppHeader: FC = () => {
               className={({ isActive }) => (isActive ? styles.link_active : styles.link)}
               to='/profile' >
               <>
-                <ProfileIcon type="primary" />
+                <ProfileIcon type={pathname === '/profile' ? "primary" : "secondary"} />
                 <p className="p-1"></p>
                 <p className="text text_type_main-default" >
                   Личный кабинет

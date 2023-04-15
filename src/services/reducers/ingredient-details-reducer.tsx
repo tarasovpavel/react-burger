@@ -11,10 +11,11 @@ import {
 
 
 
-const ingredientDetailsInitialState : IIngredientDetails = 
-    { item: null, 
-      requestError: false 
-    }
+const ingredientDetailsInitialState: IIngredientDetails =
+{
+  item: null,
+  requestError: false
+}
 
 
 export const ingredientDetailReducer = (state = ingredientDetailsInitialState, action: TIngredientDetailsActions) => {

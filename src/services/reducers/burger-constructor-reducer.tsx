@@ -7,7 +7,7 @@ import {
   BURGER_CONSTRUCTOR_CLEAR,
   TBurgerIngredientsActions
 } from '../actions/burger-constructor-actions';
-import {IburgerIngredientsState, IIngredient} from '../../types/types';
+import { IburgerIngredientsState, IIngredient } from '../../types/types';
 
 
 const burgerConstructorInitialState: IburgerIngredientsState = {
@@ -20,9 +20,9 @@ const burgerConstructorInitialState: IburgerIngredientsState = {
 // список всех ингредиентов в текущем конструкторе бургера,
 
 
-export const burgerConstructorReducer = (state = burgerConstructorInitialState as IburgerIngredientsState, action: TBurgerIngredientsActions) => {
+export const burgerConstructorReducer = (state = burgerConstructorInitialState, action: TBurgerIngredientsActions) => {
   //console.log('BURGER_CONSTRUCTOR_ADD_INGREDIENT');
- //  console.log(action);
+  //  console.log(action);
   switch (action.type) {
     case BURGER_CONSTRUCTOR_ADD_INGREDIENT: {
       //action.item.sortedId = action.sortedId;
@@ -41,9 +41,9 @@ export const burgerConstructorReducer = (state = burgerConstructorInitialState a
       };
     }
     case BURGER_CONSTRUCTOR_DELETE: {
-     //   console.log(BURGER_CONSTRUCTOR_DELETE);
-     //   console.log(action);
-     //   console.log(state.items);
+      //   console.log(BURGER_CONSTRUCTOR_DELETE);
+      //   console.log(action);
+      //   console.log(state.items);
       return {
         ...state,
         items: [...state.items].filter(

@@ -67,17 +67,17 @@ const OrderBlock: FC<TOrderBlockProps> =
                                 .map((image: any, i: number) => {
                                     if (i > 5) return;
                                     return (
-                                        
-                                            <li key={i+10}>
-                                                <IngredientIcon
-                                                    image={image} 
 
-                                                />
+                                        <li key={i + 10}>
+                                            <IngredientIcon
+                                                image={image}
+
+                                            />
 
 
-                                            </li>
+                                        </li>
 
-                                        
+
                                     )
                                 })
                                 .reverse()

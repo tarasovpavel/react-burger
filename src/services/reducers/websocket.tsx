@@ -6,7 +6,7 @@ import {
     WS_GET_ORDERS
 } from '../actions/websocket';
 
-import {  TWebSocketState } from '../../types/types';
+import { TWebSocketState } from '../../types/types';
 import { TWSOrdersActions } from '../actions/websocket';
 
 
@@ -18,13 +18,13 @@ const initialState: TWebSocketState = {
 };
 
 export const webSocketReducer = (state = initialState, action: TWSOrdersActions): TWebSocketState => {
-    switch(action.type){
+    switch (action.type) {
         case WS_CONNECTION_START: {
-            console.log('REDUCER_WS_CONNECTION_START');
-            console.log(action);
-            console.log(state);
+            //console.log('REDUCER_WS_CONNECTION_START');
+            //console.log(action);
+            //console.log(state);
             return {
-                ...state,                
+                ...state,
             }
         }
         case WS_CONNECTION_SUCCESS: {
@@ -34,7 +34,7 @@ export const webSocketReducer = (state = initialState, action: TWSOrdersActions)
             }
         }
 
-        
+
         case WS_CONNECTION_ERROR: {
             return {
                 ...state,
@@ -50,9 +50,9 @@ export const webSocketReducer = (state = initialState, action: TWSOrdersActions)
         case WS_GET_ORDERS: {
             return {
                 ...state,
-                    orders:  action.payload.orders,
-                    total:  action.payload.total,
-                    totalToday:  action.payload.totalToday,
+                orders: action.payload.orders,
+                total: action.payload.total,
+                totalToday: action.payload.totalToday,
             }
         }
         default: return state;

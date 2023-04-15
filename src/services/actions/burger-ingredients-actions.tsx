@@ -12,7 +12,7 @@ export const BURGER_INGREDIENT_REQUEST = "BURGER_INGREDIENT_REQUEST";
 
 export interface IBURGER_INGREDIENTS_SUCCESS {
     readonly type: typeof BURGER_INGREDIENTS_SUCCESS;
-    readonly items: IIngredient [];
+    readonly items: IIngredient[];
     readonly queryError?: boolean;
 }
 
@@ -23,7 +23,7 @@ export interface IBURGER_INGREDIENTS_ERROR {
 
 export interface IBURGER_INGREDIENTS_INCREASECOUNTER {
     readonly type: typeof BURGER_INGREDIENTS_INCREASECOUNTER;
-    readonly item: IIngredient ;
+    readonly item: IIngredient;
 }
 export interface IBURGER_INGREDIENTS_DECREASECOUNTER {
     readonly type: typeof BURGER_INGREDIENTS_DECREASECOUNTER;
@@ -31,15 +31,15 @@ export interface IBURGER_INGREDIENTS_DECREASECOUNTER {
 }
 export interface IBURGER_INGREDIENT_CHANGE_BUN {
     readonly type: typeof BURGER_INGREDIENT_CHANGE_BUN;
-    readonly item: IIngredient ;
+    readonly item: IIngredient;
 }
 
 export interface IBURGER_INGREDIENT_REQUEST {
-        readonly type: typeof BURGER_INGREDIENT_REQUEST;
-        readonly items: IIngredient [];    
-    }
+    readonly type: typeof BURGER_INGREDIENT_REQUEST;
+    readonly items: IIngredient[];
+}
 
- export type TIngredientsActions =  
+export type TIngredientsActions =
     IBURGER_INGREDIENTS_SUCCESS |
     IBURGER_INGREDIENTS_ERROR |
     IBURGER_INGREDIENTS_INCREASECOUNTER |

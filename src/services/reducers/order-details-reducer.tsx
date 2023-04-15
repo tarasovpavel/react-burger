@@ -3,15 +3,15 @@ import {
   ORDERDETAILS_SUCCESS,
   ORDERDETAILS_ERROR,
   ORDERDETAILS_DELETE,
-  
+
   TOrderDetailsActions
 
 } from '../actions/order-details-actions';
 
 // бъект текущего просматриваемого ингредиента,
-const orderDetailsInitialState : IIngredientDetails = { 
-  item: null, 
-  requestError: false , 
+const orderDetailsInitialState: IIngredientDetails = {
+  item: null,
+  requestError: false,
 }
 
 

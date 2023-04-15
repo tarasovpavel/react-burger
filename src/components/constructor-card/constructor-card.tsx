@@ -8,7 +8,7 @@ import { BURGER_INGREDIENTS_DECREASECOUNTER } from "../../services/actions/burge
 import { useRef } from "react";
 import { FC } from "react";
 import { nullIngredient } from '../../services/reducers/burger-ingredients-reducer';
-import {ConstructorCardProps, RectResult} from '../../types/types';
+import { ConstructorCardProps, RectResult } from '../../types/types';
 
 const getRect = (element: HTMLElement | null): RectResult | null => {
   if (!element) return null;
@@ -25,7 +25,7 @@ const ConstructorCard: FC<ConstructorCardProps> = ({ item, type, index }) => {
 
   function handleDeleteClick(key: string, _id: string) {
     //console.log('handleDeleteClick');
-      console.log(key);
+    //  console.log(key);
     //  console.log(_id);
 
     dispatch({
@@ -113,7 +113,7 @@ const ConstructorCard: FC<ConstructorCardProps> = ({ item, type, index }) => {
       dispatch({
         type: BURGER_CONSTRUCTOR_MOVE,
         dragIndex: dragIndex,
-        hoverIndex: (hoverIndex!=undefined) ?hoverIndex:0,
+        hoverIndex: (hoverIndex != undefined) ? hoverIndex : 0,
       });
 
 

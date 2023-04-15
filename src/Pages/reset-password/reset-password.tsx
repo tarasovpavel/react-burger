@@ -21,7 +21,7 @@ const ResetPasswordPage: FC = () => {
     //Если !userAuthorized то разрешать только если заходил на forgot и успешно получил сообщение о смене пароля
     // 
 
-    const createMyNewPassword  = (e: React.FormEvent<HTMLFormElement>) => {
+    const createMyNewPassword = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         //    console.log(token);
         if ((token.length > 0)) {

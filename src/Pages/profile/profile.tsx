@@ -88,7 +88,7 @@ const ProfilePage: FC = () => {
     //e.preventDefault();
     // console.log('profile');
     //  console.log(userData);
-   
+
 
 
     if ((userData !== undefined) && (userData.userName !== null)) {
@@ -116,10 +116,10 @@ const ProfilePage: FC = () => {
           <nav>
             <ul className={`text text_type_main-medium text_color_inactive `} >
               <li className={`mb-10 ${styles.liststylenone}`}>
-                <NavLink  className={({ isActive }) => 
-                            (isActive ? 
-                                `text text_type_main-medium text_color_inactive mb-6 ${styles.link_active}` : 
-                        `text text_type_main-medium text_color_inactive mb-6 ${styles.link}`)}
+                <NavLink className={({ isActive }) =>
+                (isActive ?
+                  `text text_type_main-medium text_color_inactive mb-6 ${styles.link_active}` :
+                  `text text_type_main-medium text_color_inactive mb-6 ${styles.link}`)}
                   to={'/profile'}
                 >Профиль
                 </NavLink>

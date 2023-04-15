@@ -4,12 +4,12 @@ import ReactDOM from 'react-dom';
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import {ModalRouteProps} from '../../types/types';
+import { ModalRouteProps } from '../../types/types';
 
 
 const modalRoot = document.getElementById("modal");
 
- 
+
 
 
 export const Modal: FC<ModalRouteProps> = (props) => {

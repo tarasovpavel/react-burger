@@ -3,23 +3,41 @@
     display: flex;
     flex-direction: column;
     width: 680px;
+    height: 600px;
     margin:auto;
-    margin-top:122px;
+    margin-top:120px;
     list-style-type: none;
+    
   }
-  .done{
-    color: #00CCCC;
-}
+
+
+
+
 .ingredientsList{
     list-style-type: none;
     display: flex;
     flex-direction: column;
     overflow: auto;
+    margin-top:60px;
+   
+    
 }
 
+.ingredientsList::-webkit-scrollbar {
+    width: 8px;
+ }
+ 
+ .ingredientsList::-webkit-scrollbar-track {
+    background: #2f2f37;
+    border-radius: 664px;
+ }
+ 
+ .ingredientsList::-webkit-scrollbar-thumb {
+    background-color: rgba(133, 133, 173, 1);
+ }
+ 
 .line{
     margin-left:-20px;
-
 }
 .lineTop{
 
@@ -40,7 +58,9 @@
 }
 
 
-
+.left{
+    text-align:left;
+}
 
 
 

@@ -1,6 +1,6 @@
 import {
-  password_ResetPath, password_Reset_Reset_Path, user_RegisterPath,
-  user_LogoutPath, user_LoginPath, user_TokenPath, user_DataPath, BASE_URL, WS_ORDERS
+  PASSWORD_RESETPATH, PASSWORD_RESET_RESET_PATH, USER_REGISTERPATH,
+  USER_LOGOUTPATH, USER_LOGINPATH, USER_TOKENPATH, USER_DATAPATH, BASE_URL, WS_ORDERS
 } from "../../constant";
 import { ORDERDETAILS_SUCCESS } from './order-details-actions';
 import { INGREDIENTDETAILS_QUERY } from './ingredient-details-actions';
@@ -13,19 +13,19 @@ import {
 import { BURGER_INGREDIENTS_ERROR, BURGER_INGREDIENTS_SUCCESS } from "./burger-ingredients-actions";
 import { BURGER_CONSTRUCTOR_CLEAR } from "./burger-constructor-actions";
 import utils from '../../Utils/utils';
-import { dataPath, orderNumberPath } from "../../constant";
+import { DATAPATH, ORDERNUMBERPATH } from "../../constant";
 import { IIngredient } from '../../types/types';
 import { AppDispatch, AppThunk } from "../../hooks/hooks";
 
 
 
-export const  passwordReset = (email: string)=> {
+export const passwordReset = (email: string) => {
 
   return async (dispatch: AppDispatch) => {
     const jsonBodyRequest = { email };
 
     try {
-      const answer = await request(`${password_ResetPath}`, {
+      const answer = await request(`${PASSWORD_RESETPATH}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(jsonBodyRequest)
@@ -51,18 +51,14 @@ export const  passwordReset = (email: string)=> {
 
 
 
-export const  createNewPassword = (password: string, token: string)  =>{
+export const createNewPassword = (password: string, token: string) => {
   return async (dispatch: AppDispatch) => {
     const jsonBodyRequest = { password, token };
 
     try {
-      /*const answer = await fetch(`${BASE_URL}${password_Reset_Reset_Path}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(jsonBodyRequest)
-      })*/
 
-      const answer = await request(`${password_Reset_Reset_Path}`, {
+
+      const answer = await request(`${PASSWORD_RESET_RESET_PATH}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(jsonBodyRequest)
@@ -95,13 +91,13 @@ export const  createNewPassword = (password: string, token: string)  =>{
 };
 
 
-export const registerUser =  (email: string, password: string, name: string) => {
+export const registerUser = (email: string, password: string, name: string) => {
   return async (dispatch: AppDispatch) => {
     const jsonBodyRequest = { email, password, name };
-     console.log(jsonBodyRequest);
+    console.log(jsonBodyRequest);
     // console.log(user_RegisterPath);
     try {
-      const answer = await request(`${user_RegisterPath}`, {
+      const answer = await request(`${USER_REGISTERPATH}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -113,7 +109,7 @@ export const registerUser =  (email: string, password: string, name: string) => 
 
 
       if (answer.success === true) {
-     //   console.log('registerUser SUCCESS');
+        //   console.log('registerUser SUCCESS');
         dispatch({
           type: USER_REGISTER_SUCCESS,
           userName: answer.name,
@@ -124,7 +120,7 @@ export const registerUser =  (email: string, password: string, name: string) => 
         // localStorage.setItem('refreshToken', result.refreshToken);
         // utils.setCookie('accessToken', result.accessToken.split('Bearer ')[1]);
 
-   //     console.log(USER_REGISTER_SUCCESS);
+        //     console.log(USER_REGISTER_SUCCESS);
       }
       else {
         dispatch({
@@ -139,7 +135,7 @@ export const registerUser =  (email: string, password: string, name: string) => 
       dispatch({
         type: USER_REGISTER_ERROR
       });
-      console.log(err);
+      //console.log(err);
     }
   }
 };
@@ -151,7 +147,7 @@ export const authorization = (email: string, password: string) => {
     //   console.log(jsonBodyRequest);
     //console.log('authorization SUCCESS');
     try {
-      const answer = await request(`${user_LoginPath}`, {
+      const answer = await request(`${USER_LOGINPATH}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(jsonBodyRequest)
@@ -160,7 +156,7 @@ export const authorization = (email: string, password: string) => {
       //.then((result) => 
 
 
-   //   console.log(answer);
+      //   console.log(answer);
       if (answer.success === true) {
         localStorage.setItem('refreshToken', answer.refreshToken);
         utils.setCookie('accessToken', answer.accessToken.split('Bearer ')[1], {});
@@ -182,7 +178,7 @@ export const authorization = (email: string, password: string) => {
         dispatch({
           type: USER_LOGIN_ERROR
         });
-        console.log('Authorization ERROR');
+        //console.log('Authorization ERROR');
 
       }//)
     }
@@ -190,7 +186,7 @@ export const authorization = (email: string, password: string) => {
       dispatch({
         type: USER_LOGIN_ERROR
       });
-      console.log('Authorization ERROR');
+      //console.log('Authorization ERROR');
       //console.log(err);
     }
   }
@@ -198,12 +194,12 @@ export const authorization = (email: string, password: string) => {
 
 
 
-export const updateToken = () =>{
+export const updateToken = () => {
   return async (dispatch: AppDispatch) => {
     const jsonBodyRequest = { token: localStorage.getItem('refreshToken') };
     try {
-      console.log('updateToken');
-      const answer = await request(`${user_TokenPath}`, {
+      //console.log('updateToken');
+      const answer = await request(`${USER_TOKENPATH}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -211,8 +207,8 @@ export const updateToken = () =>{
         body: JSON.stringify(jsonBodyRequest)
       })
       //const result = await utils.checkResponse(answer);
-      
-      console.log(answer);
+
+      //console.log(answer);
       if (answer.success === true) {
         dispatch({
           type: TOKEN_REFRESH_SUCCESS,
@@ -234,7 +230,7 @@ export const updateToken = () =>{
       dispatch({
         type: TOKEN_REFRESH_ERROR
       });
-      console.log(err);
+      //console.log(err);
 
     };
   }
@@ -245,7 +241,7 @@ export const updateToken = () =>{
 
 export const setIngredientData: AppThunk = (item: any) => {
 
-  return async (dispatch:  AppDispatch) => {
+  return async (dispatch: AppDispatch) => {
 
     dispatch({
       type: INGREDIENTDETAILS_QUERY,
@@ -268,7 +264,7 @@ export const updateUserData = (email: string, name: string, password: string) =>
     //console.log(jsonBodyRequest);
     try {
 
-      const answer = await request(`${user_DataPath}`, {
+      const answer = await fetchWithRefresh(`${USER_DATAPATH}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -276,8 +272,7 @@ export const updateUserData = (email: string, name: string, password: string) =>
         },
         body: JSON.stringify(jsonBodyRequest)
       })
-      //const result = await utils.checkResponse(answer);
-
+      
 
       //  console.log(result);
       if (answer.success === true) {
@@ -296,7 +291,7 @@ export const updateUserData = (email: string, name: string, password: string) =>
 
     }
     catch {
-      console.log('err');
+      //console.log('err');
       dispatch({
         type: USER_UPDATE_DATA_ERROR
       });
@@ -315,7 +310,7 @@ export const logOut = () => {
     //console.log(localStorage.getItem('refreshToken'));
     try {
 
-      const answer = await request(`${user_LogoutPath}`, {
+      const answer = await fetchWithRefresh(`${USER_LOGOUTPATH}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -361,8 +356,8 @@ export const logOut = () => {
 
 
 
-export const getUserData  = () => {
-  
+export const getUserData = () => {
+
   return async (dispatch: AppDispatch) => {
     const accessToken =
       utils.getCookie('accessToken');
@@ -370,18 +365,18 @@ export const getUserData  = () => {
       utils.getCookie('refreshToken');
     console.log(accessToken);
     {
-      console.log('getUserData');
-      const data = await fetchWithRefresh(`${user_DataPath}`, {
+      //console.log('getUserData');
+      const data = await fetchWithRefresh(`${USER_DATAPATH}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
           'Authorization': 'Bearer ' + accessToken
         }
       });
-      console.log('getUserData');
+      //console.log('getUserData');
       //console.log(data);
       //if(!data.success) throw new Error('');
-    //  console.log(data);
+      //  console.log(data);
       dispatch({
         type: USER_UPDATE_DATA_SUCCESS,
         email: data.user.email,
@@ -396,7 +391,7 @@ export const getUserData  = () => {
 
 export const fetchWithRefresh = async (url: string, options: any) => {
   try {
-     console.log('fetchWithRefresh');
+    //console.log('fetchWithRefresh');
     return await request(url, options);
     // console.log(res);
     //return await utils.checkResponse(res);
@@ -404,10 +399,10 @@ export const fetchWithRefresh = async (url: string, options: any) => {
   catch (err: any) {
     //console.log(err);
     //console.log(err.message);
-  
-    if ((err.message === 'jwt expired') || (err === 'Ошибка 403') ) {
+
+    if ((err.message === 'jwt expired') || (err === 'Ошибка 403')) {
       //console.log('updateToken');
-      const updateData : any = await updateToken();
+      const updateData: any = await updateToken();
 
       localStorage.setItem('refreshToken', updateData.refreshToken);
       //console.log(updateData.accessToken);
@@ -435,11 +430,13 @@ export const fetchWithRefresh = async (url: string, options: any) => {
 export function getOrderNumberPost(dataIngredient: string[]) {
   return async (dispatch: AppDispatch) => {
     const accessToken = utils.getCookie('accessToken');
-    
-    const answer = await request(`${orderNumberPath}`, {
+
+    const answer = await fetchWithRefresh(`${ORDERNUMBERPATH}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json',
-              'Authorization': `Bearer ${accessToken}` },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      },
       body: JSON.stringify({ ingredients: dataIngredient })
     })
 
@@ -447,7 +444,7 @@ export function getOrderNumberPost(dataIngredient: string[]) {
       type: ORDERDETAILS_SUCCESS,
       item: answer.order.number,
     });
-    console.log(answer);
+    //console.log(answer);
 
     return answer;
 
@@ -457,14 +454,14 @@ export function getOrderNumberPost(dataIngredient: string[]) {
 
 export function getIngredients() {
   //console.log(this._dataURL);
-  return request(`${dataPath}`, undefined);
+  return request(`${DATAPATH}`, undefined);
 
 
 }
 
 
 
-export const getRecommendedItems= ()  =>{
+export const getRecommendedItems = () => {
   return async (dispatch: AppDispatch) => {
     //   dispatch({
     //     type: GET_RECOMMENDED_ITEMS_REQUEST
@@ -475,9 +472,9 @@ export const getRecommendedItems= ()  =>{
         if (data) {
           dispatch({
             type: BURGER_INGREDIENTS_SUCCESS,
-            items: data.map((item: IIngredient , i?:number)=> ({ ...item, counter: 0 })),
+            items: data.map((item: IIngredient, i?: number) => ({ ...item, counter: 0 })),
 
-            
+
 
           });
           dispatch({
@@ -501,7 +498,7 @@ export const getRecommendedItems= ()  =>{
 
 
 
-const request = (endpoint: string, options:any) => {
+const request = (endpoint: string, options: any) => {
 
   // а также в ней базовый урл сразу прописывается, чтобы не дублировать в каждом запросе
   //console.log(options);

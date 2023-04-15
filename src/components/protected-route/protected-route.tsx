@@ -21,7 +21,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ element, anonymous = false })
 
 
   if (!(isLoggedIn) && (refreshToken)) {
-    console.log('ProtectedRoute');
+    //console.log('ProtectedRoute');
     dispatch(updateToken());
   }
 

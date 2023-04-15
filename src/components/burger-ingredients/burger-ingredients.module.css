@@ -8,11 +8,22 @@
 
   }
 
-  .container::-webkit-scrollbar{
-    width: 10px;
-    background-color: rgb(89, 57, 131);
+ 
+.container::-webkit-scrollbar {
+  width: 8px;
 }
 
+.container::-webkit-scrollbar-track {
+  background: #2f2f37;
+  border-radius: 664px;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: rgba(133, 133, 173, 1);
+}
+
+
+container
 
   .container_div_left {
     box-sizing: border-box;

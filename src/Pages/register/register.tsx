@@ -1,10 +1,10 @@
-import React, {  useEffect, FC } from "react";
+import React, { useEffect, FC } from "react";
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from "./register.module.css";
 import { registerUser } from '../../services/actions/redux-functions';
 import utils from '../../Utils/utils';
-import {useDispatch} from '../../hooks/hooks';
+import { useDispatch } from '../../hooks/hooks';
 
 const RegisterPage: FC = () => {
   const dispatch = useDispatch();

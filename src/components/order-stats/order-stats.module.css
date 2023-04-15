@@ -14,13 +14,20 @@
     scrollbar-width: thin;    
     row-gap: calc(var(--space) * 4);;
 }
-.ingredientsList::-webkit-scrollbar{
+
+.ingredientsList::-webkit-scrollbar {
     width: 8px;
-    background: var(--input-color);
-}
-.ingredientsList::-webkit-scrollbar-thumb{
-    background: var(--text-dark-grey);
-}
+  }
+  
+  .ingredientsList::-webkit-scrollbar-track {
+    background: #2f2f37;
+    border-radius: 664px;
+  }
+  
+  .ingredientsList::-webkit-scrollbar-thumb {
+    background-color: rgba(133, 133, 173, 1);
+  }
+  
 .statusDone{
     color: var(--light-green)
 }
@@ -35,7 +42,4 @@
     display: flex;
     align-items: center;
     column-gap: 9px;
-}
-.priceBlock svg{
-    fill: white;
 }

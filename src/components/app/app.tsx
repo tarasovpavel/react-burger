@@ -116,8 +116,6 @@ const App: FC = () => {
 
         <Route path="/login" element={<NotAccessProtectedRoute element={<LoginPage />} />} />
 
-        {/*<Route path="/register" element={<RegisterPage />} />*/}
-
 
         <Route path="/forgot-password" element={<NotAccessProtectedRoute element={<ForgotPasswordPage />} />} />
 

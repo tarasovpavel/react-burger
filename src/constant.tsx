@@ -1,13 +1,13 @@
-export const dataPath = 'ingredients';
-export const orderNumberPath = 'orders';
-export const password_ResetPath = 'password-reset';
-export const password_Reset_Reset_Path = 'password-reset/reset';
-export const user_RegisterPath = 'auth/register';
+export const DATAPATH = 'ingredients';
+export const ORDERNUMBERPATH = 'orders';
+export const PASSWORD_RESETPATH = 'password-reset';
+export const PASSWORD_RESET_RESET_PATH = 'password-reset/reset';
+export const USER_REGISTERPATH = 'auth/register';
 
-export const user_LoginPath = 'auth/login';
-export const user_LogoutPath = 'auth/logout';
-export const user_TokenPath = 'auth/token';
-export const user_DataPath = 'auth/user';
+export const USER_LOGINPATH = 'auth/login';
+export const USER_LOGOUTPATH = 'auth/logout';
+export const USER_TOKENPATH = 'auth/token';
+export const USER_DATAPATH = 'auth/user';
 
 export const BASE_URL = 'https://norma.nomoreparties.space/api/';
 

@@ -6,15 +6,15 @@ import styles from './ingredient-icon.module.css';
 
 const IngredientIcon: FC<TIngredientIconProps> = ({ image }) => {
 
-   
+
 
     return (
-       
-            <div className={(styles.icon)}>
-                
-                <img src={image} alt="ингредиент бургера" className={styles.ingredientImage}/>
-            </div>        
-   
+
+        <div className={(styles.icon)}>
+
+            <img src={image} alt="ингредиент бургера" className={styles.ingredientImage} />
+        </div>
+
     )
 }
 

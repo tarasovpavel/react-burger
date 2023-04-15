@@ -30,13 +30,13 @@ const BurgerConstructor: FC = () => {
 
   //const { dataIngredient, setData } = useState(null);
   const dispatch = useDispatch();
-  const[ isClick, setIsClick] =  useState(false);
+  const [isClick, setIsClick] = useState(false);
 
 
 
 
-  const dataIngredient = useSelector((store: Store) => store.burgerConstructorData) as IburgerIngredientsState ; // только ингредиенты контсруктора, и bun
-  const dataIngredients = useSelector((store: Store) => store.burgerIngredientsData.items) ; //Все существующие компоненты
+  const dataIngredient = useSelector((store: Store) => store.burgerConstructorData) as IburgerIngredientsState; // только ингредиенты контсруктора, и bun
+  const dataIngredients = useSelector((store: Store) => store.burgerIngredientsData.items); //Все существующие компоненты
   const orderNumber = useSelector((store: Store) => store.orderDetailsData.item);
   //console.log (dataIngredient);
   //console.log (dataIngredients);
@@ -48,7 +48,7 @@ const BurgerConstructor: FC = () => {
     let total = 0;
 
     if (dataIngredient.items.length > 0) {
-      console.log(dataIngredient.items[0].price);
+      //console.log(dataIngredient.items[0].price);
       var i: number;
       for (i = 0; i < dataIngredient.items.length; i++) {
 
@@ -57,7 +57,7 @@ const BurgerConstructor: FC = () => {
         //console.log(dataIngredient.items[i].price);
       }
 
-     
+
     }
     //console.log(total);
     //console.log (dataIngredient.bun + "1");
@@ -86,14 +86,13 @@ const BurgerConstructor: FC = () => {
     // При нажатии на кнопку «Оформить заказ» неавторизованный пользователь должен переадресовываться на маршрут /login
     //console.log(utils.getCookie( 'accessToken'));
 
-    if (((document.cookie.indexOf('accessToken') >= 0) && (utils.getCookie('accessToken') !== 'undefined') && (localStorage.getItem('refreshToken') !== '')))
-      {
-      setIsClick( true);
+    if (((document.cookie.indexOf('accessToken') >= 0) && (utils.getCookie('accessToken') !== 'undefined') && (localStorage.getItem('refreshToken') !== ''))) {
+      setIsClick(true);
       console.log('Клик на номере заказа');
       console.log(orderNumber);
       postOrder();
-      
-      }
+
+    }
     else {
       //console.log('handleOrderClick');
       navigate('/login');
@@ -149,19 +148,19 @@ const BurgerConstructor: FC = () => {
 
 
   function onDropHandler(data: any) {
-  //const { _id, type } = data;
-    
-      
+    //const { _id, type } = data;
+
+
     data.sortedId = uuid();
     data.uuid = uuid();
     //console.log(data);
     (data.type !== 'bun') &&
       dispatch({
         type: BURGER_CONSTRUCTOR_ADD_INGREDIENT,
-        item:  data ,
-      }) ;
-      
-      (data.type !== 'bun') &&
+        item: data,
+      });
+
+    (data.type !== 'bun') &&
       dispatch({
         type: BURGER_INGREDIENTS_INCREASECOUNTER,
         item: data,
@@ -173,16 +172,16 @@ const BurgerConstructor: FC = () => {
       dispatch({
         type: BURGER_CONSTRUCTOR_CHANGE_BUN,
         bun: data._id,
-      }) ;
-      
-      (data.type === 'bun') &&
+      });
+
+    (data.type === 'bun') &&
       dispatch({
         type: BURGER_INGREDIENT_CHANGE_BUN,
         item: data,
       });
   };
 
-  
+
   useEffect(() => {
     if (isClick)
       setIsClick(false);
@@ -213,7 +212,7 @@ const BurgerConstructor: FC = () => {
 
           {(dataIngredient.items.length > 0) && (sauseMainIngredients.map((item: any, index: any) => (
 
-            (dataIngredient.items[index] != undefined) && 
+            (dataIngredient.items[index] != undefined) &&
             <ConstructorCard item={item} key={item.uuid} type="sausemain" index={index}></ConstructorCard>
 
           )))}
@@ -241,10 +240,10 @@ const BurgerConstructor: FC = () => {
         </p>
       </div>
       {
-        ((orderNumber===null) && (isClick))  &&
-       
-          <Loader/>
-          
+        ((orderNumber === null) && (isClick)) &&
+
+        <Loader />
+
       }
       {orderNumber &&
         <div className={styles.overflowHidden}>

@@ -1,6 +1,6 @@
 import styles from "./empty-constructor-element.module.css";
 import { FC } from "react";
-import {EmptyConstructorCardProps} from '../../types/types';
+import { EmptyConstructorCardProps } from '../../types/types';
 
 
 const EmptyConstructorElement: FC<EmptyConstructorCardProps> = ({ text }) => {

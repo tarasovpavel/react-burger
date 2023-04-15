@@ -23,7 +23,7 @@ export interface ISendOrderAction {
     readonly payload: TWSOrder;
 }
 
-export type TWSOrdersActions = 
+export type TWSOrdersActions =
     IConnectionStartAction |
     IConnectionSuccessAction |
     IConnectionErrorAction |
