@@ -94,7 +94,7 @@ export const createNewPassword = (password: string, token: string) => {
 export const registerUser = (email: string, password: string, name: string) => {
   return async (dispatch: AppDispatch) => {
     const jsonBodyRequest = { email, password, name };
-    console.log(jsonBodyRequest);
+    //console.log(jsonBodyRequest);
     // console.log(user_RegisterPath);
     try {
       const answer = await request(`${USER_REGISTERPATH}`, {
