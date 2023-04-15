@@ -5,15 +5,9 @@ import {
   BURGER_CONSTRUCTOR_SORT,
   BURGER_CONSTRUCTOR_MOVE,
   BURGER_CONSTRUCTOR_CLEAR,
+  TBurgerIngredientsActions
 } from '../actions/burger-constructor-actions';
-import { IIngredient } from './burger-ingredients-reducer';
-
-
-interface IburgerIngredientsState {
-  items: IIngredient[],
-  bun: string,
-
-}
+import { IburgerIngredientsState, IIngredient } from '../../types/types';
 
 
 const burgerConstructorInitialState: IburgerIngredientsState = {
@@ -26,10 +20,13 @@ const burgerConstructorInitialState: IburgerIngredientsState = {
 // список всех ингредиентов в текущем конструкторе бургера,
 
 
-export const burgerConstructorReducer = (state = burgerConstructorInitialState, action: any) => {
-  // console.log(action);
+export const burgerConstructorReducer = (state = burgerConstructorInitialState, action: TBurgerIngredientsActions) => {
+  //console.log('BURGER_CONSTRUCTOR_ADD_INGREDIENT');
+  //  console.log(action);
   switch (action.type) {
     case BURGER_CONSTRUCTOR_ADD_INGREDIENT: {
+      //action.item.sortedId = action.sortedId;
+      //action.item.uuid = action.uuid;
       return {
         ...state,
         items:
@@ -44,8 +41,9 @@ export const burgerConstructorReducer = (state = burgerConstructorInitialState, 
       };
     }
     case BURGER_CONSTRUCTOR_DELETE: {
-      //  console.log(BURGER_CONSTRUCTOR_DELETE);
-      //  console.log(action);
+      //   console.log(BURGER_CONSTRUCTOR_DELETE);
+      //   console.log(action);
+      //   console.log(state.items);
       return {
         ...state,
         items: [...state.items].filter(

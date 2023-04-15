@@ -1,23 +1,18 @@
 
-import { useEffect, FC, ReactNode, } from 'react';
+import { useEffect, FC } from 'react';
 import ReactDOM from 'react-dom';
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import styles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { RouteProps } from 'react-router';
+import { ModalRouteProps } from '../../types/types';
 
 
 const modalRoot = document.getElementById("modal");
 
 
-type ProtectedRouteProps = {
-  onClose: () => void,
-  children: ReactNode,
-} & RouteProps;
 
 
-
-export const Modal: FC<ProtectedRouteProps> = (props) => {
+export const Modal: FC<ModalRouteProps> = (props) => {
 
 
 

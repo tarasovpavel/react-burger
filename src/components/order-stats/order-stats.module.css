@@ -1,0 +1,45 @@
+.orderStats{
+    width: 100%;
+}
+.number{
+    text-align: center;    
+}
+.ingredientsList{
+    display: flex;
+    flex-direction: column;
+    max-height: 28.89vh;
+    overflow: auto;
+    list-style-type: none;
+    padding-left: 0;
+    scrollbar-width: thin;    
+    row-gap: calc(var(--space) * 4);;
+}
+
+.ingredientsList::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .ingredientsList::-webkit-scrollbar-track {
+    background: #2f2f37;
+    border-radius: 664px;
+  }
+  
+  .ingredientsList::-webkit-scrollbar-thumb {
+    background-color: rgba(133, 133, 173, 1);
+  }
+  
+.statusDone{
+    color: var(--light-green)
+}
+.data{
+    display: flex;
+    justify-content: space-between;
+}
+.date{
+    color: var(--text-dark-grey);
+}
+.priceBlock{
+    display: flex;
+    align-items: center;
+    column-gap: 9px;
+}

@@ -5,13 +5,13 @@ import styles from './burger-ingredients.module.css';
 //import imageSelected from '../../images/selected.jpg';
 import { useState, useMemo, useRef } from 'react';
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "../../hooks/hooks";
 import { INGREDIENTDETAILS_QUERY } from "../../services/actions/ingredient-details-actions";
 import IngredientCard from '../ingredient-card/ingredient-card';
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { StateType } from 'typesafe-actions';
-import { IIngredient } from '../../services/reducers/burger-ingredients-reducer';
+import { IIngredient } from '../../types/types';
 
 import rootReducer from "../../services/reducers/reducer";
 export type Store = StateType<typeof rootReducer>;

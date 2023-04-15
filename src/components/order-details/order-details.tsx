@@ -1,10 +1,9 @@
 import doneImage from '../../images/done.png';
 
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/hooks";
 import { FC } from 'react';
 import { StateType } from 'typesafe-actions';
 
-//import Store  from '../../services/reducers/reducer';
 import rootReducer from "../../services/reducers/reducer";
 export type Store = StateType<typeof rootReducer>;
 
@@ -17,7 +16,7 @@ export const OrderDetails: FC = () => {
         <div >
 
             <p className="text text_type_digits-large pb-16" >
-                {orderNumber.item}
+                {orderNumber.item as any}
             </p>
             <p className=" text text_type_main-medium">
                 идентификатор заказа

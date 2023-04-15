@@ -1,24 +1,21 @@
+import { IIngredientDetails } from '../../types/types';
 import {
   ORDERDETAILS_SUCCESS,
   ORDERDETAILS_ERROR,
-  ORDERDETAILS_DELETE
+  ORDERDETAILS_DELETE,
+
+  TOrderDetailsActions
 
 } from '../actions/order-details-actions';
-import { IIngredient, nullIngredient } from './burger-ingredients-reducer';
-
-
-interface IOrderDetails {
-  item: IIngredient,
-  requestError: boolean,
-
-}
 
 // бъект текущего просматриваемого ингредиента,
-const orderDetailsInitialState = { 
-  item: null, 
-  requestError: false , 
+const orderDetailsInitialState: IIngredientDetails = {
+  item: null,
+  requestError: false,
 }
-export const orderDetailsReducer = (state = orderDetailsInitialState, action: any) => {
+
+
+export const orderDetailsReducer = (state = orderDetailsInitialState, action: TOrderDetailsActions) => {
   //console.log(action.item);
   switch (action.type) {
     case ORDERDETAILS_SUCCESS: {

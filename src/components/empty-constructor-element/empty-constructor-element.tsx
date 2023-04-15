@@ -1,9 +1,7 @@
 import styles from "./empty-constructor-element.module.css";
 import { FC } from "react";
+import { EmptyConstructorCardProps } from '../../types/types';
 
-type EmptyConstructorCardProps = {
-  text: string,
-}
 
 const EmptyConstructorElement: FC<EmptyConstructorCardProps> = ({ text }) => {
   // const classNames = `${cardStyles.card} ${type ? type === BUN_TYPE.TOP ? cardStyles.card_top : cardStyles.card_bottom : ''}`;

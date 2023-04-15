@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styles from "./ingredient-detail.module.css";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../hooks/hooks";
 import { useParams } from 'react-router-dom'
 import { StateType } from 'typesafe-actions';
 
@@ -9,7 +9,7 @@ export type Store = StateType<typeof rootReducer>;
 
 const IngredientDetail: FC = () => {
 
-    let dataIngredient = useSelector((store: Store) => store.ingredientDetailData.item);
+    let dataIngredient = useSelector((store: Store) => store.ingredientDetailData.item) as any;
     const dataIngredients = useSelector((store: Store) => store.burgerIngredientsData.items);
     const { id } = useParams();
 

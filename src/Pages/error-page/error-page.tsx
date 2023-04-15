@@ -7,11 +7,7 @@ import { FC } from "react";
 const ErrorPage: FC = () => {
   const navigate = useNavigate();
 
-  function handleClickMain() {
-    navigate("/");
-  }
-
-  return (
+   return (
 
 
     <div className="text text_type_main-large">
