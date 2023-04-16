@@ -50,7 +50,7 @@ export type ProtectedRouteProps = {
   } & RouteProps;
   
  export  interface IburgerIngredientsState {
-    items: IIngredient[],
+    items: Array<IIngredient>,
     bun: string,
     sortedId?: string;
     uuid?: string;
@@ -187,8 +187,9 @@ export type TUserData = {
   email: string|null;
   newPassword: string|null;
   condition: string|null;
-  requestChangePassword: boolean;
+
   auth_checked: boolean;
+  message: string|null;
 };
 
 
@@ -199,6 +200,7 @@ export interface IUserState
     email: string,
     condition: string,
     password: string,
+    message: string,
 };
 
 

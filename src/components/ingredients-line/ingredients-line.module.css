@@ -20,3 +20,8 @@
 .line svg{
     fill: white;
 }
+
+.price {
+    display: flex;
+    align-items: center;
+  }

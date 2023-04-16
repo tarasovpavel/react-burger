@@ -39,13 +39,7 @@ const App: FC = () => {
   const background = location.state && location.state.background;
 
 
-  //  const ingredientData = useSelector((store) => store.ingredientDetailData.item);
-
-
-
-  //const { data1, loading, error } = useFetch('https://norma.nomoreparties.space/api/ingredients');
-  // console.log(data1) ;
-  // setData(data1);setIsLoad (true);
+  
 
   useEffect(() => {
     // Отправляем экшен-функцию
@@ -53,8 +47,7 @@ const App: FC = () => {
     dispatch(getRecommendedItems())
 
     setIsLoad(true);
-    // setIsLoad(true);
-    //console.log(utils.getCookie('accessToken')) ;
+   
     if ((utils.getCookie('accessToken')) && (utils.getCookie('accessToken') !== 'undefined')) {
 
       dispatch( getUserData());

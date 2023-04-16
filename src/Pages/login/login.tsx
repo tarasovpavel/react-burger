@@ -38,18 +38,15 @@ const LoginPage: FC = () => {
   }
 
   const onButtonClick = async (e: React.FormEvent<HTMLFormElement>) => {
-    // console.log('onSubmit111');
+  
     if ((eMailValue.length > 0) && (passwordValue.length > 0)) {
       //localStorage.setItem('refreshToken', '');
       e.preventDefault();
       dispatch(authorization(eMailValue, passwordValue));
 
-      //   console.log('authorization');
-      //   console.log(utils.getCookie('accessToken'));
+
       if ((utils.getCookie('accessToken') && utils.getCookie('accessToken') !== 'undefined')) {
-        //console.log(localStorage.getItem('refreshToken'));
-        //    console.log(from);
-        //return <Navigate to={from} />;
+
         navigate(from);
       }
     }
@@ -57,9 +54,7 @@ const LoginPage: FC = () => {
 
   useEffect(() => {
     if ((utils.getCookie('accessToken') && utils.getCookie('accessToken') !== 'undefined')) {
-      //console.log(localStorage.getItem('refreshToken'));
-      //console.log(from);
-      //return <Navigate to={from} />;
+
       navigate(from);
     }
   }, [userData]);

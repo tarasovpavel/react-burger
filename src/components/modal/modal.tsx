@@ -45,7 +45,7 @@ export const Modal: FC<ModalRouteProps> = (props) => {
               <CloseIcon onClick={props.onClose} type="primary" />
             </div>
 
-            <div>
+            <div className={styles.bottom}>
               {props.children}
             </div>
           </div>

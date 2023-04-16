@@ -5,7 +5,8 @@
   width: 50%;
   padding: 15px;
   text-align: center;
-
+  align-items: center;
+  justify-content: end;
 }
 
 .container_div_right {
@@ -53,6 +54,11 @@
 
 .box2 {
   grid-column-start: 2;
+  align-items: center;
+    justify-content: end;
+    max-width: 536px;
+    min-width: 488px;
+    width: 100%;
 }
 
 

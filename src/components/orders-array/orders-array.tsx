@@ -37,13 +37,13 @@ const OrdersArray: FC = () => {
     const { orders }: { orders: TOrder[] } = useSelector((store: Store) => store.webSocket);
 
     useEffect(() => {
-        //console.log(wsUrlToken);
+
         dispatch({
             type: WS_CONNECTION_START,
             payload: wsUrlToken,
         });
 
-        //console.log('WS_CONNECTION_CLOSED');
+   
         return () => {
             dispatch({ type: WS_CONNECTION_CLOSED });
         }

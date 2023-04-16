@@ -5,17 +5,18 @@ import { useParams } from 'react-router-dom'
 import { StateType } from 'typesafe-actions';
 
 import rootReducer from "../../services/reducers/reducer";
+import { IIngredient } from "../../types/types";
 export type Store = StateType<typeof rootReducer>;
 
 const IngredientDetail: FC = () => {
 
-    let dataIngredient = useSelector((store: Store) => store.ingredientDetailData.item) as any;
+    let dataIngredient = useSelector((store: Store) => store.ingredientDetailData.item) ;
     const dataIngredients = useSelector((store: Store) => store.burgerIngredientsData.items);
     const { id } = useParams();
 
 
     if (!(dataIngredient))
-        dataIngredient = dataIngredients.find((item) => item._id === id);
+        dataIngredient = dataIngredients.find((item) => item._id === id) as IIngredient;
 
     return (
         dataIngredient &&

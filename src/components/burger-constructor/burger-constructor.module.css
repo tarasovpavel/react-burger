@@ -5,6 +5,7 @@
     flex:100%;
     height: 400px;
     overflow-y: scroll;
+    
 }
 
 
@@ -25,8 +26,18 @@
 
 .floatright{
 float:  right ;
+display: flex;
+   justify-content: flex-end;
+   height: 64px;
+   align-items: center;
 }
 
 .overflowHidden{
 overflow: hidden;
+}
+
+
+.price {
+  display: flex;
+  align-items: center;
 }

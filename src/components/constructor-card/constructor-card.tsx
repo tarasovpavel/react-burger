@@ -21,12 +21,10 @@ const ConstructorCard: FC<ConstructorCardProps> = ({ item, type, index }) => {
   const ref = useRef(null);
   const refConstructor = useRef(null);
 
-  //console.log(item);
+  
 
   function handleDeleteClick(key: string, _id: string) {
-    //console.log('handleDeleteClick');
-    //  console.log(key);
-    //  console.log(_id);
+
 
     dispatch({
       type: BURGER_CONSTRUCTOR_DELETE,
@@ -37,8 +35,7 @@ const ConstructorCard: FC<ConstructorCardProps> = ({ item, type, index }) => {
       _id: _id,
     })
   }
-  //let datenow= Date.now();
-  //console.log(datenow);
+
 
   //СОРТИРОВКА  
   const [{ isDragging }, drag] = useDrag({
@@ -46,7 +43,6 @@ const ConstructorCard: FC<ConstructorCardProps> = ({ item, type, index }) => {
     type: "constructorCard",
     item: () => {
       // Определяем элемент
-      //console.log('dragging');
       return { index };
     },
     collect: (monitor) => ({
@@ -83,29 +79,23 @@ const ConstructorCard: FC<ConstructorCardProps> = ({ item, type, index }) => {
       }
 
 
-
-
-      //console.log('useDrop');
-      //console.log (refConstructor.current);
-
-
-      const hoverBoundingRect = getRect(refConstructor.current);//.getBoundingClientRect();
+      const hoverBoundingRect = getRect(refConstructor.current);
 
       let hoverMiddleY = 0;
-      if ((hoverBoundingRect != null))
+      if ((hoverBoundingRect !== null))
         hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
       const clientOffset = monitor.getClientOffset();
       let hoverClientY = 0;
-      if ((clientOffset != null) && (clientOffset.y != null) && (hoverBoundingRect != null))
+      if ((clientOffset !== null) && (clientOffset.y !== null) && (hoverBoundingRect !== null))
         hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-      if (hoverIndex != null)
+      if ((hoverIndex) && (hoverIndex !== null) )
         if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
           return;
         }
 
-      if (hoverIndex != null)
+      if ((hoverIndex) && (hoverIndex !== null) )
         if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
           return;
         }
@@ -113,7 +103,7 @@ const ConstructorCard: FC<ConstructorCardProps> = ({ item, type, index }) => {
       dispatch({
         type: BURGER_CONSTRUCTOR_MOVE,
         dragIndex: dragIndex,
-        hoverIndex: (hoverIndex != undefined) ? hoverIndex : 0,
+        hoverIndex: hoverIndex ?? 0,
       });
 
 
@@ -124,7 +114,7 @@ const ConstructorCard: FC<ConstructorCardProps> = ({ item, type, index }) => {
 
 
   drag(drop(refConstructor));
-  //  console.log(item);
+ 
 
   return (
     <div className={styles.container} ref={refConstructor}>
