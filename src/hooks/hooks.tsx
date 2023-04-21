@@ -8,7 +8,6 @@ import { ThunkAction } from 'redux-thunk'
 import { store } from '../index';
 import { TApplicationActions } from '../types/types';
 import type { } from 'redux-thunk/extend-redux';
-import { Action, ActionCreator } from 'redux';
 
 
 export type RootState = ReturnType<typeof store.getState>;

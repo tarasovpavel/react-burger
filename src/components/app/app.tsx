@@ -81,7 +81,7 @@ const App: FC = () => {
 
 
       <AppHeader />
-      <Routes location={background || location}>
+      <Routes location={background || location} >
         <Route path="/" element={
           <DndProvider backend={HTML5Backend}>
             {isLoad && (
@@ -142,7 +142,8 @@ const App: FC = () => {
                 <IngredientDetail />
               </Modal>}>
             </Route>
-           
+            <Route path="*" element={<NotFound />} />
+            
           </>
         </Routes>
 
@@ -151,21 +152,22 @@ const App: FC = () => {
       {background &&
 
         <Routes>
-          <>
+          
           <Route path="/feed/:id" element={
             <Modal onClose={handleIngredientClose}>   
               <FeedOrderPage />
             </Modal>}>
           </Route>
           <Route path="*" element={<NotFound />} />
-          </>
+         
+          
         </Routes>
 
       }
       {background &&
 
         <Routes>
-          <>
+          
           <Route path="/profile/orders/:id" element= {<ProtectedRoute element={
             <Modal onClose={handleIngredientClose}>
               <FeedOrderPage />
@@ -173,8 +175,8 @@ const App: FC = () => {
             />
           }
           />
+          
           <Route path="*" element={<NotFound />} />
-          </>
         </Routes>
 
       }

@@ -41,7 +41,7 @@ root.render(
   <React.StrictMode>
     
 
-    <BrowserRouter basename='/react-burger'>
+    <BrowserRouter >
       <Provider store={store}>
 
         <App />
