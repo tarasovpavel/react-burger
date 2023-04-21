@@ -1,6 +1,6 @@
 describe('Драг-дроп Ингредиентов', () => {    
 	before(() => {
-      cy.visit('http://localhost:3000/react-burger');
+      cy.visit('http://localhost:3000');
 	  cy.contains('Соберите бургер');
     });
 	

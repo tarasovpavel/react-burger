@@ -1,6 +1,6 @@
 describe('Создание заказа', () => {    
 	before(() => {
-      cy.visit('http://localhost:3000/react-burger');
+      cy.visit('http://localhost:3000');
 	  cy.contains('Соберите бургер');
     });
 	
@@ -17,19 +17,19 @@ describe('Создание заказа', () => {
 
 		// Переход на страницу авторизации
         cy.get('[data-test="get-order"]').click();
-		cy.location().should((loc) => expect(loc.pathname).to.eq('/react-burger/login'));
+		cy.location().should((loc) => expect(loc.pathname).to.eq('/login'));
 		
 		// Заполнение данных на странице авторизации
 		 cy.get('[data-test="email"]').type('reactburger@yandex.ru');
 		 cy.get('[data-test="password"]').type('qwe_123');
 		 cy.get('[data-test="enter"]').click();
 		 cy.wait(500);
-		 cy.location().should((loc) => expect(loc.pathname).to.eq('/react-burger'));
+		 cy.location().should((loc) => expect(loc.pathname).to.eq('/'));
 		 
 		 //Оформлени езаказа
 		 cy.get('[data-test="get-order"]').click();
-		 cy.get('[data-test="modal"]', { timeout: 25000 }).should('exist');
-		 cy.get('[id="modal"]').should('exist');
+		 cy.get('[id="modal"]', { timeout: 25000 }).should('exist');
+		
     });
 	
   

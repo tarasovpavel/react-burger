@@ -1,6 +1,6 @@
 describe('Открытие модалки с ингредиентом, проверка его содержимого и закрытие', () => {
     before(() => {
-      cy.visit('http://localhost:3000/react-burger');
+      cy.visit('http://localhost:3000');
 	  cy.contains('Соберите бургер');
     });
 
