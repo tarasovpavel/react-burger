@@ -19,7 +19,10 @@ export const socketMiddleware = (wsActions: TWSActions): Middleware => {
             }
             if (type === onClose && socket) {
                 
+               if (socket.readyState === 1)
+                {
                 socket.close();
+                }
             }
             if (socket) {
                 socket.onopen = event => {
