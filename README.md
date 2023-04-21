@@ -1,6 +1,3 @@
-# Запуск приложения локально - по адресу  (это сделано для правильного деплоя на гитхабе) 
-http://localhost:3000/react-burger
-
 
 #  Ссылка на проект
 https://tarasovpavel.github.io/react-burger/
