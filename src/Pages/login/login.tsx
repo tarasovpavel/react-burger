@@ -38,18 +38,15 @@ const LoginPage: FC = () => {
   }
 
   const onButtonClick = async (e: React.FormEvent<HTMLFormElement>) => {
-    // console.log('onSubmit111');
+  
     if ((eMailValue.length > 0) && (passwordValue.length > 0)) {
       //localStorage.setItem('refreshToken', '');
       e.preventDefault();
       dispatch(authorization(eMailValue, passwordValue));
 
-      //   console.log('authorization');
-      //   console.log(utils.getCookie('accessToken'));
+
       if ((utils.getCookie('accessToken') && utils.getCookie('accessToken') !== 'undefined')) {
-        //console.log(localStorage.getItem('refreshToken'));
-        //    console.log(from);
-        //return <Navigate to={from} />;
+
         navigate(from);
       }
     }
@@ -57,9 +54,7 @@ const LoginPage: FC = () => {
 
   useEffect(() => {
     if ((utils.getCookie('accessToken') && utils.getCookie('accessToken') !== 'undefined')) {
-      //console.log(localStorage.getItem('refreshToken'));
-      //console.log(from);
-      //return <Navigate to={from} />;
+
       navigate(from);
     }
   }, [userData]);
@@ -82,7 +77,7 @@ const LoginPage: FC = () => {
               value={eMailValue}
               size={"default"}
               extraClass="mb-2"
-
+              data-test="email"
             />
           </div>
 
@@ -93,11 +88,12 @@ const LoginPage: FC = () => {
               value={passwordValue}
               name={'password'}
               extraClass="mb-2"
+              data-test="password"
             />
 
           </div>
 
-          <Button htmlType="submit" type="primary" size="large" >Войти</Button>
+          <Button htmlType="submit" type="primary" size="large" data-test="enter">Войти</Button>
 
           <p className="text text_type_main-default text_color_inactive mt-20">Вы — новый пользователь?
             <Link to={"/register"} > Зарегистрироваться</Link>

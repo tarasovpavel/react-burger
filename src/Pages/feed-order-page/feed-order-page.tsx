@@ -55,7 +55,7 @@ const FeedOrderPage: FC = () => {
     let order;
     let priceSum;
 
-    if ((orders.length) && (orders.length > 0)) {
+    if ((orders.length)) {
         order = orders.find((order: TWSOrder) => order.number === Number(id));
 
         let bun = false;
@@ -81,7 +81,7 @@ const FeedOrderPage: FC = () => {
                     <Loader />) : (
                     <div className={`${styles.container} `}>
 
-                        <div className={`${styles.orderNumber} text_type_digits-default`}>{`#${order.number}`}</div>
+                        <div className={`${styles.orderNumber} text_type_main-large`}>{`#${order.number}`}</div>
 
 
                         <span className={`${styles.left} text_type_main-medium mt-10 `}>   {order.name}  </span>
@@ -89,7 +89,7 @@ const FeedOrderPage: FC = () => {
                         <span className={`${styles.left}  text_type_main-default mb-10  mt-4   ${order.status === 'done' && styles.done}`}>
                             {getStatus[order.status]} </span>
 
-                        <span className={` ${styles.left}  text_type_main-medium `}>Состав:</span>
+                        <span className={` ${styles.left}  text_type_main-medium mb-2`}>Состав:</span>
                         <div className={styles.ingredientsList}>
 
                             <ul className={styles.line}>
@@ -110,8 +110,8 @@ const FeedOrderPage: FC = () => {
                                 {Utils.getTime(order.createdAt) + ' i-GMT+3'}
                             </span>
 
-                            <div className={styles.picture}>
-                                <span >{priceSum}</span>
+                            <div className={styles.price}>
+                                <span className="text text_type_digits-small m-2">{priceSum}</span>
                                 <CurrencyIcon type="secondary" />
                             </div>
                         </div>

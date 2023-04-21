@@ -41,11 +41,11 @@ export const Modal: FC<ModalRouteProps> = (props) => {
 
         <div className={styles.modal}>
           <div>
-            <div className={styles.header}>
+            <div className={styles.header} data-test="close-icon">
               <CloseIcon onClick={props.onClose} type="primary" />
             </div>
 
-            <div>
+            <div className={styles.bottom}>
               {props.children}
             </div>
           </div>

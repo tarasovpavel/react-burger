@@ -34,13 +34,13 @@ const OrdersArrayNoProfile: FC = () => {
     const { orders }: { orders: TOrder[] } = useSelector((store: Store) => store.webSocket);
 
     useEffect(() => {
-        //console.log(wsUrlToken);
+
         dispatch({
             type: WS_CONNECTION_START,
             payload: wsUrl
         });
 
-        //console.log('WS_CONNECTION_CLOSED');
+
         return () => {
             dispatch({ type: WS_CONNECTION_CLOSED });
         }
@@ -52,11 +52,6 @@ const OrdersArrayNoProfile: FC = () => {
         dispatch(logOut());
         navigate('/');
     }
-
-
-    console.log(url);
-    //navigate(`/feed/${id}`, { state: { background: location } });
-
 
 
     return (

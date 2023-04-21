@@ -18,15 +18,18 @@ const IngredientsLine: FC<TIngredientsLineProps> =
             <li className={`${styles.line} text text_type_digits-default`}>
                 <div className={styles.ingredientName}>
                     <IngredientIcon image={itemLine.image} />
-                    <span className={` text_type_main-default mr-6`}>
+                    <span className={` text_type_main-default mr-6 ml-4`}>
                         {itemLine.name}  </span>
                 </div>
-                <div className={styles.ingredientName}>
-                    <span className={styles.price}>
-                        {itemLine.type === 'bun' ? `2 x ${itemLine.price}` : `${numbers} x ${itemLine.price}`}
-                    </span>
-                    <CurrencyIcon type="secondary" />
-                </div>
+                
+          <div className={`${styles.price} mr-4`}>
+          <p className="text text_type_digits-small m-2">
+                {itemLine.type === 'bun' ? `2 x ${itemLine.price}` : `${numbers} x ${itemLine.price}`}
+          </p>
+          <CurrencyIcon type="primary" />
+        </div>
+
+
             </li>
         )
     }

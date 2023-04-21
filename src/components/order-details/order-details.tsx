@@ -5,12 +5,13 @@ import { FC } from 'react';
 import { StateType } from 'typesafe-actions';
 
 import rootReducer from "../../services/reducers/reducer";
+import { IIngredientDetails } from '../../types/types';
 export type Store = StateType<typeof rootReducer>;
 
 
 export const OrderDetails: FC = () => {
 
-    const orderNumber = useSelector((store: Store) => store.orderDetailsData);
+    const orderNumber = useSelector((store: Store) => store.orderDetailsData) as IIngredientDetails;
 
     return (
         <div >

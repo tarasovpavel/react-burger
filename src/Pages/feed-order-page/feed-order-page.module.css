@@ -19,12 +19,13 @@
     flex-direction: column;
     overflow: auto;
     margin-top:60px;
-   
+    
     
 }
 
 .ingredientsList::-webkit-scrollbar {
     width: 8px;
+    margin-right:24px;
  }
  
  .ingredientsList::-webkit-scrollbar-track {
@@ -34,6 +35,7 @@
  
  .ingredientsList::-webkit-scrollbar-thumb {
     background-color: rgba(133, 133, 173, 1);
+    
  }
  
 .line{
@@ -45,7 +47,7 @@
 }
 
 .orderNumber{
-    text-align: center;    
+    text-align: left;    
     
 }
 
@@ -64,6 +66,16 @@
 
 
 
-.picture svg{
+.price svg{
     fill: white;
 }
+
+.done{
+    color:  #00CCCC;
+}
+
+
+.price {
+    display: flex;
+    align-items: center;
+  }

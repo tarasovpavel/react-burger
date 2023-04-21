@@ -96,7 +96,7 @@ const OrderStats: FC = () => {
             {
                 !order ? (
                     <Loader />) : (
-                    <section className={`${styles.orderStats} text text_type_digits-default`}>
+                    <div className={`${styles.orderStats} text text_type_digits-default`}>
                         <div className={styles.number}>{`#${order.number}`}</div>
                         <h2 className={`text_type_main-medium mt-10 mb-3`}>
                             {order.name}
@@ -122,12 +122,19 @@ const OrderStats: FC = () => {
                             <span className={`${styles.date} text_type_main-default`}>
                                 {Utils.getTime(order.createdAt)}
                             </span>
-                            <div className={styles.priceBlock}>
-                                <span className={styles.price}>{price}</span>
-                                <CurrencyIcon type="secondary" />
+                            
+                            <div className={`${styles.price} mr-4`}>
+                            <p className="text text_type_digits-small m-2">
+                                {price}</p>
+                                <CurrencyIcon type="primary" />
                             </div>
+
+                        
+
+
+
                         </div>
-                    </section>
+                    </div>
                 )
             }
         </React.Fragment>

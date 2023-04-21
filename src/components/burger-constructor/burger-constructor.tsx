@@ -35,32 +35,28 @@ const BurgerConstructor: FC = () => {
 
 
 
-  const dataIngredient = useSelector((store: Store) => store.burgerConstructorData) as IburgerIngredientsState; // только ингредиенты контсруктора, и bun
+  const dataIngredient = useSelector((store: Store) => store.burgerConstructorData); // только ингредиенты контсруктора, и bun
   const dataIngredients = useSelector((store: Store) => store.burgerIngredientsData.items); //Все существующие компоненты
-  const orderNumber = useSelector((store: Store) => store.orderDetailsData.item);
-  //console.log (dataIngredient);
-  //console.log (dataIngredients);
-  //console.log (orderNumber);
+  const orderNumber = useSelector((store: Store) => store.orderDetailsData.item) ;
+
   // Расчет фиктивной полной стоимости, потом будем считать только выбранные
   const SumPrice = useMemo(() => {
-    //console.log('getSumPrice');
-    //console.log( dataIngredient.items);
+
     let total = 0;
 
     if (dataIngredient.items.length > 0) {
-      //console.log(dataIngredient.items[0].price);
+
       var i: number;
       for (i = 0; i < dataIngredient.items.length; i++) {
 
-        if ((dataIngredient.items[i] != undefined) && (dataIngredient.items[i].price !== undefined) && (dataIngredient.items[i].price !== null))
+        if ((dataIngredient.items[i]) && (dataIngredient.items[i].price) && (dataIngredient.items[i].price !== null))
           total += dataIngredient.items[i].price;
-        //console.log(dataIngredient.items[i].price);
+
       }
 
 
     }
-    //console.log(total);
-    //console.log (dataIngredient.bun + "1");
+
     if (dataIngredient.bun) { total += 2 * dataIngredients.filter((item) => item._id === dataIngredient.bun)[0].price };
 
     return total;
@@ -70,36 +66,32 @@ const BurgerConstructor: FC = () => {
 
   const bunIngredients = useMemo(() => {
     return dataIngredients.filter((item) => item._id === dataIngredient.bun);
-    // this.setState({price: sumPrice});
+
   }, [dataIngredients, dataIngredient]);
 
 
   const sauseMainIngredients = useMemo(() => {
-    //console.log(dataIngredient.items);
+
     return dataIngredient.items;
-    // this.setState({price: sumPrice});
+
   }, [dataIngredient]);
 
 
   const navigate = useNavigate();
   function handleOrderClick() {
     // При нажатии на кнопку «Оформить заказ» неавторизованный пользователь должен переадресовываться на маршрут /login
-    //console.log(utils.getCookie( 'accessToken'));
 
-    if (((document.cookie.indexOf('accessToken') >= 0) && (utils.getCookie('accessToken') !== 'undefined') && (localStorage.getItem('refreshToken') !== ''))) {
+
+    if (( ((utils.getCookie('accessToken')) && (utils.getCookie('accessToken') !== 'undefined'))  && (localStorage.getItem('refreshToken') !== ''))) {
       setIsClick(true);
-      console.log('Клик на номере заказа');
-      console.log(orderNumber);
+
       postOrder();
 
     }
     else {
-      //console.log('handleOrderClick');
+
       navigate('/login');
     }
-    // console.log('handleOrderClick');
-    // console.log(orderNumber);
-    //setIsModalVisible(true);
 
   }
 
@@ -110,7 +102,7 @@ const BurgerConstructor: FC = () => {
     });
   }
 
-  //const selectedBunIngredients = dataIngredient.filter((item) => item.type === "bun");
+
 
   function postOrder() {
     // Посылаем на данный момент  все ингредиенты 
@@ -124,8 +116,7 @@ const BurgerConstructor: FC = () => {
     for (let item of bunIngredients) {
       ingredientsList.push(item._id);
     }
-    //console.log(bunIngredients);
-    //console.log(sauseMainIngredients);
+
     dispatch(getOrderNumberPost(ingredientsList));
 
 
@@ -153,7 +144,7 @@ const BurgerConstructor: FC = () => {
 
     data.sortedId = uuid();
     data.uuid = uuid();
-    //console.log(data);
+
     (data.type !== 'bun') &&
       dispatch({
         type: BURGER_CONSTRUCTOR_ADD_INGREDIENT,
@@ -188,7 +179,7 @@ const BurgerConstructor: FC = () => {
   }, [orderNumber]);
 
   return (
-    < div ref={dropTargetRef} >
+    < div ref={dropTargetRef} data-test="constructor">
       <p className="text text_type_main-medium pt-20 pb-10"> </p>
 
       <div >
@@ -203,7 +194,7 @@ const BurgerConstructor: FC = () => {
             <ConstructorCard item={bunIngredients[0]} type="bunUp" key={bunIngredients[0]._id + "bunUp"}  ></ConstructorCard>}
         </div>
 
-        <div className={`${styles.container} custom-scroll mt-10 pr-2`}  >
+        <div className={`${styles.container} custom-scroll mt-10 pr-2`}  data-test="constructor-main-sauce">
 
           {/*Если sauseMain-пустой, то рисуем приглашение))*/}
 
@@ -212,7 +203,7 @@ const BurgerConstructor: FC = () => {
 
           {(dataIngredient.items.length > 0) && (sauseMainIngredients.map((item: any, index: any) => (
 
-            (dataIngredient.items[index] != undefined) &&
+            (dataIngredient.items[index]) &&
             <ConstructorCard item={item} key={item.uuid} type="sausemain" index={index}></ConstructorCard>
 
           )))}
@@ -228,16 +219,24 @@ const BurgerConstructor: FC = () => {
 
 
 
-      <div className={styles.floatright}>
+      <div className={`${styles.floatright}  mt-10 mr-4`}>
 
-        <p className="text text_type_main-default pr-4 pt-20 pb-10">
 
-          {SumPrice + ' '}
-          <CurrencyIcon type='primary' />
-          <Button htmlType="button" type="primary" size="medium" onClick={handleOrderClick}>
-            Оформить заказ
-          </Button>
-        </p>
+
+
+        
+        <div className={`${styles.price} mr-10`}>
+          <p className="text text_type_digits-medium m-2">
+            {SumPrice + ' '}
+          </p>
+          <CurrencyIcon type="primary" />
+        </div>
+
+
+        <Button htmlType="button" type="primary" size="medium" onClick={handleOrderClick} data-test="get-order">
+          Оформить заказ
+        </Button>
+
       </div>
       {
         ((orderNumber === null) && (isClick)) &&

@@ -13,32 +13,31 @@ export const socketMiddleware = (wsActions: TWSActions): Middleware => {
             const { type, payload } = action;
 
             if (type === wsInit) {
-                //console.log(payload);
+
                 socket = new WebSocket(payload);
-                //console.log(socket);
+                
             }
             if (type === onClose && socket) {
-                ///console.log('onClose');
+                
                 socket.close();
             }
             if (socket) {
                 socket.onopen = event => {
-                    //console.log('onOpen');
+                   
                     dispatch({
                         type: onOpen,
                         payload: event
                     });
                 };
                 socket.onerror = event => {
-                    //console.log('onerr');
+                   
                     dispatch({
                         type: onError,
                         payload: event
                     });
                 };
                 socket.onmessage = event => {
-                    //console.log('onMessage');
-                    //console.log(event);
+                  
                     const { data } = event;
                     const parsedData = JSON.parse(data);
                     const { success, ...rest } = parsedData;

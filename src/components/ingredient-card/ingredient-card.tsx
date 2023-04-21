@@ -6,15 +6,13 @@ import { IngredientCardProps } from '../../types/types';
 
 const IngredientCard: FC<IngredientCardProps> = ({ item, type }) => {
 
-  // console.log(item) ;
-
+ 
   const [, dragRef] = useDrag({
     type: type,
     item: item,
   });
 
-  //console.log(item.counter);
-
+  
   return (
     <div ref={dragRef} className={styles.stylerelative}>
       <img src={item.image} alt={item.name} />
