@@ -23,7 +23,7 @@ const ForgotPasswordPage: FC = () => {
     const navigate = useNavigate();
 
     const recreatePassword = (e: React.FormEvent<HTMLFormElement>) => {
-        //console.log('recreatePassword');
+
         e.preventDefault();
         if (eMailValue.length > 0) {
             dispatch(passwordReset(eMailValue));

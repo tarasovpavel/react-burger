@@ -48,13 +48,12 @@ const ProfilePage: FC = () => {
   }
 
   function onReset() {
-    //dispatch(utils.logout());
-    //console.log(userData);
+
     setName(userData.userName);
     setPasswordValue(userData.password);
     setEMailValue(userData.email);
 
-    //console.log(userData);
+
     const nameHTMLInputElement = document.getElementById('name') as HTMLInputElement;
     nameHTMLInputElement.value = (userData.userName === null) ? '' : userData.userName;
 
@@ -68,7 +67,7 @@ const ProfilePage: FC = () => {
 
   const onSave = () => {
     //сохраняем данные на сервер Сохраняем данные  в стор
-    // console.log('onSave');
+ 
 
     dispatch(updateUserData(eMailValue as string, nameValue as string, passwordValue as string));
     setUserDataChanged(false);
@@ -85,14 +84,10 @@ const ProfilePage: FC = () => {
 
   useEffect(() => {
 
-    //e.preventDefault();
-    // console.log('profile');
-    //  console.log(userData);
-
 
 
     if ((userData !== undefined) && (userData.userName !== null)) {
-      //console.log('profile1');
+
       const nameHTMLInputElement = document.getElementById('name') as HTMLInputElement;
       nameHTMLInputElement.value = (userData.userName === null) ? '' : userData.userName;
 

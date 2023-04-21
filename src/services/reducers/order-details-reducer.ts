@@ -16,11 +16,10 @@ const orderDetailsInitialState: IIngredientDetails = {
 
 
 export const orderDetailsReducer = (state = orderDetailsInitialState, action: TOrderDetailsActions) => {
-  //console.log(action.item);
+ 
   switch (action.type) {
     case ORDERDETAILS_SUCCESS: {
-      // console.log(ORDERDETAILS_SUCCESS);
-      // console.log(action);
+
       return {
         item: action.item,
         requestError: false,

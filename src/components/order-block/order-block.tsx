@@ -21,13 +21,13 @@ const OrderBlock: FC<TOrderBlockProps> =
         const location = useLocation();
 
         let isBun: boolean = false;
-        //console.log(ingredients);
+
         let price: number = 0;
         if (ingredients.length > 0) {
             price = ingredients.reduce((accum: any, id: string) => {
 
                 const item = ingredientsData.find((item: TIngredientItem) => item._id === id);
-                //console.log(item.type);
+ 
                 if ((item?.type) && (item.type === 'bun')) {
                     if (isBun) return accum;
                     isBun = true;
@@ -83,8 +83,9 @@ const OrderBlock: FC<TOrderBlockProps> =
                                 .reverse()
                         }
                     </ul>
-                    <div className={styles.price}>
-                        <span>{`${price}  `}</span>
+                    <div className={`${styles.price} text_type_main-medium mr-4`}>
+                    
+                        <span className="text text_type_digits-small m-2">{`${price} `}</span>
                         <CurrencyIcon type="secondary" />
                     </div>
                 </div>

@@ -42,8 +42,7 @@ const BurgerIngredients: FC = () => {
 
 
   const bunIngredients = useMemo(() => {
-    //console.log('BurgerIngredientsSelector');
-    //console.log(dataIngredient);
+
     return dataIngredient.filter((item) => item.type === "bun");
   }, [dataIngredient]);
 
@@ -58,34 +57,28 @@ const BurgerIngredients: FC = () => {
 
   function handleIngredientClick(item: IIngredient) {
     //setIngredient(item);
-    //console.log('click');
+
     dispatch({
       type: INGREDIENTDETAILS_QUERY,
       item: item
     });
-    //console.log(item);
+
     const id = item._id;
-    //console.log('/ingredients/${id}');
+
     navigate(`/ingredients/${id}`, { state: { background: location } });
   }
 
   function handleScroll(e: React.UIEvent<HTMLElement>) {
-    //console.log('scr1');
     e.stopPropagation();
     let bunDistance = 0;
-    if ((headerMenuRef.current != null) && (bunMenuRef.current != null))
+    if ((headerMenuRef.current !== null) && (bunMenuRef.current !== null))
       bunDistance = headerMenuRef.current.getBoundingClientRect().top - bunMenuRef.current.getBoundingClientRect().top;
     let sauceDistance = 0;
-    if ((headerMenuRef.current != null) && (sauceMenuRef.current != null))
+    if ((headerMenuRef.current !== null) && (sauceMenuRef.current !== null))
       sauceDistance = headerMenuRef.current.getBoundingClientRect().top - sauceMenuRef.current.getBoundingClientRect().top;
     let mainDistance = 0;
-    if ((headerMenuRef.current != null) && (mainMenuRef.current != null))
+    if ((headerMenuRef.current !== null) && (mainMenuRef.current !== null))
       mainDistance = headerMenuRef.current.getBoundingClientRect().top - mainMenuRef.current.getBoundingClientRect().top;
-
-    // console.log("bunDistance  " + bunDistance);
-    // console.log("sauceDistance" + sauceDistance);
-    // console.log("mainDistance" + mainDistance);
-
     if ((Math.abs(bunDistance) < Math.abs(sauceDistance)) && (Math.abs(bunDistance) < Math.abs(mainDistance))) { setActiveTab("bun") }
     else {
       (Math.abs(mainDistance) < Math.abs(sauceDistance)) ? setActiveTab("main") : setActiveTab("sauce");
@@ -108,7 +101,8 @@ const BurgerIngredients: FC = () => {
         mainMenuRef.current?.scrollIntoView({ behavior: 'smooth' })
         break
       default:
-        console.log('ERR!!!')
+        break
+        
     }
   }
 

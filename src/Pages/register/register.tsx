@@ -16,7 +16,7 @@ const RegisterPage: FC = () => {
 
 
   const onButtonClick = (e: React.FormEvent<HTMLFormElement>) => {
-    //console.log('register');
+
 
     if ((name.length > 0) && (email.length > 0) && (password.length > 0)) {
       e.preventDefault();

@@ -17,13 +17,12 @@ const ResetPasswordPage: FC = () => {
 
     const navigate = useNavigate();
 
-    //const userData = useSelector((store) => store.userData);
-    //Если !userAuthorized то разрешать только если заходил на forgot и успешно получил сообщение о смене пароля
+       //Если !userAuthorized то разрешать только если заходил на forgot и успешно получил сообщение о смене пароля
     // 
 
     const createMyNewPassword = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        //    console.log(token);
+  
         if ((token.length > 0)) {
             dispatch(createNewPassword(password, token));
             navigate('/');
@@ -32,11 +31,6 @@ const ResetPasswordPage: FC = () => {
 
     useEffect(() => {
 
-        //    if (userData)
-        //    {
-        //        (location.state && location.state.previousLocation) ? navigate(location.state.previousLocation.pathname) : navigate('/');
-        //    }
-        //    else
         !location?.state?.resetPassword && navigate('/forgot-password')
     }, [location.state, navigate]);
 

@@ -20,9 +20,7 @@ const initialState: TWebSocketState = {
 export const webSocketReducer = (state = initialState, action: TWSOrdersActions): TWebSocketState => {
     switch (action.type) {
         case WS_CONNECTION_START: {
-            //console.log('REDUCER_WS_CONNECTION_START');
-            //console.log(action);
-            //console.log(state);
+
             return {
                 ...state,
             }

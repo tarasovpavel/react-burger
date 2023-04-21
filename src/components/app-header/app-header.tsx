@@ -8,7 +8,7 @@ import { useLocation } from 'react-router-dom';
 
 const AppHeader: FC = () => {
   const { pathname } = useLocation();
-  console.log(pathname);
+
   return (
 
     <header className={styles.header} >

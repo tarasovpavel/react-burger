@@ -19,12 +19,11 @@ const ingredientDetailsInitialState: IIngredientDetails =
 
 
 export const ingredientDetailReducer = (state = ingredientDetailsInitialState, action: TIngredientDetailsActions) => {
-  //    console.log('ingredientDetailReducer');
-  //    console.log(action);
+
   switch (action.type) {
 
     case INGREDIENTDETAILS_QUERY: {
-      //console.log(action.item);
+      
       return {
         item: action.item,
         requestError: false,

@@ -1,18 +1,18 @@
 .header {
     box-sizing: border-box;
     margin: auto;
-    background-color: rgb(8, 8, 8);
+    background-color: #1C1C21;
     height: 88px;
     display: flex;
     align-items: center;
-    width: 1200px;
+    width: 100%;
     top:40px;
-
+ 
   }
   
 
   .menu {
-    width: 100%;
+    width: 1200px;
     margin: 0 auto;
   }
   

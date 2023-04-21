@@ -4,7 +4,7 @@ import {
   BURGER_INGREDIENTS_INCREASECOUNTER,
   BURGER_INGREDIENTS_DECREASECOUNTER,
   BURGER_INGREDIENT_CHANGE_BUN,
-  BURGER_INGREDIENT_REQUEST,
+
   TIngredientsActions
 } from '../actions/burger-ingredients-actions';
 
@@ -55,8 +55,7 @@ export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, 
       };
     }
     case BURGER_INGREDIENTS_SUCCESS: {
-      //console.log('BURGER_INGREDIENTS_SUCCESS');
-      //console.log([...action.items]);
+
       return {
         items: [...action.items],
         queryError: false,
@@ -64,7 +63,7 @@ export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, 
     }
 
     case BURGER_INGREDIENT_CHANGE_BUN: {
-      // console.log(action.item);
+    
       return {
         ...state,
         items: [...state.items].map(item => {
@@ -76,7 +75,7 @@ export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, 
       }
     }
     case BURGER_INGREDIENTS_INCREASECOUNTER: {
-      //console.log(action.item);
+    
       return {
         ...state,
         items: [...state.items].map(item => {
@@ -87,8 +86,7 @@ export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, 
       }
     }
     case BURGER_INGREDIENTS_DECREASECOUNTER: {
-      // console.log('BURGER_INGREDIENTS_DECREASECOUNTER');
-      // console.log(action);
+
       return {
         ...state,
         items: [...state.items].map(item => {
@@ -98,11 +96,7 @@ export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, 
 
       }
     }
-    case BURGER_INGREDIENT_REQUEST: {
-      return {
-        ...state,
-      };
-    }
+   
     default: {
       return state;
     }

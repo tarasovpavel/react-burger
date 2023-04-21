@@ -43,3 +43,9 @@
     align-items: center;
     column-gap: 9px;
 }
+
+
+.price {
+    display: flex;
+    align-items: center;
+  }

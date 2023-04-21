@@ -39,13 +39,7 @@ const App: FC = () => {
   const background = location.state && location.state.background;
 
 
-  //  const ingredientData = useSelector((store) => store.ingredientDetailData.item);
-
-
-
-  //const { data1, loading, error } = useFetch('https://norma.nomoreparties.space/api/ingredients');
-  // console.log(data1) ;
-  // setData(data1);setIsLoad (true);
+  
 
   useEffect(() => {
     // Отправляем экшен-функцию
@@ -53,8 +47,7 @@ const App: FC = () => {
     dispatch(getRecommendedItems())
 
     setIsLoad(true);
-    // setIsLoad(true);
-    //console.log(utils.getCookie('accessToken')) ;
+   
     if ((utils.getCookie('accessToken')) && (utils.getCookie('accessToken') !== 'undefined')) {
 
       dispatch( getUserData());
@@ -88,7 +81,7 @@ const App: FC = () => {
 
 
       <AppHeader />
-      <Routes location={background || location}>
+      <Routes location={background || location} >
         <Route path="/" element={
           <DndProvider backend={HTML5Backend}>
             {isLoad && (
@@ -149,7 +142,8 @@ const App: FC = () => {
                 <IngredientDetail />
               </Modal>}>
             </Route>
-           
+            <Route path="*" element={<NotFound />} />
+            
           </>
         </Routes>
 
@@ -158,21 +152,22 @@ const App: FC = () => {
       {background &&
 
         <Routes>
-          <>
+          
           <Route path="/feed/:id" element={
             <Modal onClose={handleIngredientClose}>   
               <FeedOrderPage />
             </Modal>}>
           </Route>
           <Route path="*" element={<NotFound />} />
-          </>
+         
+          
         </Routes>
 
       }
       {background &&
 
         <Routes>
-          <>
+          
           <Route path="/profile/orders/:id" element= {<ProtectedRoute element={
             <Modal onClose={handleIngredientClose}>
               <FeedOrderPage />
@@ -180,8 +175,8 @@ const App: FC = () => {
             />
           }
           />
+          
           <Route path="*" element={<NotFound />} />
-          </>
         </Routes>
 
       }
